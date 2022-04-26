@@ -5,9 +5,13 @@
   "author": "na2na",
   "license": "MIT",
   "dependencies": {
+    "@discordjs/voice": "^0.9.0",
     "autobind-decorator": "^2.4.0",
+    "bufferutil": "^4.0.6",
     "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "utf-8-validate": "^5.0.9",
+    "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.15.0",
