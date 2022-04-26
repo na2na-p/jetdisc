@@ -1,0 +1,22 @@
+{
+  "name": "2na2-discord",
+  "version": "0.0.0",
+  "main": "built/index.js",
+  "author": "na2na",
+  "license": "MIT",
+  "dependencies": {
+    "autobind-decorator": "^2.4.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "eslint": "^8.11.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "scripts": {
+    "start": "node built/index.js",
+    "build": "npx tsc"
+  }
+}
