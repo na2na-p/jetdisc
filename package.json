@@ -2,10 +2,11 @@
   "name": "2na2-discord",
   "version": "0.0.0",
   "main": "built/index.js",
+  "private": true,
   "author": "na2na",
   "license": "MIT",
   "dependencies": {
-    "@discordjs/voice": "^0.9.0",
+    "@discordjs/voice": "^0.10.0",
     "autobind-decorator": "^2.4.0",
     "bufferutil": "^4.0.6",
     "discord.js": "^13.6.0",
@@ -14,13 +15,15 @@
     "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.15.0",
-    "@typescript-eslint/parser": "^5.15.0",
-    "eslint": "^8.11.0",
-    "eslint-config-google": "^0.14.0"
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "eslint": ">=5.16.0",
+    "eslint-config-google": "^0.14.0",
+    "typescript": "^4.7.4"
   },
   "scripts": {
     "start": "node built/index.js",
-    "build": "npx tsc"
+    "build": "npx tsc",
+    "lint": "yarn eslint --ext .js,.vue,.ts . --fix"
   }
 }

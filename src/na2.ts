@@ -2,6 +2,7 @@ import autobind from 'autobind-decorator';
 // eslint-disable-next-line object-curly-spacing
 import { EventEmitter } from 'events';
 import * as discord from 'discord.js';
+import Message from './message'
 
 /**
  * Discord Client
@@ -15,7 +16,6 @@ export default class なず extends EventEmitter {
    */
   constructor() {
     super();
-
     this.client = new discord.Client({
       intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES'],
     });
@@ -34,15 +34,6 @@ export default class なず extends EventEmitter {
   }
 
   /**
-   * @param {discord.Message} receivedMessage 送りつけられてきたやつ
-   * @param {string} message 送信するメッセージ
-   */
-  public reply(receivedMessage:discord.Message, message: string): void {
-    receivedMessage.reply(message);
-    return;
-  }
-
-  /**
    * messageCreateイベント
    * 今後はここでそれぞれの機能モジュールのところへ行くようにする。
    * コンストラクタでモジュールの読み込みをする。
@@ -52,8 +43,9 @@ export default class なず extends EventEmitter {
     if (message.author.bot) {
       return;
     }
-    console.log(message);
-    this.reply(message, 'おはようございます');
+    console.log(message.author.tag + ' said: ' + message.content);
+    const messageHandler: Message = new Message(this, message)
+    messageHandler.send(message);
     return;
   }
 }
