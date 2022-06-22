@@ -2,7 +2,8 @@ import autobind from 'autobind-decorator';
 // eslint-disable-next-line object-curly-spacing
 import { EventEmitter } from 'events';
 import * as discord from 'discord.js';
-import Message from './message'
+import Message from './message';
+import {config} from './config';
 
 /**
  * Discord Client
@@ -19,7 +20,7 @@ export default class なず extends EventEmitter {
     this.client = new discord.Client({
       intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES'],
     });
-    this.client.login(process.env.DISCORD_TOKEN);
+    this.client.login(config.discordToken);
     this.client.on('ready', this.onReady);
     this.client.on('messageCreate', this.onMessage);
   }
@@ -44,7 +45,7 @@ export default class なず extends EventEmitter {
       return;
     }
     console.log(message.author.tag + ' said: ' + message.content);
-    const messageHandler: Message = new Message(this, message)
+    const messageHandler: Message = new Message(this, message);
     messageHandler.send(message);
     return;
   }
