@@ -18,7 +18,16 @@
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"dbaeumer.vscode-eslint"
+				"dbaeumer.vscode-eslint",
+				"formulahendry.code-runner",
+				"EditorConfig.EditorConfig",
+				"mhutchie.git-graph",
+				"vector-of-bool.gitflow",
+				"GitHub.copilot",
+				"oderwat.indent-rainbow",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"christian-kohler.path-intellisense",
+				"esbenp.prettier-vscode"
 			]
 		}
 	},
