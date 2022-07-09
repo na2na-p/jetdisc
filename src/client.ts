@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 import {Client, Intents} from 'discord.js';
 import {config} from '@/config.js';
+import chalk from 'chalk';
 
 export class なずClient extends Client {
 	public readonly name = 'なず';
@@ -16,7 +17,7 @@ export class なずClient extends Client {
 
 		this.login(config.token);
 		this.once('ready', () => {
-			console.log(`Logged in as ${this.user?.tag}!`);
+			console.log(chalk.green(`Logged in as ${this.user?.tag}`));
 		});
 	}
 }

@@ -5,7 +5,7 @@ import {queryMessage} from '@/types.js';
  * ping module
  */
 export class Dice {
-	public readonly name = 'dice';
+	public readonly name = 'Dice';
 
 	public install() {
 		return this.hook;

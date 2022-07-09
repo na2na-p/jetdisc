@@ -8,6 +8,7 @@ type installedHooks = (message: Message) => Promise<boolean>;
 // モジュール群のインポート
 import {Ping} from '@/modules/ping/index.js';
 import {Dice} from '@/modules/dice/index.js';
+import chalk from 'chalk';
 
 // モジュール群のインスタンス化
 const modules = [
@@ -19,6 +20,7 @@ const modules = [
 const installedHooks: installedHooks[] = [];
 for (const module of modules) {
 	installedHooks.push(module.install());
+	console.log(chalk.yellow(`Installed: ${module.name}`));
 }
 
 const client = new なずClient();
