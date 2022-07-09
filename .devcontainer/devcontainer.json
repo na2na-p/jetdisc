@@ -22,7 +22,8 @@
 				"ms-azuretools.vscode-docker",
 				"VisualStudioExptTeam.vscodeintellicode",
 				"esbenp.prettier-vscode",
-				"vector-of-bool.gitflow"
+				"vector-of-bool.gitflow",
+				"oderwat.indent-rainbow"
 			]
 		}
 	},
