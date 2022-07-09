@@ -19,7 +19,9 @@
 				"dbaeumer.vscode-eslint",
 				"mhutchie.git-graph",
 				"GitHub.copilot",
-				"ms-azuretools.vscode-docker"
+				"ms-azuretools.vscode-docker",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"esbenp.prettier-vscode"
 			]
 		}
 	},
