@@ -21,7 +21,8 @@
 				"GitHub.copilot",
 				"ms-azuretools.vscode-docker",
 				"VisualStudioExptTeam.vscodeintellicode",
-				"esbenp.prettier-vscode"
+				"esbenp.prettier-vscode",
+				"vector-of-bool.gitflow"
 			]
 		}
 	},
