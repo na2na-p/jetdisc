@@ -3,7 +3,6 @@
     "incremental": false,
     "target": "ESNext",
     "module": "NodeNext",
-    "moduleResolution": "node",
     "allowJs": false,
     "rootDir": "src",
     "typeRoots": ["src/@types", "node_modules/@types"],
@@ -25,9 +24,10 @@
     "sourceMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "paths": {
-			"@/*": ["src/*"]
-		}
+		"paths": {
+			"@/*": ["src/*"],
+			"@config/": ["./.config/*"],
+		},
   },
   "include": [
     "./src/**/*.ts"
