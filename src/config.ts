@@ -1,8 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import {load} from 'js-yaml';
+import {readFileSync} from 'fs';
 
-const config = {
-  discordToken: process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN : '',
-};
+type config = {
+	token: string;
+	prefix: string;
+}
 
-export {config};
+export const config = load(readFileSync('.config/default.yml', 'utf8')) as config;

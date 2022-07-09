@@ -4,26 +4,30 @@
   "main": "built/index.js",
   "private": true,
   "author": "na2na",
+  "type": "module",
   "license": "MIT",
-  "dependencies": {
-    "@discordjs/voice": "^0.10.0",
-    "autobind-decorator": "^2.4.0",
-    "bufferutil": "^4.0.6",
-    "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0",
-    "utf-8-validate": "^5.0.9",
-    "zlib-sync": "^0.1.7"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.29.0",
-    "@typescript-eslint/parser": "^5.29.0",
-    "eslint": ">=5.16.0",
-    "eslint-config-google": "^0.14.0",
-    "typescript": "^4.7.4"
-  },
   "scripts": {
     "start": "node built/index.js",
-    "build": "npx tsc",
-    "lint": "yarn eslint --ext .js,.vue,.ts . --fix"
+    "build": "yarn tsc -p tsconfig.json && yarn tsc-alias -p tsconfig.json",
+    "lint": "yarn eslint --ext .js,.ts .",
+    "lint:fix": "yarn eslint --ext .js,.ts . --fix"
+  },
+  "dependencies": {
+    "autobind-decorator": "^2.4.0",
+    "chalk": "^5.0.1",
+    "discord-api-types": "^0.36.1",
+    "discord.js": "^13.8.1",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "eslint": ">=5.16.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.2",
+    "tsc-alias": "^1.6.11",
+    "typescript": "^4.7.4"
   }
 }
