@@ -76,10 +76,8 @@ export class Divination {
 			this.date = dayjs().format('YYYY/MM/DD');
 			// 「今日の」と「運勢は」の間にある文字列を抽出する
 			const signQuery = message.queryContent.replace(/今日の|の運勢は？/g, '');
-			console.log(signQuery);
 			// signがhoroscopeに含まれているか確認する
 			if (Object.keys(horoscope).includes(signQuery)) {
-				console.log('horoscopeに含まれている');
 				const sign = signQuery as horoscope;
 				const divination = await this.getDivination(sign);
 				const embed = await this.makeEmbed(divination);
