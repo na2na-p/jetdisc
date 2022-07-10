@@ -8,7 +8,7 @@
     "typeRoots": ["src/@types", "node_modules/@types"],
     "baseUrl": ".",
     "outDir": "./built",
-    "declaration": false,
+    "declaration": true,
     "removeComments": true,
     "noEmitOnError": true,
     "esModuleInterop": true,
