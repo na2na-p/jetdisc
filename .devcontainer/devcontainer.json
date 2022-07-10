@@ -23,7 +23,8 @@
 				"VisualStudioExptTeam.vscodeintellicode",
 				"esbenp.prettier-vscode",
 				"vector-of-bool.gitflow",
-				"oderwat.indent-rainbow"
+				"oderwat.indent-rainbow",
+				"EditorConfig.EditorConfig"
 			]
 		}
 	},
