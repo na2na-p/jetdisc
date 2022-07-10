@@ -13,6 +13,7 @@ type module = any; // TODO: anyをなんとかする
 export class Na2Client extends Client {
 	public readonly name = 'なず';
 	private mentionHooks: installedHooksType[] = [];
+	private streamHooks: installedHooksType[] = [];
 
 	constructor(modules: Array<module>) {
 		super({
@@ -51,6 +52,7 @@ export class Na2Client extends Client {
 				this.log(`Installing ${chalk.cyan.italic(module.name)}\tmodule...`);
 				const result = module.install();
 				if (result.mentionHook) this.mentionHooks.push(result.mentionHook);
+				if (result.streamHook) this.streamHooks.push(result.streamHook);
 			}
 			return true;
 		} catch (error) {
@@ -71,6 +73,15 @@ export class Na2Client extends Client {
 
 			this.mentionHooks.forEach(async (mentionHook) => {
 				if (await mentionHook(queryMessage as queryMessage)) {
+					return;
+				}
+			});
+		} else {
+			this.streamHooks.forEach(async (streamHook) => {
+				const queryMessage: Partial<queryMessage> = message;
+				queryMessage.queryContent = message.content;
+				if (message.member === null) queryMessage.memberName = '名無しさん';
+				if (await streamHook(queryMessage as queryMessage)) {
 					return;
 				}
 			});
