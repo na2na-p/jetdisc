@@ -2,7 +2,10 @@
 import {Client, Intents, Message} from 'discord.js';
 import {config} from '@/config.js';
 import {queryMessage} from '@/types.js';
+import {boundMethod} from 'autobind-decorator';
+import log from '@utils/log.js';
 import chalk from 'chalk';
+import {exit} from 'process';
 
 type installedHooksType = (message: queryMessage) => Promise<boolean>;
 type module = any;
@@ -19,10 +22,15 @@ export class Na2Client extends Client {
 				Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
 			],
 		});
+		try {
+			this.login(config.token);
+		} catch (error) {
+			this.log(chalk.red('Failed to fetch the account'));
+			exit(1);
+		}
 
-		this.login(config.token);
 		this.once('ready', () => {
-			console.log(chalk.green(`Logged in as ${this.user?.tag}`));
+			this.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
 		});
 		if (this.installMolules(modules)) {
 			this.on('messageCreate', async (message) => {
@@ -31,12 +39,18 @@ export class Na2Client extends Client {
 		}
 	}
 
+	@boundMethod
+	public log(logMessge: string): void {
+		log(`${chalk.hex('#C239B3')('[2na2]')}: ${logMessge}`);
+	}
+
+	@boundMethod
 	private installMolules(modules: Array<module>): boolean {
 		try {
 			for (const module of modules) {
+				this.log(`Installing ${chalk.cyan.italic(module.name)}\tmodule...`);
 				const result = module.install();
 				if (result.mentionHook) this.mentionHooks.push(result.mentionHook);
-				console.log(chalk.yellow(`Installed: ${module.name}`));
 			}
 			return true;
 		} catch (error) {
@@ -44,6 +58,7 @@ export class Na2Client extends Client {
 		}
 	}
 
+	@boundMethod
 	private onMessageCreate(message: Message): Promise<boolean> {
 		// prefixで始まる投稿 && Botによるものではないもの
 		if (message.content.startsWith(config.prefix) && !message.author.bot) {
@@ -51,6 +66,9 @@ export class Na2Client extends Client {
 			const queryMessage: Partial<queryMessage> = message;
 			queryMessage.queryContent = message.content.replace(config.prefix, '');
 			if (message.member === null) queryMessage.memberName = '名無しさん';
+
+			this.log(chalk.gray(`<<< An message received: ${chalk.underline(message.id)}`));
+
 			this.mentionHooks.forEach(async (mentionHook) => {
 				if (await mentionHook(queryMessage as queryMessage)) {
 					return;
