@@ -1,4 +1,5 @@
 /* eslint-disable require-jsdoc */
+import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
 
 /**
@@ -7,11 +8,15 @@ import {queryMessage} from '@/types.js';
 export class Dice {
 	public readonly name = 'Dice';
 
+	@boundMethod
 	public install() {
-		return this.hook;
+		return {
+			mentionHook: this.mentionHook,
+		};
 	}
 
-	private async hook(message: queryMessage): Promise<boolean> {
+	@boundMethod
+	private async mentionHook(message: queryMessage): Promise<boolean> {
 		if (message.queryContent == null) return false;
 		const query = message.queryContent.match(/([0-9]+)[dD]([0-9]+)/);
 

@@ -4,6 +4,7 @@ import {readFileSync} from 'fs';
 type config = {
 	token: string;
 	prefix: string;
+	deeplApiKey: string;
 }
 
 export const config = load(readFileSync('.config/default.yml', 'utf8')) as config;

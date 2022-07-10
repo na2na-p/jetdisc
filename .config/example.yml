@@ -3,3 +3,6 @@ token: "YOUR_TOKEN_HERE"
 
 # DiscordBot Prefix
 prefix: "YOUR_BOT_PREFIX_HERE"
+
+# DeepL API Key
+deeplApiKey: "YOUR_DEEPL_API_KEY_HERE"
