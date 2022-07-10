@@ -6,10 +6,10 @@ import chalk from 'chalk';
 type installedHooksType = (message: queryMessage) => Promise<boolean>;
 
 // モジュール群のインポート
-import {Ping} from '@/modules/ping/index.js';
-import {Dice} from '@/modules/dice/index.js';
-import {Translate} from '@/modules/translate/index.js';
-import {ColorPicker} from '@/modules/colorpicker/index.js';
+import {Ping} from '@modules/ping/index.js';
+import {Dice} from '@modules/dice/index.js';
+import {Translate} from '@modules/translate/index.js';
+import {ColorPicker} from '@modules/colorpicker/index.js';
 
 // モジュール群のインスタンス化
 const modules = [
