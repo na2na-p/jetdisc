@@ -9,6 +9,7 @@ RUN yarn build
 RUN rm -rf .git
 
 FROM node:18-bullseye-slim AS runner
+
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 WORKDIR /app
