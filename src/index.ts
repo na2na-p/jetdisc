@@ -6,6 +6,7 @@ import {Dice} from '@modules/dice/index.js';
 import {Translate} from '@modules/translate/index.js';
 import {ColorPicker} from '@modules/colorpicker/index.js';
 import {Divination} from '@modules/divination/index.js';
+import {Menu} from '@modules/menu/index.js';
 
 // モジュール群のインスタンス化
 const modules = [
@@ -14,6 +15,7 @@ const modules = [
 	new Translate(),
 	new ColorPicker(),
 	new Divination(),
+	new Menu(),
 ];
 
 new Na2Client(modules);
