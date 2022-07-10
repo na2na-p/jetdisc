@@ -12,5 +12,7 @@ jobs:
           node-version: 18.x
       - name: ci
         run: yarn install --immutable --immutable-cache --check-cache
+      - name: build
+        run: yarn build
       - name: mocha
         run: yarn test
