@@ -123,14 +123,14 @@ export class Divination {
 	 * @return {Promise<MessageEmbed>}
 	 */
 	private async makeEmbed(divination: divination): Promise<MessageEmbed> {
-		const colorEng = await translate({
-			free_api: true,
-			text: divination.color,
-			target_lang: 'EN',
-			source_lang: 'JA',
-			auth_key: config.deeplApiKey,
-		});
 		try {
+			const colorEng = await translate({
+				free_api: true,
+				text: divination.color,
+				target_lang: 'EN',
+				source_lang: 'JA',
+				auth_key: config.deeplApiKey,
+			});
 			this.luckeyColor = color(colorEng.data.translations[0].text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
 			console.log(error);
