@@ -1,9 +1,4 @@
-import {なずClient} from '@/client.js';
-import {config} from '@/config.js';
-import {queryMessage} from '@/types.js';
-import chalk from 'chalk';
-
-type installedHooksType = (message: queryMessage) => Promise<boolean>;
+import {Na2Client} from '@/client.js';
 
 // モジュール群のインポート
 import {Ping} from '@modules/ping/index.js';
@@ -21,27 +16,4 @@ const modules = [
 	new Divination(),
 ];
 
-// モジュール群のインストール
-const mentionHooks: installedHooksType[] = [];
-for (const module of modules) {
-	const result = module.install();
-	if (result.mentionHook) mentionHooks.push(result.mentionHook);
-	console.log(chalk.yellow(`Installed: ${module.name}`));
-}
-
-const client = new なずClient();
-
-client.on('messageCreate', async (message) => {
-	// prefixで始まる投稿をキャッチ
-	if (message.content.startsWith(config.prefix) && !message.author.bot) {
-		// messageからconfig.prefixを除去
-		const queryMessage: Partial<queryMessage> = message;
-		queryMessage.queryContent = message.content.replace(config.prefix, '');
-		if (message.member === null) queryMessage.memberName = '名無しさん';
-		mentionHooks.forEach(async (mentionHook) => {
-			if (await mentionHook(queryMessage as queryMessage)) {
-				return;
-			}
-		});
-	}
-});
+new Na2Client(modules);
