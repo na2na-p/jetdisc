@@ -8,7 +8,7 @@ import chalk from 'chalk';
 import {exit} from 'process';
 
 type installedHooksType = (message: queryMessage) => Promise<boolean>;
-type module = any;
+type module = any; // TODO: anyをなんとかする
 
 export class Na2Client extends Client {
 	public readonly name = 'なず';
