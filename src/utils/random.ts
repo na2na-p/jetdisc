@@ -18,6 +18,10 @@ export function random<T>(
 	} else {
 		// min/maxからランダムに選ぶ
 		const optionsRange = options as Required<Exclude<typeof options, 'candidate'>>; // TODO: Exculdeでみなかったことにするやつ
-		return Math.floor(Math.random() * (optionsRange.max - optionsRange.min + 1)) + optionsRange.min;
+		const result = Math.floor(Math.random() * (optionsRange.max - optionsRange.min + 1)) + optionsRange.min;
+		if (result < optionsRange.min || result > optionsRange.max) {
+			throw new Error('random()で生成した数値がmin/maxの範囲外です');
+		}
+		return result;
 	}
 }
