@@ -1,25 +1,31 @@
 import {なずClient} from '@/client.js';
 import {config} from '@/config.js';
-import {Message} from 'discord.js';
 import {queryMessage} from '@/types.js';
+import chalk from 'chalk';
 
-type installedHooks = (message: Message) => Promise<boolean>;
+type installedHooksType = (message: queryMessage) => Promise<boolean>;
 
 // モジュール群のインポート
-import {Ping} from '@/modules/ping/index.js';
-import {Dice} from '@/modules/dice/index.js';
-import chalk from 'chalk';
+import {Ping} from '@modules/ping/index.js';
+import {Dice} from '@modules/dice/index.js';
+import {Translate} from '@modules/translate/index.js';
+import {ColorPicker} from '@modules/colorpicker/index.js';
+import {Divination} from '@modules/divination/index.js';
 
 // モジュール群のインスタンス化
 const modules = [
 	new Ping(),
 	new Dice(),
+	new Translate(),
+	new ColorPicker(),
+	new Divination(),
 ];
 
 // モジュール群のインストール
-const installedHooks: installedHooks[] = [];
+const mentionHooks: installedHooksType[] = [];
 for (const module of modules) {
-	installedHooks.push(module.install());
+	const result = module.install();
+	if (result.mentionHook) mentionHooks.push(result.mentionHook);
 	console.log(chalk.yellow(`Installed: ${module.name}`));
 }
 
@@ -29,11 +35,13 @@ client.on('messageCreate', async (message) => {
 	// prefixで始まる投稿をキャッチ
 	if (message.content.startsWith(config.prefix) && !message.author.bot) {
 		// messageからconfig.prefixを除去
-		const queryMessage: queryMessage = message;
+		const queryMessage: Partial<queryMessage> = message;
 		queryMessage.queryContent = message.content.replace(config.prefix, '');
-		// queryMessage as Required<queryMessage>; // 無くても成立してそう
-		installedHooks.forEach(async (hook) => {
-			await hook(queryMessage);
+		if (message.member === null) queryMessage.memberName = '名無しさん';
+		mentionHooks.forEach(async (mentionHook) => {
+			if (await mentionHook(queryMessage as queryMessage)) {
+				return;
+			}
 		});
 	}
 });

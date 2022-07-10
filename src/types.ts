@@ -1,5 +1,8 @@
 import {Message} from 'discord.js';
 
-export type queryMessage = Message<boolean> & {
+type beforeIInitializeQueryMessage = Message<boolean> & {
 	queryContent?: string;
+	memberName?: string;
 };
+
+export type queryMessage = Required<beforeIInitializeQueryMessage>;
