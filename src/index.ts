@@ -9,12 +9,14 @@ type installedHooksType = (message: queryMessage) => Promise<boolean>;
 import {Ping} from '@/modules/ping/index.js';
 import {Dice} from '@/modules/dice/index.js';
 import {Translate} from '@/modules/translate/index.js';
+import {ColorPicker} from '@/modules/colorpicker/index.js';
 
 // モジュール群のインスタンス化
 const modules = [
 	new Ping(),
 	new Dice(),
 	new Translate(),
+	new ColorPicker(),
 ];
 
 // モジュール群のインストール
@@ -35,7 +37,9 @@ client.on('messageCreate', async (message) => {
 		queryMessage.queryContent = message.content.replace(config.prefix, '');
 		if (message.member === null) queryMessage.memberName = '名無しさん';
 		mentionHooks.forEach(async (mentionHook) => {
-			await mentionHook(queryMessage as queryMessage);
+			if (await mentionHook(queryMessage as queryMessage)) {
+				return;
+			}
 		});
 	}
 });
