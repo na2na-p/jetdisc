@@ -82,6 +82,7 @@ export class Na2Client extends Client {
 				queryMessage.queryContent = message.content;
 				if (message.member === null) queryMessage.memberName = '名無しさん';
 				if (await streamHook(queryMessage as queryMessage)) {
+					this.log(chalk.gray(`<<< An message received and reacted: ${chalk.underline(message.id)}`));
 					return;
 				}
 			});
