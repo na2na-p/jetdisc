@@ -113,7 +113,7 @@ export class Divination {
 			const key: keyof parsedDivination = eachResults.sign;
 			protoResult[key] = eachResults;
 		});
-		const result: parsedDivination = protoResult as parsedDivination;
+		const result = protoResult as parsedDivination;
 		return result[sign];
 	}
 
