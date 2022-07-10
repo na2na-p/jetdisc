@@ -2,7 +2,7 @@ version : '3'
 services: 
   app:
     container_name: app
-    image: teoremi/discordbot:develop
+    image: teoremi/discordbot:release
     restart: always
     volumes:
       - .config:/app/.config

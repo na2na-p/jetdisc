@@ -39,7 +39,7 @@ jobs:
           context: .
           push: true
           # タグはきおつけろ
-          tags: teoremi/discordbot:develop
+          tags: teoremi/discordbot:release
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       -
