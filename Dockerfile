@@ -1,16 +1,24 @@
 FROM node:18-bullseye AS builder
 
-RUN apt-get update && apt-get install -y tini
-
 WORKDIR /app
 
 COPY . ./
 
-# RUN apt update
-# RUN apt install -y build-essential
 RUN yarn install
 RUN yarn build
 RUN rm -rf .git
 
+FROM node:18-bullseye-slim AS runner
+RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y tini
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/built ./built
+COPY . ./
+
+ENV NODE_ENV=production
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD yarn start
