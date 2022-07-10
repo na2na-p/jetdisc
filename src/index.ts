@@ -1,19 +1,20 @@
 import {なずClient} from '@/client.js';
 import {config} from '@/config.js';
-import {Message} from 'discord.js';
 import {queryMessage} from '@/types.js';
+import chalk from 'chalk';
 
-type installedHooksType = (message: Message) => Promise<boolean>;
+type installedHooksType = (message: queryMessage) => Promise<boolean>;
 
 // モジュール群のインポート
 import {Ping} from '@/modules/ping/index.js';
 import {Dice} from '@/modules/dice/index.js';
-import chalk from 'chalk';
+import {Translate} from '@/modules/translate/index.js';
 
 // モジュール群のインスタンス化
 const modules = [
 	new Ping(),
 	new Dice(),
+	new Translate(),
 ];
 
 // モジュール群のインストール
@@ -30,12 +31,11 @@ client.on('messageCreate', async (message) => {
 	// prefixで始まる投稿をキャッチ
 	if (message.content.startsWith(config.prefix) && !message.author.bot) {
 		// messageからconfig.prefixを除去
-		const queryMessage: queryMessage = message;
+		const queryMessage: Partial<queryMessage> = message;
 		queryMessage.queryContent = message.content.replace(config.prefix, '');
 		if (message.member === null) queryMessage.memberName = '名無しさん';
-		// queryMessage as Required<queryMessage>; // 無くても成立してそう
 		mentionHooks.forEach(async (mentionHook) => {
-			await mentionHook(queryMessage);
+			await mentionHook(queryMessage as queryMessage);
 		});
 	}
 });
