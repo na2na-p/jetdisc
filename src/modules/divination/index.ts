@@ -113,7 +113,7 @@ export class Divination {
 			const key: keyof parsedDivination = eachResults.sign;
 			protoResult[key] = eachResults;
 		});
-		const result: parsedDivination = protoResult as parsedDivination;
+		const result = protoResult as parsedDivination;
 		return result[sign];
 	}
 
@@ -133,7 +133,7 @@ export class Divination {
 			});
 			this.luckeyColor = color(colorEng.data.translations[0].text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			this.luckeyColor = 'WHITE';
 		}
 

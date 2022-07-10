@@ -7,7 +7,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "node built/index.js",
+    "start": "node built/index.js --trace-warnings",
     "build": "yarn tsc -p tsconfig.json && yarn tsc-alias -p tsconfig.json",
     "lint": "yarn eslint --ext .js,.ts .",
     "lint:fix": "yarn eslint --ext .js,.ts . --fix"
