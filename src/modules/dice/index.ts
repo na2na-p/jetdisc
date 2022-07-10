@@ -8,10 +8,12 @@ export class Dice {
 	public readonly name = 'Dice';
 
 	public install() {
-		return this.hook;
+		return {
+			mentionHook: this.mentionHook,
+		};
 	}
 
-	private async hook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: queryMessage): Promise<boolean> {
 		if (message.queryContent == null) return false;
 		const query = message.queryContent.match(/([0-9]+)[dD]([0-9]+)/);
 

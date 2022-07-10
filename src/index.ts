@@ -3,7 +3,7 @@ import {config} from '@/config.js';
 import {Message} from 'discord.js';
 import {queryMessage} from '@/types.js';
 
-type installedHooks = (message: Message) => Promise<boolean>;
+type installedHooksType = (message: Message) => Promise<boolean>;
 
 // モジュール群のインポート
 import {Ping} from '@/modules/ping/index.js';
@@ -17,9 +17,10 @@ const modules = [
 ];
 
 // モジュール群のインストール
-const installedHooks: installedHooks[] = [];
+const mentionHooks: installedHooksType[] = [];
 for (const module of modules) {
-	installedHooks.push(module.install());
+	const result = module.install();
+	if (result.mentionHook) mentionHooks.push(result.mentionHook);
 	console.log(chalk.yellow(`Installed: ${module.name}`));
 }
 
@@ -31,9 +32,10 @@ client.on('messageCreate', async (message) => {
 		// messageからconfig.prefixを除去
 		const queryMessage: queryMessage = message;
 		queryMessage.queryContent = message.content.replace(config.prefix, '');
+		if (message.member === null) queryMessage.memberName = '名無しさん';
 		// queryMessage as Required<queryMessage>; // 無くても成立してそう
-		installedHooks.forEach(async (hook) => {
-			await hook(queryMessage);
+		mentionHooks.forEach(async (mentionHook) => {
+			await mentionHook(queryMessage);
 		});
 	}
 });

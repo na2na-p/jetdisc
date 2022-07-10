@@ -8,10 +8,12 @@ export class Ping {
 	public readonly name = 'Ping';
 
 	public install() {
-		return this.hook;
+		return {
+			mentionHook: this.mentionHook,
+		};
 	}
 
-	private async hook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: queryMessage): Promise<boolean> {
 		if (message.queryContent === 'ping') {
 			message.reply('pong');
 			return true;
