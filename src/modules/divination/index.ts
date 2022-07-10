@@ -133,7 +133,7 @@ export class Divination {
 			});
 			this.luckeyColor = color(colorEng.data.translations[0].text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			this.luckeyColor = 'WHITE';
 		}
 
