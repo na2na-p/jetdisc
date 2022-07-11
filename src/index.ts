@@ -14,6 +14,7 @@ import {ColorPicker} from '@modules/colorpicker/index.js';
 import {Divination} from '@modules/divination/index.js';
 import {Menu} from '@modules/menu/index.js';
 import {Search} from '@modules/search/index.js';
+import {EmojiReact} from '@modules/emoji-react/index.js';
 
 // モジュール群のインスタンス化
 // 上にあるほど高優先度
@@ -27,6 +28,7 @@ const modules = [
 	new Menu(),
 	// streamHook系
 	new Search(),
+	new EmojiReact(),
 ];
 
 log('Starting Na2Client...');
