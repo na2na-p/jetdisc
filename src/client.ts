@@ -63,12 +63,16 @@ export class Na2Client extends Client {
 	@boundMethod
 	private onMessageCreate(message: Message): Promise<boolean> {
 		// prefixで始まる投稿 && Botによるものではないもの
-		if (message.content.startsWith(config.prefix) && !message.author.bot) {
+		console.log(message.content);
+		if ((message.content.startsWith(config.prefix) || message.mentions.users.has(this.user!.id)) &&
+			!message.author.bot) {
 			// messageからconfig.prefixを除去
 			const queryMessage: Partial<queryMessage> = message;
-			queryMessage.queryContent = message.content.replace(config.prefix, '');
+			// config.prefixと`<@${this.user!.id}> `を除去
+			// それぞれ別で扱う
+			const regExp = new RegExp(`^${config.prefix}|<@${this.user!.id}> `);
+			queryMessage.queryContent = message.content.replace(regExp, '');
 			if (message.member === null) queryMessage.memberName = '名無しさん';
-
 			this.log(chalk.gray(`<<< An message received: ${chalk.underline(message.id)}`));
 
 			this.mentionHooks.forEach(async (mentionHook) => {
