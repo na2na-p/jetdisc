@@ -64,9 +64,9 @@ export class Na2Client extends Client {
 	private onMessageCreate(message: Message): Promise<boolean> {
 		// prefixで始まる投稿 && Botによるものではないもの
 		const mentionedRoleId = this.mentionHasOwnRole(message);
-		if ((message.content.startsWith(config.prefix) ||
-				message.mentions.users.has(this.user!.id) ||
-				mentionedRoleId) &&
+		if ((message.content.startsWith(config.prefix) || // prefixで始まる場合
+				message.mentions.users.has(this.user!.id) || // ユーザーメンションされた場合
+				mentionedRoleId) && // ロールメンションされた場合
 			!message.author.bot) {
 			// messageからconfig.prefixを除去
 			const queryMessage: Partial<queryMessage> = message;
