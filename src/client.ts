@@ -63,14 +63,19 @@ export class Na2Client extends Client {
 	@boundMethod
 	private onMessageCreate(message: Message): Promise<boolean> {
 		// prefixで始まる投稿 && Botによるものではないもの
-		if (message.content.startsWith(config.prefix) && !message.author.bot) {
+		const mentionedRoleId = this.mentionHasOwnRole(message);
+		if ((message.content.startsWith(config.prefix) || // prefixで始まる場合
+				message.mentions.users.has(this.user!.id) || // ユーザーメンションされた場合
+				mentionedRoleId) && // ロールメンションされた場合
+			!message.author.bot) {
 			// messageからconfig.prefixを除去
 			const queryMessage: Partial<queryMessage> = message;
-			queryMessage.queryContent = message.content.replace(config.prefix, '');
+			// config.prefixと`<@${this.user!.id}> `を除去
+			// それぞれ別で扱う
+			const regExp = new RegExp(`^${config.prefix}|^<@${this.user!.id}> |^<@&${mentionedRoleId}> `);
+			queryMessage.queryContent = message.content.replace(regExp, '');
 			if (message.member === null) queryMessage.memberName = '名無しさん';
-
 			this.log(chalk.gray(`<<< An message received: ${chalk.underline(message.id)}`));
-
 			this.mentionHooks.forEach(async (mentionHook) => {
 				if (await mentionHook(queryMessage as queryMessage)) {
 					return;
@@ -88,5 +93,29 @@ export class Na2Client extends Client {
 			});
 		}
 		return Promise.resolve(true);
+	}
+
+	@boundMethod
+	private mentionHasOwnRole(message: Message): void | string | undefined {
+		// 自分が所属するロールidを取得
+		const myRoleIds = message.guild!.roles.cache.filter((role) => {
+			return role.members.has(this.user!.id);
+		}).map((role) => {
+			return role.id;
+		});
+
+		const mentionRoleIds = message.mentions.roles.map((role) => {
+			return role.id;
+		});
+
+		// console.log(myRoleIds);
+		// console.log(mentionRoleIds);
+
+		if (myRoleIds === null || mentionRoleIds === null) return;
+		// 自分が所属するロールidとメンションされたロールidを比較して、一致するものがあればそのロールidを返す
+		// returnはstring
+		return myRoleIds.find((myRoleId) => {
+			return mentionRoleIds.includes(myRoleId);
+		});
 	}
 }

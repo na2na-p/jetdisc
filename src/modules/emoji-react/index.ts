@@ -17,12 +17,18 @@ export class EmojiReact {
 
 	@boundMethod
 	private async streamHook(message: queryMessage): Promise<boolean> {
+		let reacted = false;
 		if (/(肉|にく)/.exec(message.queryContent)) {
 			message.react(`🍖`);
-			return true;
+			reacted = true;
 		}
 		if (/(寿司|すし)/.exec(message.queryContent)) {
 			message.react(`🍣`);
+			reacted = true;
+		}
+
+		// 多重反応可にする
+		if (reacted) {
 			return true;
 		}
 		return false;
