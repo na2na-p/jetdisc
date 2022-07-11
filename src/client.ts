@@ -96,7 +96,7 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	private mentionHasOwnRole(message: Message): string | void {
+	private mentionHasOwnRole(message: Message): void | string | undefined {
 		// 自分が所属するロールidを取得
 		const myRoleIds = message.guild!.roles.cache.filter((role) => {
 			return role.members.has(this.user!.id);
