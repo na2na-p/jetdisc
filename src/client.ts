@@ -16,6 +16,7 @@ export class Na2Client extends Client {
 	private mentionHooks: installedHooksType[] = [];
 	private streamHooks: installedHooksType[] = [];
 	private interactionHooks: installedHooksType[] = [];
+	private isIntaractionEnabled: boolean = true;
 
 	constructor(modules: Array<module>, commands: commandSetType[]) {
 		super({
@@ -32,6 +33,9 @@ export class Na2Client extends Client {
 			exit(1);
 		}
 
+		if (config.setCommandsTargetServers.length === 0) {
+			this.isIntaractionEnabled = false;
+		}
 		const modulesInstallResult: boolean = this.installMolules(modules);
 		this.on('ready', () => {
 			this.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
@@ -59,7 +63,9 @@ export class Na2Client extends Client {
 				const result = module.install();
 				if (result.mentionHook) this.mentionHooks.push(result.mentionHook);
 				if (result.streamHook) this.streamHooks.push(result.streamHook);
-				if (result.interactionHook) this.interactionHooks.push(result.interactionHook);
+				if (result.interactionHook && this.isIntaractionEnabled) {
+					this.interactionHooks.push(result.interactionHook);
+				}
 			}
 			return true;
 		} catch (error) {
