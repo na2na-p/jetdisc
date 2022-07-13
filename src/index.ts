@@ -19,6 +19,7 @@ import {EmojiReact} from '@modules/hooks/emoji-react/index.js';
 // スラッシュコマンドあれこれ用
 import {pingCommandSetter, Ping as PingCommand} from '@modules/commands/ping/index.js';
 import {diceCommandSetter, Dice as DiceCommand} from '@modules/commands/dice/index.js';
+import {VCJoinCommandSetter, VCJoin} from '@modules/commands/voice/join/index.js';
 
 // モジュール群のインスタンス化
 // 上にあるほど高優先度
@@ -36,12 +37,14 @@ const hooks = [
 	// interactionHook系
 	new PingCommand(),
 	new DiceCommand(),
+	new VCJoin(),
 ];
 
 // /コマンド登録用のオブジェクト群のインポート
 const commands = [
 	pingCommandSetter,
 	diceCommandSetter,
+	VCJoinCommandSetter,
 ];
 
 log('Starting Na2Client...');
