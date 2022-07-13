@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import {Client, Intents, Message} from 'discord.js';
+import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
 import {config} from '@/config.js';
 import {queryMessage} from '@/types.js';
 import {boundMethod} from 'autobind-decorator';
@@ -8,14 +8,17 @@ import chalk from 'chalk';
 import {exit} from 'process';
 
 type installedHooksType = (message: queryMessage) => Promise<boolean>;
+type commandSetType = {name: string, description: string};
 type module = any; // TODO: anyをなんとかする
 
 export class Na2Client extends Client {
 	public readonly name = 'なず';
 	private mentionHooks: installedHooksType[] = [];
 	private streamHooks: installedHooksType[] = [];
+	private interactionHooks: installedHooksType[] = [];
+	private isIntaractionEnabled: boolean = true;
 
-	constructor(modules: Array<module>) {
+	constructor(modules: Array<module>, commands: commandSetType[]) {
 		super({
 			intents: [
 				Intents.FLAGS.GUILDS,
@@ -30,14 +33,21 @@ export class Na2Client extends Client {
 			exit(1);
 		}
 
-		this.once('ready', () => {
-			this.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
-		});
-		if (this.installMolules(modules)) {
-			this.on('messageCreate', async (message) => {
-				this.onMessageCreate(message);
-			});
+		if (config.setCommandsTargetServers.length === 0) {
+			this.isIntaractionEnabled = false;
 		}
+		const modulesInstallResult: boolean = this.installMolules(modules);
+		this.on('ready', () => {
+			this.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
+			if (modulesInstallResult && this.installCommands(commands)) {
+				this.on('messageCreate', async (message) => {
+					this.onMessageCreate(message);
+				});
+				this.on('interactionCreate', async (interaction) => {
+					this.onInteractionCreate(interaction);
+				});
+			}
+		});
 	}
 
 	@boundMethod
@@ -53,10 +63,27 @@ export class Na2Client extends Client {
 				const result = module.install();
 				if (result.mentionHook) this.mentionHooks.push(result.mentionHook);
 				if (result.streamHook) this.streamHooks.push(result.streamHook);
+				if (result.interactionHook && this.isIntaractionEnabled) {
+					this.interactionHooks.push(result.interactionHook);
+				}
 			}
 			return true;
 		} catch (error) {
 			return false;
+		}
+	}
+
+	@boundMethod
+	private installCommands(commands: commandSetType[]): boolean {
+		try {
+			config.setCommandsTargetServers.forEach(async (serverId) => {
+				this.application!.commands.set(commands, serverId);
+				// this.on('ready')になってないとthis.applicationがnull。そうでないならok
+				this.log(`Installed commands to ${chalk.underline(serverId)}`);
+			});
+			return true;
+		} catch (error) {
+			throw new Error('コマンドのインストールに失敗しました。');
 		}
 	}
 
@@ -94,6 +121,21 @@ export class Na2Client extends Client {
 		}
 		return Promise.resolve(true);
 	}
+
+	@boundMethod
+	private onInteractionCreate(interaction: Interaction): Promise<boolean> {
+		if (!interaction.isCommand()) {
+			return Promise.resolve(false);
+		}
+		const commandInteraction = interaction as CommandInteraction;
+		this.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(commandInteraction.commandName)}`));
+		this.interactionHooks.forEach(async (interactionHook) => {
+			if (await interactionHook(commandInteraction as module)) {
+				return;
+			}
+		});
+		return Promise.resolve(true);
+	};
 
 	@boundMethod
 	private mentionHasOwnRole(message: Message): void | string | undefined {

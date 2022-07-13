@@ -5,6 +5,7 @@ type config = {
 	token: string;
 	prefix: string;
 	deeplApiKey: string;
+	setCommandsTargetServers: string[];
 }
 
 export const config = load(readFileSync('.config/default.yml', 'utf8')) as config;
