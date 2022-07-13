@@ -14,6 +14,7 @@ export class Na2Client extends Client {
 	public readonly name = 'なず';
 	private mentionHooks: installedHooksType[] = [];
 	private streamHooks: installedHooksType[] = [];
+	private interactionHooks: installedHooksType[] = [];
 
 	constructor(modules: Array<module>) {
 		super({
@@ -37,6 +38,9 @@ export class Na2Client extends Client {
 			this.on('messageCreate', async (message) => {
 				this.onMessageCreate(message);
 			});
+			this.on('interactionCreate', async (interaction) => {
+				console.log(interaction);
+			});
 		}
 	}
 
@@ -53,6 +57,7 @@ export class Na2Client extends Client {
 				const result = module.install();
 				if (result.mentionHook) this.mentionHooks.push(result.mentionHook);
 				if (result.streamHook) this.streamHooks.push(result.streamHook);
+				if (result.interactionHook) this.interactionHooks.push(result.interactionHook);
 			}
 			return true;
 		} catch (error) {
