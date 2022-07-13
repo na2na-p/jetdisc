@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import {Client, Intents, Message} from 'discord.js';
+import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
 import {config} from '@/config.js';
 import {queryMessage} from '@/types.js';
 import {boundMethod} from 'autobind-decorator';
@@ -40,7 +40,7 @@ export class Na2Client extends Client {
 					this.onMessageCreate(message);
 				});
 				this.on('interactionCreate', async (interaction) => {
-					console.log(interaction);
+					this.onInteractionCreate(interaction);
 				});
 			}
 		});
@@ -115,6 +115,21 @@ export class Na2Client extends Client {
 		}
 		return Promise.resolve(true);
 	}
+
+	@boundMethod
+	private onInteractionCreate(interaction: Interaction): Promise<boolean> {
+		if (!interaction.isCommand()) {
+			return Promise.resolve(false);
+		}
+		const commandInteraction = interaction as CommandInteraction;
+		this.log(chalk.gray(`<<< An interaction received: ${chalk.underline(commandInteraction.commandName)}`));
+		this.interactionHooks.forEach(async (interactionHook) => {
+			if (await interactionHook(commandInteraction as module)) {
+				return;
+			}
+		});
+		return Promise.resolve(true);
+	};
 
 	@boundMethod
 	private mentionHasOwnRole(message: Message): void | string | undefined {
