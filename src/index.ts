@@ -7,18 +7,21 @@ function log(msg: string): void {
 }
 
 // モジュール群のインポート
-import {Ping} from '@modules/ping/index.js';
-import {Dice} from '@modules/dice/index.js';
-import {Translate} from '@modules/translate/index.js';
-import {ColorPicker} from '@modules/colorpicker/index.js';
-import {Divination} from '@modules/divination/index.js';
-import {Menu} from '@modules/menu/index.js';
-import {Search} from '@modules/search/index.js';
-import {EmojiReact} from '@modules/emoji-react/index.js';
+import {Ping} from '@modules/hooks/ping/index.js';
+import {Dice} from '@modules/hooks/dice/index.js';
+import {Translate} from '@modules/hooks/translate/index.js';
+import {ColorPicker} from '@/modules/hooks/colorpicker/index.js';
+import {Divination} from '@modules/hooks/divination/index.js';
+import {Menu} from '@modules/hooks/menu/index.js';
+import {Search} from '@modules/hooks/search/index.js';
+import {EmojiReact} from '@modules/hooks/emoji-react/index.js';
+
+// コマンド登録用のオブジェクト郡のインポート
+import {Ping as PingCommand} from '@modules/commands/ping/setCommand.js';
 
 // モジュール群のインスタンス化
 // 上にあるほど高優先度
-const modules = [
+const hooks = [
 	// mentionHook系
 	new Ping(),
 	new Dice(),
@@ -31,5 +34,10 @@ const modules = [
 	new EmojiReact(),
 ];
 
+// /コマンド登録用のオブジェクト群のインポート
+const commands = [
+	PingCommand,
+];
+
 log('Starting Na2Client...');
-new Na2Client(modules);
+new Na2Client(hooks, commands);

@@ -6,3 +6,5 @@ type beforeIInitializeQueryMessage = Message<boolean> & {
 };
 
 export type queryMessage = Required<beforeIInitializeQueryMessage>;
+
+export type commandSetType = {name: string, description: string};

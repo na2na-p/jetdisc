@@ -8,6 +8,7 @@ import chalk from 'chalk';
 import {exit} from 'process';
 
 type installedHooksType = (message: queryMessage) => Promise<boolean>;
+type commandSetType = {name: string, description: string};
 type module = any; // TODO: anyをなんとかする
 
 export class Na2Client extends Client {
@@ -16,7 +17,7 @@ export class Na2Client extends Client {
 	private streamHooks: installedHooksType[] = [];
 	private interactionHooks: installedHooksType[] = [];
 
-	constructor(modules: Array<module>) {
+	constructor(modules: Array<module>, commands: commandSetType[]) {
 		super({
 			intents: [
 				Intents.FLAGS.GUILDS,
@@ -31,17 +32,18 @@ export class Na2Client extends Client {
 			exit(1);
 		}
 
-		this.once('ready', () => {
+		const modulesInstallResult: boolean = this.installMolules(modules);
+		this.on('ready', () => {
 			this.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
+			if (modulesInstallResult && this.installCommands(commands)) {
+				this.on('messageCreate', async (message) => {
+					this.onMessageCreate(message);
+				});
+				this.on('interactionCreate', async (interaction) => {
+					console.log(interaction);
+				});
+			}
 		});
-		if (this.installMolules(modules)) {
-			this.on('messageCreate', async (message) => {
-				this.onMessageCreate(message);
-			});
-			this.on('interactionCreate', async (interaction) => {
-				console.log(interaction);
-			});
-		}
 	}
 
 	@boundMethod
@@ -62,6 +64,20 @@ export class Na2Client extends Client {
 			return true;
 		} catch (error) {
 			return false;
+		}
+	}
+
+	@boundMethod
+	private installCommands(commands: commandSetType[]): boolean {
+		try {
+			config.setCommandsTargetServers.forEach(async (serverId) => {
+				this.application!.commands.set(commands, serverId);
+				// this.on('ready')になってないとthis.applicationがnull。そうでないならok
+				this.log(`Installed commands to ${chalk.underline(serverId)}`);
+			});
+			return true;
+		} catch (error) {
+			throw new Error('コマンドのインストールに失敗しました。');
 		}
 	}
 
