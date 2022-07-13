@@ -1,11 +1,18 @@
 /* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {CommandInteraction} from 'discord.js';
+import {commandSetType} from '@/types.js';
+
+// コマンドセットする用
+const command: commandSetType = {
+	name: 'ping',
+	description: 'ping',
+};
 
 /**
  * ping module
  */
-export class Ping {
+class Ping {
 	public readonly name = 'Ping';
 
 	@boundMethod
@@ -25,3 +32,5 @@ export class Ping {
 		}
 	}
 }
+
+export {command as pingCommandSetter, Ping};

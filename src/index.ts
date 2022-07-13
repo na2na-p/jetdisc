@@ -16,11 +16,9 @@ import {Menu} from '@modules/hooks/menu/index.js';
 import {Search} from '@modules/hooks/search/index.js';
 import {EmojiReact} from '@modules/hooks/emoji-react/index.js';
 
-// コマンド登録用のオブジェクト群のインポート
-import {Ping as PingCommand} from '@modules/commands/ping/install.js';
-
-// コマンドに対するリアクションのインポート
-import {Ping as PingCommandReaction} from '@modules/commands/ping/interaction.js';
+// スラッシュコマンドあれこれ用
+import {pingCommandSetter, Ping as PingCommand} from '@modules/commands/ping/index.js';
+import {diceCommandSetter, Dice as DiceCommand} from '@modules/commands/dice/index.js';
 
 // モジュール群のインスタンス化
 // 上にあるほど高優先度
@@ -36,12 +34,14 @@ const hooks = [
 	new Search(),
 	new EmojiReact(),
 	// interactionHook系
-	new PingCommandReaction(),
+	new PingCommand(),
+	new DiceCommand(),
 ];
 
 // /コマンド登録用のオブジェクト群のインポート
 const commands = [
-	PingCommand,
+	pingCommandSetter,
+	diceCommandSetter,
 ];
 
 log('Starting Na2Client...');

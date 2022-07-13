@@ -122,7 +122,7 @@ export class Na2Client extends Client {
 			return Promise.resolve(false);
 		}
 		const commandInteraction = interaction as CommandInteraction;
-		this.log(chalk.gray(`<<< An interaction received: ${chalk.underline(commandInteraction.commandName)}`));
+		this.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(commandInteraction.commandName)}`));
 		this.interactionHooks.forEach(async (interactionHook) => {
 			if (await interactionHook(commandInteraction as module)) {
 				return;
