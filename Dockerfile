@@ -14,7 +14,7 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y tini
+RUN apt-get update && apt-get install --no-install-recommends -y tini ffmpeg
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/built ./built

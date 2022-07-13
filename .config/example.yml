@@ -6,3 +6,6 @@ prefix: "YOUR_BOT_PREFIX_HERE"
 
 # DeepL API Key
 deeplApiKey: "YOUR_DEEPL_API_KEY_HERE"
+
+# Commands Install Target Server ID
+setCommandsTargetServers: []
