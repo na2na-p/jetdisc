@@ -1,14 +1,13 @@
 /* eslint-disable require-jsdoc */
 import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
 import {config} from '@/config.js';
-import {queryMessage} from '@/types.js';
+import {queryMessage, commandSetType} from '@/types.js';
 import {boundMethod} from 'autobind-decorator';
 import log from '@utils/log.js';
 import chalk from 'chalk';
 import {exit} from 'process';
 
 type installedHooksType = (message: queryMessage) => Promise<boolean>;
-type commandSetType = {name: string, description: string};
 type module = any; // TODO: anyをなんとかする
 
 export class Na2Client extends Client {
@@ -35,6 +34,7 @@ export class Na2Client extends Client {
 
 		if (config.setCommandsTargetServers.length === 0) {
 			this.isIntaractionEnabled = false;
+			this.log(chalk.yellow('No interactions are installed - Target servers are not set'));
 		}
 		const modulesInstallResult: boolean = this.installMolules(modules);
 		this.on('ready', () => {
@@ -75,6 +75,10 @@ export class Na2Client extends Client {
 
 	@boundMethod
 	private installCommands(commands: commandSetType[]): boolean {
+		if (commands.length === 0) {
+			this.log(chalk.yellow('No commands are installed - Commands are not set in index.ts'));
+			return true;
+		}
 		try {
 			config.setCommandsTargetServers.forEach(async (serverId) => {
 				this.application!.commands.set(commands, serverId);
