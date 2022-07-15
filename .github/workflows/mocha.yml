@@ -1,5 +1,8 @@
 name: mocha
-on: push
+on:
+  push:
+    branches-ignore:
+      - main
 jobs:
   mocha:
     runs-on: ubuntu-latest
