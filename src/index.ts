@@ -1,5 +1,6 @@
 import {Na2Client} from '@/client.js';
 import _log from '@utils/log.js';
+import {commandSetType} from '@/types.js';
 
 // eslint-disable-next-line require-jsdoc
 function log(msg: string): void {
@@ -41,7 +42,7 @@ const hooks = [
 ];
 
 // /コマンド登録用のオブジェクト群のインポート
-const commands = [
+const commands: commandSetType[] = [
 	pingCommandSetter,
 	diceCommandSetter,
 	// VCJoinCommandSetter, TODO: このモジュールは未実装
