@@ -70,7 +70,7 @@ export class Divination {
 	}
 
 	@boundMethod
-	private async mentionHook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
 		if (message.queryContent.endsWith(`運勢は？`)) {
 			// YYYY/MM/DDにする
 			this.date = dayjs().format('YYYY/MM/DD');
@@ -122,7 +122,7 @@ export class Divination {
 	 * @param {divination} divination 運勢(1星座のみ入ってるやつ)
 	 * @return {Promise<MessageEmbed>}
 	 */
-	private async makeEmbed(divination: divination): Promise<MessageEmbed> {
+	private async makeEmbed(divination: Readonly<divination>): Promise<MessageEmbed> {
 		try {
 			const colorEng = await translate({
 				free_api: true,

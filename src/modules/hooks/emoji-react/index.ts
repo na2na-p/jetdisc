@@ -41,7 +41,7 @@ export class EmojiReact {
 	}
 
 	@boundMethod
-	private async mimicking(message: queryMessage): Promise<boolean> {
+	private async mimicking(message: Readonly<queryMessage>): Promise<boolean> {
 		const emojis = parse(message.queryContent).map((x) => x.text);
 		// "<:"から始まって">"で終わるものを抽出
 		const customEmojisRegEx = /<:.[^>]*:\d+>/g;

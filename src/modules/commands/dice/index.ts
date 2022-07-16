@@ -23,7 +23,7 @@ class Dice {
 	}
 
 	@boundMethod
-	private async interactionHook(interaction: CommandInteraction): Promise<boolean> {
+	private async interactionHook(interaction: Readonly<CommandInteraction>): Promise<boolean> {
 		if (interaction.commandName === 'dice') {
 			const dice = Math.floor(Math.random() * 6) + 1;
 			interaction.reply(`(ｺﾛｺﾛ) ${dice}が出ました！`);

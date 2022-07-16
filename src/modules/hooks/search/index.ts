@@ -16,7 +16,7 @@ export class Search {
 	}
 
 	@boundMethod
-	private async streamHook(message: queryMessage): Promise<boolean> {
+	private async streamHook(message: Readonly<queryMessage>): Promise<boolean> {
 		if (message.queryContent.endsWith('検索')) {
 			let searchQuery = message.content.replace('検索', '');
 			// searchQueryの一番後ろにスペースがある場合は削除

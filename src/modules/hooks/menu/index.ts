@@ -16,7 +16,7 @@ export class Menu {
 	}
 
 	@boundMethod
-	private async mentionHook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
 		if (message.queryContent.includes('ごはん')) {
 			// 1~2535111の適当な数字を取得
 			const url = `https://cookpad.com/recipe/${Math.floor(Math.random() * 2535111) + 1}`;

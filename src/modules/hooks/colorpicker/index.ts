@@ -23,7 +23,7 @@ export class ColorPicker {
 	}
 
 	@boundMethod
-	private async mentionHook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
 		if (message.queryContent === '色決めて') {
 			const options = {
 				min: 0,

@@ -23,7 +23,7 @@ class Ping {
 	}
 
 	@boundMethod
-	private async interactionHook(interaction: CommandInteraction): Promise<boolean> {
+	private async interactionHook(interaction: Readonly<CommandInteraction>): Promise<boolean> {
 		if (interaction.commandName === 'ping') {
 			interaction.reply('pong');
 			return true;

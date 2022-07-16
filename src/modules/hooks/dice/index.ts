@@ -16,7 +16,7 @@ export class Dice {
 	}
 
 	@boundMethod
-	private async mentionHook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
 		if (message.queryContent == null) return false;
 		if (message.queryContent.includes('サイコロ')) {
 			const dice = Math.floor(Math.random() * 6) + 1;
