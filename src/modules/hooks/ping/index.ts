@@ -16,7 +16,7 @@ export class Ping {
 	}
 
 	@boundMethod
-	private async mentionHook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
 		if (message.queryContent === 'ping') {
 			message.reply('pong');
 			return true;

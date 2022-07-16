@@ -25,12 +25,12 @@ export class Na2Voice {
 	}
 
 	@boundMethod
-	private async fetchMember(interaction: CommandInteraction): Promise<GuildMember> {
+	private async fetchMember(interaction: Readonly<CommandInteraction>): Promise<GuildMember> {
 		return await this.guild.members.fetch(interaction.member!.user.id);
 	}
 
 	@boundMethod
-	public async getMemberJoinedVoiceChannel(interaction: CommandInteraction<CacheType>)
+	public async getMemberJoinedVoiceChannel(interaction: Readonly<CommandInteraction<CacheType>>)
 		:Promise<VoiceBasedChannel | null> {
 		const member = await this.fetchMember(interaction);
 		return member.voice.channel;
