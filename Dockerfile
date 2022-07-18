@@ -18,8 +18,7 @@ RUN apt update && apt install --no-install-recommends -y tini ffmpeg
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/built ./built
-COPY package.json ./
 
 ENV NODE_ENV=production
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD yarn start
+CMD node built/index.js --trace-warnings
