@@ -1,22 +1,20 @@
 /* eslint-disable require-jsdoc */
 import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
 import {config} from '@/config.js';
-import {queryMessage, commandSetType, interactionHookType, mentionHookType, streamHookType} from '@/types.js';
+import {
+	queryMessage,
+	commandSetType,
+	interactionHookType,
+	mentionHookType,
+	streamHookType,
+	installedHooksType,
+	module,
+} from '@/types.js';
 import {boundMethod} from 'autobind-decorator';
 import log from '@utils/log.js';
 import chalk from 'chalk';
 import {exit} from 'process';
 
-type installedHooksType<T>
-	=	T extends interactionHookType ? interactionHookType
-	: T extends mentionHookType ? mentionHookType
-	: T extends streamHookType ? streamHookType
-	: never;
-
-type module<T> = {
-	name: string,
-	install(): installedHooksType<T>
-}
 
 export class Na2Client extends Client {
 	public readonly name = 'なず';
