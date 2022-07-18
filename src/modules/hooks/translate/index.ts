@@ -15,7 +15,7 @@ export class Translate {
 		};
 	}
 
-	private async mentionHook(message: queryMessage): Promise<boolean> {
+	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
 		if (message.queryContent?.endsWith('を英語で')) {
 			const translateQuery = message.queryContent.replace('を英語で', '');
 			const result = await translate({

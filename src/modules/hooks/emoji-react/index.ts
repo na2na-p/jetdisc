@@ -1,8 +1,8 @@
 /* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {parse} from 'twemoji-parser';
-import log from '@/utils/log.js';
 import {queryMessage} from '@/types.js';
+import {Na2Client} from '@/client.js';
 
 /**
  * ping module
@@ -41,7 +41,7 @@ export class EmojiReact {
 	}
 
 	@boundMethod
-	private async mimicking(message: queryMessage): Promise<boolean> {
+	private async mimicking(message: Readonly<queryMessage>): Promise<boolean> {
 		const emojis = parse(message.queryContent).map((x) => x.text);
 		// "<:"から始まって">"で終わるものを抽出
 		const customEmojisRegEx = /<:.[^>]*:\d+>/g;
@@ -70,10 +70,10 @@ export class EmojiReact {
 		case 0:
 			break;
 		case 1:
-			log(`Emoji detected - ${emojis}`);
+			Na2Client.log(`Emoji detected - ${emojis}`);
 			break;
 		default:
-			log(`Emojis detected - ${emojis}`);
+			Na2Client.log(`Emojis detected - ${emojis}`);
 			break;
 		}
 
@@ -81,10 +81,10 @@ export class EmojiReact {
 		case 0:
 			break;
 		case 1:
-			log(`Custom Emoji detected - ${customEmojis}`);
+			Na2Client.log(`Custom Emoji detected - ${customEmojis}`);
 			break;
 		default:
-			log(`Custom Emojis detected - ${customEmojis}`);
+			Na2Client.log(`Custom Emojis detected - ${customEmojis}`);
 			break;
 		}
 

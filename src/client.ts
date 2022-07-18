@@ -1,23 +1,29 @@
 /* eslint-disable require-jsdoc */
 import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
 import {config} from '@/config.js';
-import {queryMessage, commandSetType} from '@/types.js';
+import {
+	queryMessage,
+	commandSetType,
+	interactionHookType,
+	mentionHookType,
+	streamHookType,
+	installedHooksType,
+	module,
+} from '@/types.js';
 import {boundMethod} from 'autobind-decorator';
 import log from '@utils/log.js';
 import chalk from 'chalk';
 import {exit} from 'process';
 
-type installedHooksType = (message: queryMessage) => Promise<boolean>;
-type module = any; // TODO: anyをなんとかする
 
 export class Na2Client extends Client {
 	public readonly name = 'なず';
-	private mentionHooks: installedHooksType[] = [];
-	private streamHooks: installedHooksType[] = [];
-	private interactionHooks: installedHooksType[] = [];
+	private mentionHooks: installedHooksType<mentionHookType>[] = [];
+	private streamHooks: installedHooksType<streamHookType>[] = [];
+	private interactionHooks: installedHooksType<interactionHookType>[] = [];
 	private isIntaractionEnabled: boolean = true;
 
-	constructor(modules: Array<module>, commands: commandSetType[]) {
+	constructor(modules: Array<module<unknown>>, commands: commandSetType[]) {
 		super({
 			intents: [
 				Intents.FLAGS.GUILDS,
@@ -28,17 +34,17 @@ export class Na2Client extends Client {
 		try {
 			this.login(config.token);
 		} catch (error) {
-			this.log(chalk.red('Failed to fetch the account'));
+			Na2Client.log(chalk.red('Failed to fetch the account'));
 			exit(1);
 		}
 
 		if (config.setCommandsTargetServers.length === 0) {
 			this.isIntaractionEnabled = false;
-			this.log(chalk.yellow('No interactions are installed - Target servers are not set'));
+			Na2Client.log(chalk.yellow('No interactions are installed - Target servers are not set'));
 		}
 		const modulesInstallResult: boolean = this.installMolules(modules);
 		this.on('ready', () => {
-			this.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
+			Na2Client.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
 			if (modulesInstallResult && this.installCommands(commands)) {
 				this.on('messageCreate', async (message) => {
 					this.onMessageCreate(message);
@@ -51,15 +57,15 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	public log(logMessge: string): void {
+	public static log(logMessge: string): void {
 		log(`${chalk.hex('#C239B3')('[2na2]')}: ${logMessge}`);
 	}
 
 	@boundMethod
-	private installMolules(modules: Array<module>): boolean {
+	private installMolules(modules: Array<any>): boolean {
 		try {
 			for (const module of modules) {
-				this.log(`Installing ${chalk.cyan.italic(module.name)}\tmodule...`);
+				Na2Client.log(`Installing ${chalk.cyan.italic(module.name)}\tmodule...`);
 				const result = module.install();
 				if (result.mentionHook) this.mentionHooks.push(result.mentionHook);
 				if (result.streamHook) this.streamHooks.push(result.streamHook);
@@ -76,14 +82,14 @@ export class Na2Client extends Client {
 	@boundMethod
 	private installCommands(commands: commandSetType[]): boolean {
 		if (commands.length === 0) {
-			this.log(chalk.yellow('No commands are installed - Commands are not set in index.ts'));
+			Na2Client.log(chalk.yellow('No commands are installed - Commands are not set in index.ts'));
 			return true;
 		}
 		try {
 			config.setCommandsTargetServers.forEach(async (serverId) => {
 				this.application!.commands.set(commands, serverId);
 				// this.on('ready')になってないとthis.applicationがnull。そうでないならok
-				this.log(`Installed commands to ${chalk.underline(serverId)}`);
+				Na2Client.log(`Installed commands to ${chalk.underline(serverId)}`);
 			});
 			return true;
 		} catch (error) {
@@ -106,7 +112,7 @@ export class Na2Client extends Client {
 			const regExp = new RegExp(`^${config.prefix}|^<@${this.user!.id}> |^<@&${mentionedRoleId}> `);
 			queryMessage.queryContent = message.content.replace(regExp, '');
 			if (message.member === null) queryMessage.memberName = '名無しさん';
-			this.log(chalk.gray(`<<< An message received: ${chalk.underline(message.id)}`));
+			Na2Client.log(chalk.gray(`<<< An message received: ${chalk.underline(message.id)}`));
 			this.mentionHooks.forEach(async (mentionHook) => {
 				if (await mentionHook(queryMessage as queryMessage)) {
 					return;
@@ -118,7 +124,9 @@ export class Na2Client extends Client {
 				queryMessage.queryContent = message.content;
 				if (message.member === null) queryMessage.memberName = '名無しさん';
 				if (await streamHook(queryMessage as queryMessage)) {
-					this.log(chalk.gray(`<<< An message received and na2 reacted: ${chalk.underline(message.id)}`));
+					Na2Client.log(
+						chalk.gray(`<<< An message received and na2 reacted: ${chalk.underline(message.id)}`),
+					);
 					return;
 				}
 			});
@@ -132,9 +140,9 @@ export class Na2Client extends Client {
 			return Promise.resolve(false);
 		}
 		const commandInteraction = interaction as CommandInteraction;
-		this.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(commandInteraction.commandName)}`));
+		Na2Client.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(commandInteraction.commandName)}`));
 		this.interactionHooks.forEach(async (interactionHook) => {
-			if (await interactionHook(commandInteraction as module)) {
+			if (await interactionHook(commandInteraction)) {
 				return;
 			}
 		});

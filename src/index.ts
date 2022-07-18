@@ -24,7 +24,7 @@ import {diceCommandSetter, Dice as DiceCommand} from '@modules/commands/dice/ind
 
 // モジュール群のインスタンス化
 // 上にあるほど高優先度
-const hooks = [
+const hooks: Array<any> = [ // TODO: anyなくす
 	// mentionHook系
 	new Ping(),
 	new Dice(),
