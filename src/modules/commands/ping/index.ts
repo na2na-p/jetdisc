@@ -26,7 +26,7 @@ class Ping {
 	private async interactionHook(interaction: Readonly<CommandInteraction>): Promise<boolean> {
 		if (interaction.commandName === 'ping') {
 			// interaction.createdAtから応答するまでの時間を取得し、replyに渡す
-			interaction.reply(`RTT: ${interaction.createdAt.getTime() - (new Date()).getTime()}ms`);
+			interaction.reply(`RTT: ${(new Date()).getTime() - interaction.createdAt.getTime()}ms`);
 			return true;
 		} else {
 			return false;
