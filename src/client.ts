@@ -1,23 +1,31 @@
 /* eslint-disable require-jsdoc */
 import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
 import {config} from '@/config.js';
-import {queryMessage, commandSetType} from '@/types.js';
+import {queryMessage, commandSetType, interactionHookType, mentionHookType, streamHookType} from '@/types.js';
 import {boundMethod} from 'autobind-decorator';
 import log from '@utils/log.js';
 import chalk from 'chalk';
 import {exit} from 'process';
 
-type installedHooksType = (message: queryMessage) => Promise<boolean>;
-type module = any; // TODO: anyをなんとかする
+type installedHooksType<T>
+	=	T extends interactionHookType ? interactionHookType
+	: T extends mentionHookType ? mentionHookType
+	: T extends streamHookType ? streamHookType
+	: never;
+
+type module<T> = {
+	name: string,
+	install(): installedHooksType<T>
+}
 
 export class Na2Client extends Client {
 	public readonly name = 'なず';
-	private mentionHooks: installedHooksType[] = [];
-	private streamHooks: installedHooksType[] = [];
-	private interactionHooks: installedHooksType[] = [];
+	private mentionHooks: installedHooksType<mentionHookType>[] = [];
+	private streamHooks: installedHooksType<streamHookType>[] = [];
+	private interactionHooks: installedHooksType<interactionHookType>[] = [];
 	private isIntaractionEnabled: boolean = true;
 
-	constructor(modules: Array<module>, commands: commandSetType[]) {
+	constructor(modules: Array<module<unknown>>, commands: commandSetType[]) {
 		super({
 			intents: [
 				Intents.FLAGS.GUILDS,
@@ -56,7 +64,7 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	private installMolules(modules: Array<module>): boolean {
+	private installMolules(modules: Array<any>): boolean {
 		try {
 			for (const module of modules) {
 				Na2Client.log(`Installing ${chalk.cyan.italic(module.name)}\tmodule...`);
@@ -136,7 +144,7 @@ export class Na2Client extends Client {
 		const commandInteraction = interaction as CommandInteraction;
 		Na2Client.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(commandInteraction.commandName)}`));
 		this.interactionHooks.forEach(async (interactionHook) => {
-			if (await interactionHook(commandInteraction as module)) {
+			if (await interactionHook(commandInteraction)) {
 				return;
 			}
 		});
