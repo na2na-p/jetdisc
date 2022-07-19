@@ -21,7 +21,7 @@ export class Na2Client extends Client {
 	private mentionHooks: installedHooksType<mentionHookType>[] = [];
 	private streamHooks: installedHooksType<streamHookType>[] = [];
 	private interactionHooks: installedHooksType<interactionHookType>[] = [];
-	private isIntaractionEnabled: boolean = true;
+	private isInteractionEnabled: boolean = true;
 
 	constructor(modules: Array<module<unknown>>, commands: commandSetType[]) {
 		super({
@@ -39,7 +39,7 @@ export class Na2Client extends Client {
 		}
 
 		if (config.setCommandsTargetServers.length === 0) {
-			this.isIntaractionEnabled = false;
+			this.isInteractionEnabled = false;
 			Na2Client.log(chalk.yellow('No interactions are installed - Target servers are not set'));
 		}
 		const modulesInstallResult: boolean = this.installMolules(modules);
@@ -69,7 +69,7 @@ export class Na2Client extends Client {
 				const result = module.install();
 				if (result.mentionHook) this.mentionHooks.push(result.mentionHook);
 				if (result.streamHook) this.streamHooks.push(result.streamHook);
-				if (result.interactionHook && this.isIntaractionEnabled) {
+				if (result.interactionHook && this.isInteractionEnabled) {
 					this.interactionHooks.push(result.interactionHook);
 				}
 			}
