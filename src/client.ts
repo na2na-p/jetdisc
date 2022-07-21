@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
+import {CacheType, Client, GatewayIntentBits, Interaction, InteractionType, Message} from 'discord.js';
 import {config} from '@/config.js';
 import {
 	queryMessage,
@@ -26,9 +26,9 @@ export class Na2Client extends Client {
 	constructor(modules: Array<module<unknown>>, commands: commandSetType[]) {
 		super({
 			intents: [
-				Intents.FLAGS.GUILDS,
-				Intents.FLAGS.GUILD_MESSAGES,
-				Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+				GatewayIntentBits.Guilds,
+				GatewayIntentBits.GuildMessages,
+				GatewayIntentBits.DirectMessageReactions,
 			],
 		});
 		try {
@@ -57,8 +57,8 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	public static log(logMessge: string): void {
-		log(`${chalk.hex('#C239B3')('[2na2]')}: ${logMessge}`);
+	public static log(logMessage: string): void {
+		log(`${chalk.hex('#C239B3')('[2na2]')}: ${logMessage}`);
 	}
 
 	@boundMethod
@@ -134,15 +134,15 @@ export class Na2Client extends Client {
 		return Promise.resolve(true);
 	}
 
+	// TODO: 型見直し
 	@boundMethod
-	private onInteractionCreate(interaction: Interaction): Promise<boolean> {
-		if (!interaction.isCommand()) {
+	private onInteractionCreate(interaction: Interaction<CacheType>): Promise<boolean> {
+		if (!(interaction.type === InteractionType.ApplicationCommand)) {
 			return Promise.resolve(false);
 		}
-		const commandInteraction = interaction as CommandInteraction;
-		Na2Client.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(commandInteraction.commandName)}`));
+		Na2Client.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(interaction.commandName)}`));
 		this.interactionHooks.forEach(async (interactionHook) => {
-			if (await interactionHook(commandInteraction)) {
+			if (await interactionHook(interaction)) {
 				return;
 			}
 		});

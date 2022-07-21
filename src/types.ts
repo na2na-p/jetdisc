@@ -1,4 +1,15 @@
-import {CommandInteraction, Message} from 'discord.js';
+import {
+	AutocompleteInteraction,
+	ButtonInteraction,
+	CacheType,
+	ChatInputCommandInteraction,
+	Interaction,
+	Message,
+	MessageContextMenuCommandInteraction,
+	ModalSubmitInteraction,
+	SelectMenuInteraction,
+	UserContextMenuCommandInteraction,
+} from 'discord.js';
 
 type beforeIInitializeQueryMessage = Message<boolean> & {
 	queryContent?: string;
@@ -9,7 +20,21 @@ export type queryMessage = Required<beforeIInitializeQueryMessage>;
 
 export type commandSetType = {name: string, description: string};
 
-export type interactionHookType = (interaction: Readonly<CommandInteraction>) => Promise<boolean>;
+// TODO: 型見直し
+export type na2InteractionType<T>
+	= T extends ChatInputCommandInteraction ? ChatInputCommandInteraction<CacheType>
+	: T extends MessageContextMenuCommandInteraction ? MessageContextMenuCommandInteraction<CacheType>
+	: T extends UserContextMenuCommandInteraction ? UserContextMenuCommandInteraction<CacheType>
+	: T extends SelectMenuInteraction ? SelectMenuInteraction<CacheType>
+	: T extends ButtonInteraction ? ButtonInteraction<CacheType>
+	: T extends AutocompleteInteraction ? AutocompleteInteraction<CacheType>
+	: T extends ModalSubmitInteraction ? ModalSubmitInteraction<CacheType>
+	: T extends Interaction ? Interaction<CacheType>
+	: never;
+
+// これ使うってことはすでに型の絞り込みが済んでるので、ジェネリクスで指定できるように何か作るべき
+// それで出来たのがna2InteractionType<T>だけどなんか違う
+export type interactionHookType = (interaction: Readonly<na2InteractionType<Interaction>>) => Promise<boolean>;
 export type mentionHookType = (message: Readonly<queryMessage>) => Promise<boolean>;
 export type streamHookType = (message: Readonly<queryMessage>) => Promise<boolean>;
 
