@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
+import {Message} from 'discord.js';
 
 /**
  * ping module
@@ -16,8 +17,8 @@ export class Search {
 	}
 
 	@boundMethod
-	private async streamHook(message: Readonly<queryMessage>): Promise<boolean> {
-		if (message.queryContent.endsWith('検索')) {
+	private async streamHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
+		if (query.queryContent.endsWith('検索')) {
 			let searchQuery = message.content.replace('検索', '');
 			// searchQueryの一番後ろにスペースがある場合は削除
 			if (searchQuery.endsWith(' ') || searchQuery.endsWith('　')) {

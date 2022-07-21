@@ -3,7 +3,7 @@
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
 import {config} from '@/config.js';
-import {EmbedBuilder, ColorResolvable, EmbedFooterData} from 'discord.js';
+import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.js';
 import dayjs from 'dayjs';
 import translate from 'deepl';
 import color from 'color';
@@ -70,12 +70,12 @@ export class Divination {
 	}
 
 	@boundMethod
-	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
-		if (message.queryContent.endsWith(`運勢は？`)) {
+	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
+		if (query.queryContent.endsWith(`運勢は？`)) {
 			// YYYY/MM/DDにする
 			this.date = dayjs().format('YYYY/MM/DD');
 			// 「今日の」と「運勢は」の間にある文字列を抽出する
-			const signQuery = message.queryContent.replace(/今日の|の運勢は？/g, '');
+			const signQuery = query.queryContent.replace(/今日の|の運勢は？/g, '');
 			// signがhoroscopeに含まれているか確認する
 			if (Object.keys(horoscope).includes(signQuery)) {
 				const sign = signQuery as horoscope;

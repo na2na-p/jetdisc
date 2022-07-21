@@ -11,12 +11,10 @@ import {
 	UserContextMenuCommandInteraction,
 } from 'discord.js';
 
-type beforeIInitializeQueryMessage = Message<boolean> & {
-	queryContent?: string;
-	memberName?: string;
+export type queryMessage = {
+	queryContent: string;
+	memberName: string;
 };
-
-export type queryMessage = Required<beforeIInitializeQueryMessage>;
 
 export type commandSetType = {name: string, description: string};
 
@@ -35,8 +33,8 @@ export type na2InteractionType<T>
 // これ使うってことはすでに型の絞り込みが済んでるので、ジェネリクスで指定できるように何か作るべき
 // それで出来たのがna2InteractionType<T>だけどなんか違う
 export type interactionHookType = (interaction: Readonly<na2InteractionType<Interaction>>) => Promise<boolean>;
-export type mentionHookType = (message: Readonly<queryMessage>) => Promise<boolean>;
-export type streamHookType = (message: Readonly<queryMessage>) => Promise<boolean>;
+export type mentionHookType = (message: Readonly<Message<boolean>>, query: queryMessage) => Promise<boolean>;
+export type streamHookType = (message: Readonly<Message<boolean>>, query: queryMessage) => Promise<boolean>;
 
 export type installedHooksType<T>
 	=	T extends interactionHookType ? interactionHookType

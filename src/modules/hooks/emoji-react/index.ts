@@ -3,6 +3,7 @@ import {boundMethod} from 'autobind-decorator';
 import {parse} from 'twemoji-parser';
 import {queryMessage} from '@/types.js';
 import {Na2Client} from '@/client.js';
+import {Message} from 'discord.js';
 
 /**
  * ping module
@@ -18,17 +19,17 @@ export class EmojiReact {
 	}
 
 	@boundMethod
-	private async streamHook(message: queryMessage): Promise<boolean> {
-		if (await this.mimicking(message)) {
+	private async streamHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
+		if (await this.mimicking(message, query)) {
 			return true;
 		}
 
 		let reacted = false;
-		if (/(肉|にく)/.exec(message.queryContent)) {
+		if (/(肉|にく)/.exec(query.queryContent)) {
 			message.react(`🍖`);
 			reacted = true;
 		}
-		if (/(寿司|すし)/.exec(message.queryContent)) {
+		if (/(寿司|すし)/.exec(query.queryContent)) {
 			message.react(`🍣`);
 			reacted = true;
 		}
@@ -41,12 +42,12 @@ export class EmojiReact {
 	}
 
 	@boundMethod
-	private async mimicking(message: Readonly<queryMessage>): Promise<boolean> {
-		const emojis = parse(message.queryContent).map((x) => x.text);
+	private async mimicking(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
+		const emojis = parse(query.queryContent).map((x) => x.text);
 		// "<:"から始まって">"で終わるものを抽出
 		const customEmojisRegEx = /<:.[^>]*:\d+>/g;
 		// customEmojisに追加
-		const customEmojis: string[] = message.queryContent.match(customEmojisRegEx) || [];
+		const customEmojis: string[] = query.queryContent.match(customEmojisRegEx) || [];
 
 		// const customEmojisIds: string[] = (() => {
 		// 	if (customEmojis.length > 0) {
