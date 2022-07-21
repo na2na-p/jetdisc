@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y tini ffmpeg \
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/built ./built
-COPY --from=build /app/package.json ./package.json
+COPY --from=builder /app/package.json ./package.json
 
 ENV NODE_ENV=production
 ENTRYPOINT ["/usr/bin/tini", "--"]
