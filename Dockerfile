@@ -22,4 +22,4 @@ COPY --from=builder /app/built ./built
 
 ENV NODE_ENV=production
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node", "built/index.js", "--trace-warnings"]
+CMD ["yarn", "start"]
