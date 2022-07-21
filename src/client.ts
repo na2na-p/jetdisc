@@ -137,7 +137,6 @@ export class Na2Client extends Client {
 		return Promise.resolve(true);
 	}
 
-	// TODO: 型見直し
 	@boundMethod
 	private onInteractionCreate(interaction: Interaction<CacheType>): Promise<boolean> {
 		if (!(interaction.type === InteractionType.ApplicationCommand)) {
