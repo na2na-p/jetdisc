@@ -1,5 +1,9 @@
 # 使い方
 
+## 共通
+`.config`にある、`example.yml`をコピーして、`default.yml`にリネームします。  
+`default.yml`の中身をいい感じにします。
+
 ## Docker を利用する場合
 
 ### 導入手順
