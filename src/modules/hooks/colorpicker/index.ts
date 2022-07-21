@@ -2,6 +2,7 @@
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
 import {random} from '@utils/random.js';
+import {Message} from 'discord.js';
 
 type rgb = {
 	r: number;
@@ -23,8 +24,8 @@ export class ColorPicker {
 	}
 
 	@boundMethod
-	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
-		if (message.queryContent === '色決めて') {
+	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
+		if (query.queryContent === '色決めて') {
 			const options = {
 				min: 0,
 				max: 255,

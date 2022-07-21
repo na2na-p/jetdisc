@@ -30,7 +30,7 @@ class VCJoin {
 		if (interaction.commandName === 'vcjoin') {
 			const channel = await voice.getMemberJoinedVoiceChannel(interaction);
 			// すでにBotがVCに参加しているか確認
-			const clientId = interaction.client.user?.id;
+			// const clientId = interaction.client.user?.id;
 			// すでに参加済みのメンバを取得
 			// その中に自分がいるかどうかでif文を分岐
 			// if(){

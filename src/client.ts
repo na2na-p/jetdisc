@@ -1,14 +1,14 @@
 /* eslint-disable require-jsdoc */
-import {Client, CommandInteraction, Intents, Interaction, Message} from 'discord.js';
+import {CacheType, Client, GatewayIntentBits, Interaction, InteractionType, Message} from 'discord.js';
 import {config} from '@/config.js';
 import {
-	queryMessage,
 	commandSetType,
 	interactionHookType,
 	mentionHookType,
 	streamHookType,
 	installedHooksType,
 	module,
+	queryMessage,
 } from '@/types.js';
 import {boundMethod} from 'autobind-decorator';
 import log from '@utils/log.js';
@@ -26,9 +26,10 @@ export class Na2Client extends Client {
 	constructor(modules: Array<module<unknown>>, commands: commandSetType[]) {
 		super({
 			intents: [
-				Intents.FLAGS.GUILDS,
-				Intents.FLAGS.GUILD_MESSAGES,
-				Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+				GatewayIntentBits.Guilds,
+				GatewayIntentBits.GuildMessages,
+				GatewayIntentBits.MessageContent,
+				GatewayIntentBits.DirectMessageReactions,
 			],
 		});
 		try {
@@ -42,7 +43,7 @@ export class Na2Client extends Client {
 			this.isInteractionEnabled = false;
 			Na2Client.log(chalk.yellow('No interactions are installed - Target servers are not set'));
 		}
-		const modulesInstallResult: boolean = this.installMolules(modules);
+		const modulesInstallResult: boolean = this.installModules(modules);
 		this.on('ready', () => {
 			Na2Client.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
 			if (modulesInstallResult && this.installCommands(commands)) {
@@ -57,12 +58,12 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	public static log(logMessge: string): void {
-		log(`${chalk.hex('#C239B3')('[2na2]')}: ${logMessge}`);
+	public static log(logMessage: string): void {
+		log(`${chalk.hex('#C239B3')('[2na2]')}: ${logMessage}`);
 	}
 
 	@boundMethod
-	private installMolules(modules: Array<any>): boolean {
+	private installModules(modules: Array<any>): boolean {
 		try {
 			for (const module of modules) {
 				Na2Client.log(`Installing ${chalk.cyan.italic(module.name)}\tmodule...`);
@@ -98,7 +99,7 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	private onMessageCreate(message: Message): Promise<boolean> {
+	private onMessageCreate(message: Message<boolean>): Promise<boolean> {
 		// prefixで始まる投稿 && Botによるものではないもの
 		const mentionedRoleId = this.mentionHasOwnRole(message);
 		if ((message.content.startsWith(config.prefix) || // prefixで始まる場合
@@ -106,24 +107,26 @@ export class Na2Client extends Client {
 				mentionedRoleId) && // ロールメンションされた場合
 			!message.author.bot) {
 			// messageからconfig.prefixを除去
-			const queryMessage: Partial<queryMessage> = message;
-			// config.prefixと`<@${this.user!.id}> `を除去
-			// それぞれ別で扱う
+
 			const regExp = new RegExp(`^${config.prefix}|^<@${this.user!.id}> |^<@&${mentionedRoleId}> `);
-			queryMessage.queryContent = message.content.replace(regExp, '');
-			if (message.member === null) queryMessage.memberName = '名無しさん';
+			const query: queryMessage = {
+				queryContent: message.content.replace(regExp, ''),
+				memberName: message.member === null ? '名無しさん' : message.member.displayName,
+			};
+
 			Na2Client.log(chalk.gray(`<<< An message received: ${chalk.underline(message.id)}`));
 			this.mentionHooks.forEach(async (mentionHook) => {
-				if (await mentionHook(queryMessage as queryMessage)) {
+				if (await mentionHook(message, query)) {
 					return;
 				}
 			});
 		} else {
 			this.streamHooks.forEach(async (streamHook) => {
-				const queryMessage: Partial<queryMessage> = message;
-				queryMessage.queryContent = message.content;
-				if (message.member === null) queryMessage.memberName = '名無しさん';
-				if (await streamHook(queryMessage as queryMessage)) {
+				const query = {
+					queryContent: message.content,
+					memberName: message.member === null ? '名無しさん' : message.member.displayName,
+				};
+				if (await streamHook(message, query)) {
 					Na2Client.log(
 						chalk.gray(`<<< An message received and na2 reacted: ${chalk.underline(message.id)}`),
 					);
@@ -135,14 +138,13 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	private onInteractionCreate(interaction: Interaction): Promise<boolean> {
-		if (!interaction.isCommand()) {
+	private onInteractionCreate(interaction: Interaction<CacheType>): Promise<boolean> {
+		if (!(interaction.type === InteractionType.ApplicationCommand)) {
 			return Promise.resolve(false);
 		}
-		const commandInteraction = interaction as CommandInteraction;
-		Na2Client.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(commandInteraction.commandName)}`));
+		Na2Client.log(chalk.gray(`<<< A slash-command received: ${chalk.underline(interaction.commandName)}`));
 		this.interactionHooks.forEach(async (interactionHook) => {
-			if (await interactionHook(commandInteraction)) {
+			if (await interactionHook(interaction)) {
 				return;
 			}
 		});
