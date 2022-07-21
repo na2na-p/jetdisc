@@ -3,7 +3,7 @@
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
 import {config} from '@/config.js';
-import {MessageEmbed, ColorResolvable, EmbedFooterData} from 'discord.js';
+import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.js';
 import dayjs from 'dayjs';
 import translate from 'deepl';
 import color from 'color';
@@ -60,7 +60,7 @@ type parsedDivination = {
 export class Divination {
 	public readonly name = 'Divination';
 	private date: string = '';
-	private luckeyColor: ColorResolvable = 'WHITE';
+	private luckeyColor: ColorResolvable = 'White';
 
 	@boundMethod
 	public install() {
@@ -70,12 +70,12 @@ export class Divination {
 	}
 
 	@boundMethod
-	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
-		if (message.queryContent.endsWith(`運勢は？`)) {
+	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
+		if (query.queryContent.endsWith(`運勢は？`)) {
 			// YYYY/MM/DDにする
 			this.date = dayjs().format('YYYY/MM/DD');
 			// 「今日の」と「運勢は」の間にある文字列を抽出する
-			const signQuery = message.queryContent.replace(/今日の|の運勢は？/g, '');
+			const signQuery = query.queryContent.replace(/今日の|の運勢は？/g, '');
 			// signがhoroscopeに含まれているか確認する
 			if (Object.keys(horoscope).includes(signQuery)) {
 				const sign = signQuery as horoscope;
@@ -120,9 +120,9 @@ export class Divination {
 	/**
 	 * Discord送信用のembedを作成する
 	 * @param {divination} divination 運勢(1星座のみ入ってるやつ)
-	 * @return {Promise<MessageEmbed>}
+	 * @return {Promise<EmbedBuilder>}
 	 */
-	private async makeEmbed(divination: Readonly<divination>): Promise<MessageEmbed> {
+	private async makeEmbed(divination: Readonly<divination>): Promise<EmbedBuilder> {
 		try {
 			const colorEng = await translate({
 				free_api: true,
@@ -134,7 +134,7 @@ export class Divination {
 			this.luckeyColor = color(colorEng.data.translations[0].text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
 			// console.log(error);
-			this.luckeyColor = 'WHITE';
+			this.luckeyColor = 'White';
 		}
 
 		const footerOptions: EmbedFooterData = {
@@ -142,16 +142,18 @@ export class Divination {
 			iconURL: 'http://jugemkey.jp/api/waf/api_free.php',
 		};
 
-		const embed: MessageEmbed = new MessageEmbed();
+		const embed = new EmbedBuilder();
 		embed.setColor(this.luckeyColor);
 		embed.setTitle(`${divination.sign}の今日の運勢は...`);
-		embed.addField('総合運', `${divination.total}`, false);
-		embed.addField('金運', `${divination.money}`, true);
-		embed.addField('仕事運', `${divination.job}`, true);
-		embed.addField('恋愛運', `${divination.love}`, true);
-		embed.addField('ラッキーアイテム', `${divination.item}`, false);
-		embed.addField('ラッキーカラー', `${divination.color}`, true);
-		embed.addField('コメント', `${divination.content}`, false);
+		embed.addFields([
+			{name: '総合運', value: `${divination.total}`, inline: false},
+			{name: '金運', value: `${divination.money}`, inline: true},
+			{name: '仕事運', value: `${divination.job}`, inline: true},
+			{name: '恋愛運', value: `${divination.love}`, inline: true},
+			{name: 'ラッキーアイテム', value: `${divination.item}`, inline: false},
+			{name: 'ラッキーカラー', value: `${divination.color}`, inline: true},
+			{name: 'コメント', value: `${divination.content}`, inline: false},
+		]);
 		embed.setTimestamp();
 		embed.setFooter(footerOptions);
 		return embed;

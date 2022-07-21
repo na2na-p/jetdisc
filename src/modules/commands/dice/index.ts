@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
-import {CommandInteraction} from 'discord.js';
+import {ChatInputCommandInteraction} from 'discord.js';
 import {commandSetType} from '@/types.js';
 
 const command: commandSetType = {
@@ -23,7 +23,7 @@ class Dice {
 	}
 
 	@boundMethod
-	private async interactionHook(interaction: Readonly<CommandInteraction>): Promise<boolean> {
+	private async interactionHook(interaction: Readonly<ChatInputCommandInteraction>): Promise<boolean> {
 		if (interaction.commandName === 'dice') {
 			const dice = Math.floor(Math.random() * 6) + 1;
 			interaction.reply(`(ｺﾛｺﾛ) ${dice}が出ました！`);

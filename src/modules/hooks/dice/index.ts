@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
+import {Message} from 'discord.js';
 
 /**
  * ping module
@@ -16,23 +17,23 @@ export class Dice {
 	}
 
 	@boundMethod
-	private async mentionHook(message: Readonly<queryMessage>): Promise<boolean> {
-		if (message.queryContent == null) return false;
-		if (message.queryContent.includes('サイコロ')) {
+	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
+		if (query.queryContent == null) return false;
+		if (query.queryContent.includes('サイコロ')) {
 			const dice = Math.floor(Math.random() * 6) + 1;
 			message.reply(`(ｺﾛｺﾛ) ${dice}が出ました！`);
 			return true;
 		} else {
 			// message.queryContentに含まれる全角数字を半角に
-			const number = message.queryContent.replace(/[０-９]/g, (s) => {
+			const number = query.queryContent.replace(/[０-９]/g, (s) => {
 				return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
 			});
-			const query = number.match(/([0-9]+)[dD]([0-9]+)/);
+			const diceQuery = number.match(/([0-9]+)[dD]([0-9]+)/);
 
-			if (query == null) return false;
+			if (diceQuery == null) return false;
 
-			const times = parseInt(query[1], 10);
-			const dice = parseInt(query[2], 10);
+			const times = parseInt(diceQuery[1], 10);
+			const dice = parseInt(diceQuery[2], 10);
 
 			if (times > 10) {
 				message.reply('ダイスの数が多すぎますよ...');
