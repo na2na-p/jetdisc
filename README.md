@@ -1,5 +1,10 @@
 # 使い方
 
+## 共通
+`fetch()`を使う関係でNode.js v17.5.0以降が必要になります。
+`.config`にある、`example.yml`をコピーして、`default.yml`にリネームします。  
+`default.yml`の中身をいい感じにします。
+
 ## Docker を利用する場合
 
 ### 導入手順

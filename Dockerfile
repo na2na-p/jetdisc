@@ -5,8 +5,7 @@ WORKDIR /app
 COPY . ./
 
 RUN yarn install \
-		&& yarn build \
-		&& rm -rf .git
+		&& yarn build
 
 FROM node:18-bullseye-slim AS runner
 
@@ -19,7 +18,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y tini ffmpeg \
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/built ./built
+COPY --from=build /app/package.json ./package.json
 
 ENV NODE_ENV=production
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node", "built/index.js", "--trace-warnings"]
+CMD ["yarn", "start"]
