@@ -5,7 +5,7 @@ import {queryMessage} from '@/types.js';
 import {config} from '@/config.js';
 import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.js';
 import dayjs from 'dayjs';
-import translate from 'deepl';
+import {Translator} from 'deepl-node';
 import color from 'color';
 
 type divination = {
@@ -24,30 +24,30 @@ type divination = {
 type horoscope = '牡羊座' | '牡牛座' | '双子座' | '蟹座' | '獅子座' | '乙女座' | '天秤座' | '蠍座' | '射手座' | '山羊座' | '水瓶座' | '魚座';
 
 const horoscope = {
-	'牡羊座': 'aries',
-	'おひつじ座': 'aries',
-	'牡牛座': 'taurus',
-	'おうし座': 'taurus',
-	'双子座': 'gemini',
-	'ふたご座': 'gemini',
-	'蟹座': 'cancer',
-	'かに座': 'cancer',
-	'獅子座': 'leo',
-	'しし座': 'leo',
-	'乙女座': 'virgo',
-	'おとめ座': 'virgo',
-	'天秤座': 'libra',
-	'てんびん座': 'libra',
-	'蠍座': 'scorpio',
-	'さそり座': 'scorpio',
-	'射手座': 'sagittarius',
-	'いて座': 'sagittarius',
-	'山羊座': 'capricorn',
-	'やぎ座': 'capricorn',
-	'水瓶座': 'aquarius',
-	'みずがめ座': 'aquarius',
-	'魚座': 'pisces',
-	'うお座': 'pisces',
+	'牡羊座': '牡羊座',
+	'おひつじ座': '牡羊座',
+	'牡牛座': '牡牛座',
+	'おうし座': '牡牛座',
+	'双子座': '双子座',
+	'ふたご座': '双子座',
+	'蟹座': '蟹座',
+	'かに座': '蟹座',
+	'獅子座': '獅子座',
+	'しし座': '獅子座',
+	'乙女座': '乙女座',
+	'おとめ座': '乙女座',
+	'天秤座': '天秤座',
+	'てんびん座': '天秤座',
+	'蠍座': '蠍座',
+	'さそり座': '蠍座',
+	'射手座': '射手座',
+	'いて座': '射手座',
+	'山羊座': '山羊座',
+	'やぎ座': '山羊座',
+	'水瓶座': '水瓶座',
+	'みずがめ座': '水瓶座',
+	'魚座': '魚座',
+	'うお座': '魚座',
 };
 
 type parsedDivination = {
@@ -78,7 +78,7 @@ export class Divination {
 			const signQuery = query.queryContent.replace(/今日の|の運勢は？/g, '');
 			// signがhoroscopeに含まれているか確認する
 			if (Object.keys(horoscope).includes(signQuery)) {
-				const sign = signQuery as horoscope;
+				const sign = Object(horoscope)[signQuery] as horoscope;
 				const divination = await this.getDivination(sign);
 				const embed = await this.makeEmbed(divination);
 				message.reply({embeds: [embed]});
@@ -114,6 +114,8 @@ export class Divination {
 			protoResult[key] = eachResults;
 		});
 		const result = protoResult as parsedDivination;
+		console.table(result);
+		console.log(sign);
 		return result[sign];
 	}
 
@@ -124,14 +126,16 @@ export class Divination {
 	 */
 	private async makeEmbed(divination: Readonly<divination>): Promise<EmbedBuilder> {
 		try {
-			const colorEng = await translate({
-				free_api: true,
-				text: divination.color,
-				target_lang: 'EN',
-				source_lang: 'JA',
-				auth_key: config.deeplApiKey,
-			});
-			this.luckeyColor = color(colorEng.data.translations[0].text).hex().toUpperCase() as ColorResolvable;
+			const translator = new Translator(config.deeplApiKey);
+			// const colorEng = await translate({
+			// 	free_api: true,
+			// 	text: divination.color,
+			// 	target_lang: 'EN',
+			// 	source_lang: 'JA',
+			// 	auth_key: config.deeplApiKey,
+			// });
+			const colorEng = await translator.translateText(divination.color, null, 'en-US');
+			this.luckeyColor = color(colorEng.text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
 			// console.log(error);
 			this.luckeyColor = 'White';
@@ -141,7 +145,6 @@ export class Divination {
 			text: 'powerd by JugemKey',
 			iconURL: 'http://jugemkey.jp/api/waf/api_free.php',
 		};
-
 		const embed = new EmbedBuilder();
 		embed.setColor(this.luckeyColor);
 		embed.setTitle(`${divination.sign}の今日の運勢は...`);

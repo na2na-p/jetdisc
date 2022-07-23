@@ -5,8 +5,11 @@ import {queryMessage} from '@/types.js';
 import {Na2Client} from '@/client.js';
 import {Message} from 'discord.js';
 
+
+type wordReactType = Array<[RegExp, string]>;
+
 /**
- * ping module
+ * EmojiReact module
  */
 export class EmojiReact {
 	public readonly name = 'EmojiReact';
@@ -23,19 +26,7 @@ export class EmojiReact {
 		if (await this.mimicking(message, query)) {
 			return true;
 		}
-
-		let reacted = false;
-		if (/(肉|にく)/.exec(query.queryContent)) {
-			message.react(`🍖`);
-			reacted = true;
-		}
-		if (/(寿司|すし)/.exec(query.queryContent)) {
-			message.react(`🍣`);
-			reacted = true;
-		}
-
-		// 多重反応可にする
-		if (reacted) {
+		if (this.wordReact(message)) {
 			return true;
 		}
 		return false;
@@ -90,5 +81,33 @@ export class EmojiReact {
 		}
 
 		return true;
+	}
+
+	@boundMethod
+	private wordReact(message: Readonly<Message<boolean>>): boolean {
+		const words: wordReactType = [
+			[/(肉|にく)/, '🍗'],
+			[/(寿司|すし)/, '🍣'],
+			[/(ラーメン)/, '🍜'],
+			[/(ピザ)/, '🍕'],
+			[/(カレー)/, '🍛'],
+			[/(お菓子)/, '🍬'],
+			[/(おちゃ)/, '🍵'],
+		];
+
+		const isReacted: boolean = (() => {
+			let hit = false;
+			// words全て試行するまでreturnしない
+			// つまり、複数リアクションが可能。この場合でlet使わずに何とかする方法ないかしら。
+			words.forEach(([word, emoji]) => {
+				if (word.exec(message.content)) {
+					message.react(emoji);
+					hit = true;
+				};
+			});
+			return hit;
+		})();
+
+		return isReacted;
 	}
 };

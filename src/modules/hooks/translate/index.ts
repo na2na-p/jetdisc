@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 import {queryMessage} from '@/types.js';
 import {config} from '@/config.js';
-import translate from 'deepl';
+import {Translator} from 'deepl-node';
 import {Message} from 'discord.js';
 
 /**
@@ -18,24 +18,22 @@ export class Translate {
 
 	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
 		if (query.queryContent?.endsWith('を英語で')) {
+			const translator = new Translator(config.deeplApiKey);
 			const translateQuery = query.queryContent.replace('を英語で', '');
-			const result = await translate({
-				free_api: true,
-				text: translateQuery,
-				auth_key: config.deeplApiKey,
-				target_lang: 'EN',
-			});
-			message.reply(`\`${result.data.translations[0].text}\`\nこんな意味らしいですよ！ > ${query.memberName}さん`);
+			const result = await translator.translateText(translateQuery, null, 'en-US');
+			message.reply(`\`\`\`${result.text}\`\`\`\nこんな意味らしいですよ！ > ${query.memberName}さん`);
 			return true;
 		} else if (query.queryContent.endsWith('を日本語で')) {
+			const translator = new Translator(config.deeplApiKey);
 			const translateQuery = query.queryContent.replace('を日本語で', '');
-			const result = await translate({
-				free_api: true,
-				text: translateQuery,
-				auth_key: config.deeplApiKey,
-				target_lang: 'JA',
-			});
-			message.reply(result.data.translations[0].text);
+			// const result = await translate({
+			// 	free_api: true,
+			// 	text: translateQuery,
+			// 	auth_key: config.deeplApiKey,
+			// 	target_lang: 'JA',
+			// });
+			const result = await translator.translateText(translateQuery, null, 'ja');
+			message.reply(`\`\`\`${result.text}\`\`\`\nこんな意味らしいですよ！ > ${query.memberName}さん`);
 			return true;
 		} else {
 			return false;

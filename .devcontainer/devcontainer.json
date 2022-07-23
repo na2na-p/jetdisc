@@ -24,8 +24,8 @@
 				"esbenp.prettier-vscode",
 				"vector-of-bool.gitflow",
 				"oderwat.indent-rainbow",
-				"EditorConfig.EditorConfig",
-				"exiasr.hadolint"
+				"EditorConfig.EditorConfig"
+				// "exiasr.hadolint"
 			]
 		}
 	},

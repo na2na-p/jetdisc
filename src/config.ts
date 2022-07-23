@@ -8,4 +8,4 @@ type config = {
 	setCommandsTargetServers: string[];
 }
 
-export const config = load(readFileSync('.config/default.yml', 'utf8')) as config;
+export const config = load(readFileSync('.config/default.yml', 'utf8')) as Readonly<config>;

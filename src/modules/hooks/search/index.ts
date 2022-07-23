@@ -19,11 +19,15 @@ export class Search {
 	@boundMethod
 	private async streamHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
 		if (query.queryContent.endsWith('検索')) {
-			let searchQuery = message.content.replace('検索', '');
-			// searchQueryの一番後ろにスペースがある場合は削除
-			if (searchQuery.endsWith(' ') || searchQuery.endsWith('　')) {
-				searchQuery = searchQuery.slice(0, -1);
-			}
+			const searchQuery = (() => {
+				const searchQuery = message.content.replace('検索', '');
+				// searchQueryの一番後ろにスペースがある場合は削除
+				if (searchQuery.endsWith(' ') || searchQuery.endsWith('　')) {
+					return searchQuery.slice(0, -1);
+				}
+				return searchQuery;
+			})();
+
 			// queryはURIエンコードする
 			const query = encodeURIComponent(searchQuery);
 			const searchUrl = 'https://www.google.com/search?q=' + query;
