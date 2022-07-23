@@ -114,8 +114,6 @@ export class Divination {
 			protoResult[key] = eachResults;
 		});
 		const result = protoResult as parsedDivination;
-		console.table(result);
-		console.log(sign);
 		return result[sign];
 	}
 

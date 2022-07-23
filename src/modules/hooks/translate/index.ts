@@ -26,12 +26,6 @@ export class Translate {
 		} else if (query.queryContent.endsWith('を日本語で')) {
 			const translator = new Translator(config.deeplApiKey);
 			const translateQuery = query.queryContent.replace('を日本語で', '');
-			// const result = await translate({
-			// 	free_api: true,
-			// 	text: translateQuery,
-			// 	auth_key: config.deeplApiKey,
-			// 	target_lang: 'JA',
-			// });
 			const result = await translator.translateText(translateQuery, null, 'ja');
 			message.reply(`\`\`\`${result.text}\`\`\`\nこんな意味らしいですよ！ > ${query.memberName}さん`);
 			return true;
