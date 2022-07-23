@@ -5,7 +5,7 @@ import {queryMessage} from '@/types.js';
 import {config} from '@/config.js';
 import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.js';
 import dayjs from 'dayjs';
-import translate from 'deepl';
+import {Translator} from 'deepl-node';
 import color from 'color';
 
 type divination = {
@@ -124,14 +124,16 @@ export class Divination {
 	 */
 	private async makeEmbed(divination: Readonly<divination>): Promise<EmbedBuilder> {
 		try {
-			const colorEng = await translate({
-				free_api: true,
-				text: divination.color,
-				target_lang: 'EN',
-				source_lang: 'JA',
-				auth_key: config.deeplApiKey,
-			});
-			this.luckeyColor = color(colorEng.data.translations[0].text).hex().toUpperCase() as ColorResolvable;
+			const translator = new Translator(config.deeplApiKey);
+			// const colorEng = await translate({
+			// 	free_api: true,
+			// 	text: divination.color,
+			// 	target_lang: 'EN',
+			// 	source_lang: 'JA',
+			// 	auth_key: config.deeplApiKey,
+			// });
+			const colorEng = await translator.translateText(divination.color, null, 'en-US');
+			this.luckeyColor = color(colorEng.text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
 			// console.log(error);
 			this.luckeyColor = 'White';
