@@ -50,9 +50,11 @@ export class Dice {
 
 			const results: number[] = [];
 
-			for (let i = 0; i < times; i++) {
-				results.push(Math.floor(Math.random() * dice) + 1);
-			}
+			[...Array(times)].forEach(
+				() => {
+					results.push(Math.floor(Math.random() * dice) + 1);
+				},
+			);
 
 			message.reply(`(ｺﾛｺﾛ) ${results.join(' ')} (合計: ${results.reduce((a, b) => a + b, 0)}) が出ました！`);
 		}
