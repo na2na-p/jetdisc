@@ -2,6 +2,8 @@ import {expect} from 'chai';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as _mocha from 'mocha';
 import {random} from '../built/utils/random.js';
+import dayjs from 'dayjs';
+import {getDivination} from '../built/modules/hooks/divination/divitation.js';
 
 // mochaを利用したテストコード
 describe('モジュール群のテスト', () => {
@@ -36,6 +38,14 @@ describe('モジュール群のテスト', () => {
 				candidate: ['a'],
 			};
 			expect(random(options)).to.equal('a');
+		});
+	});
+	describe('divinationモジュールのテスト', () => {
+		const dateStr = dayjs().format('YYYY/MM/DD');
+		const sign = '天秤座';
+		it('正しく返ってくるか(毎日変わるのでresult.signだけ確認してます。)', async () => {
+			const result = await getDivination(sign, dateStr);
+			expect(result.sign).to.equal(sign);
 		});
 	});
 });

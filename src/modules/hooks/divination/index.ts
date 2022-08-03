@@ -7,8 +7,9 @@ import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.j
 import dayjs from 'dayjs';
 import {Translator} from 'deepl-node';
 import color from 'color';
+import {getDivination} from './divitation.js';
 
-type divination = {
+export type divination = {
 	content: string,
 	item: string,
 	money: 1 | 2 | 3 | 4 | 5,
@@ -21,9 +22,9 @@ type divination = {
 	sign: horoscope
 }
 
-type horoscope = '牡羊座' | '牡牛座' | '双子座' | '蟹座' | '獅子座' | '乙女座' | '天秤座' | '蠍座' | '射手座' | '山羊座' | '水瓶座' | '魚座';
+export type horoscope = '牡羊座' | '牡牛座' | '双子座' | '蟹座' | '獅子座' | '乙女座' | '天秤座' | '蠍座' | '射手座' | '山羊座' | '水瓶座' | '魚座';
 
-const horoscope = {
+export const horoscope = {
 	'牡羊座': '牡羊座',
 	'おひつじ座': '牡羊座',
 	'牡牛座': '牡牛座',
@@ -50,10 +51,6 @@ const horoscope = {
 	'うお座': '魚座',
 };
 
-type parsedDivination = {
-	[key in horoscope]: divination;
-};
-
 /**
  * 占い
  */
@@ -75,11 +72,11 @@ export class Divination {
 			// YYYY/MM/DDにする
 			this.date = dayjs().format('YYYY/MM/DD');
 			// 「今日の」と「運勢は」の間にある文字列を抽出する
-			const signQuery = query.queryContent.replace(/今日の|の運勢は？/g, '');
+			const signQuery = query.queryContent.replace(/今日の|の運勢は？/g, '').replace(/\s/g, '');
 			// signがhoroscopeに含まれているか確認する
 			if (Object.keys(horoscope).includes(signQuery)) {
 				const sign = Object(horoscope)[signQuery] as horoscope;
-				const divination = await this.getDivination(sign);
+				const divination = await getDivination(sign, this.date);
 				const embed = await this.makeEmbed(divination);
 				message.reply({embeds: [embed]});
 			}
@@ -87,34 +84,6 @@ export class Divination {
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * @param {string} sign
-	 * @return {divination} 引数で渡した星座の運勢を返す
-	 */
-	@boundMethod
-	private async getDivination(sign: horoscope): Promise<divination> {
-		const jugemkey = 'http://api.jugemkey.jp/api/horoscope/free/' + this.date;
-		const options = {
-			method: 'GET',
-			url: jugemkey,
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		};
-		const response: Array<divination> =
-			JSON.parse(await (await fetch(options.url, options)).text()).horoscope[`${this.date}`];
-
-		const protoResult: Partial<parsedDivination> = {};
-
-		response.forEach((eachResults) => {
-			// resultに[key: eachResults.sign]: eachResultsを追加する
-			const key: keyof parsedDivination = eachResults.sign;
-			protoResult[key] = eachResults;
-		});
-		const result = protoResult as parsedDivination;
-		return result[sign];
 	}
 
 	/**
