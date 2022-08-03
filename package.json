@@ -1,6 +1,6 @@
 {
 	"name": "2na2-discord",
-	"version": "1.1.1.1",
+	"version": "1.1.1.2",
 	"main": "built/index.js",
 	"private": true,
 	"author": "na2na",
