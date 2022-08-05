@@ -1,7 +1,8 @@
 # 使い方
 
 ## 共通
-`fetch()`を使う関係でNode.js v17.5.0以降が必要になります。
+
+`fetch()`を使う関係で Node.js v17.5.0 以降が必要になります。
 `.config`にある、`example.yml`をコピーして、`default.yml`にリネームします。  
 `default.yml`の中身をいい感じにします。
 
@@ -37,3 +38,8 @@
 1. `yarn install`する
 1. `yarn build`する
 1. `yarn start`する
+
+# 開発者向け
+
+devcontainer を用いて開発することを前提に`yarn dev`コマンドを準備しています。  
+devcontainer を使用しない場合でも、`nodemon`をグローバルインストールしてあれば使えます。
