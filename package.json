@@ -25,6 +25,7 @@
 		"discord.js": "14.1.2",
 		"js-yaml": "4.1.0",
 		"libsodium-wrappers": "0.7.10",
+		"spotify-web-api-node": "^5.0.2",
 		"twemoji-parser": "14.0.0"
 	},
 	"devDependencies": {
