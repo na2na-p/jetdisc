@@ -8,6 +8,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "node built/index.js --trace-warnings",
+		"dev": "nodemon",
 		"build": "yarn tsc -p tsconfig.json && yarn tsc-alias -p tsconfig.json",
 		"lint": "yarn eslint --ext .js,.ts .",
 		"lint:fix": "yarn eslint --ext .js,.ts . --fix",
@@ -25,9 +26,12 @@
 		"discord.js": "14.1.2",
 		"js-yaml": "4.1.0",
 		"libsodium-wrappers": "0.7.10",
+		"spotify-web-api-node": "^5.0.2",
 		"twemoji-parser": "14.0.0"
 	},
 	"devDependencies": {
+		"@swc/core": "^1.2.223",
+		"@swc/helpers": "^0.4.3",
 		"@types/chai": "4.3.1",
 		"@types/color": "3.0.3",
 		"@types/js-yaml": "4.0.5",
