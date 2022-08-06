@@ -30,7 +30,7 @@
 		"twemoji-parser": "14.0.0"
 	},
 	"devDependencies": {
-		"@swc/core": "^1.2.223",
+		"@swc/core": "1.2.224",
 		"@swc/helpers": "^0.4.3",
 		"@types/chai": "4.3.1",
 		"@types/color": "3.0.3",
