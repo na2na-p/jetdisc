@@ -1,6 +1,9 @@
 # DiscordBot Token
 token: "YOUR_TOKEN_HERE"
 
+# Your Discord ID (e.g using for spotify auth)
+botMasterId: "Your Discord ID"
+
 # DiscordBot Prefix
 prefix: "YOUR_BOT_PREFIX_HERE"
 

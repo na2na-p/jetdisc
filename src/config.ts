@@ -3,6 +3,7 @@ import {readFileSync} from 'fs';
 
 type config = {
 	token: string;
+	botMasterId: string;
 	prefix: string;
 	deeplApiKey: string;
 	setCommandsTargetServers: string[];

@@ -13,7 +13,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # RUN su node -c "source /usr/local/share/nvm/nvm.sh && nvm install ${EXTRA_NODE_VERSION}"
 
 # [Optional] Uncomment if you want to install more global node modules
-# RUN su node -c "npm install -g <your-package-list-here>"
+RUN su node -c "npm install -g nodemon"
+
+# Use Hadolint
 # USER node
 # RUN export LANG=C.UTF-8 && export LC_ALL=C.UTF-8 && export LANGUAGE=C.UTF-8 \
 # 	&& cd /home/node \
