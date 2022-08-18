@@ -22,7 +22,7 @@
 		"color": "4.2.3",
 		"dayjs": "1.11.5",
 		"deepl-node": "1.4.0",
-		"discord-api-types": "0.37.2",
+		"discord-api-types": "0.37.3",
 		"discord.js": "14.2.0",
 		"js-yaml": "4.1.0",
 		"libsodium-wrappers": "0.7.10",
@@ -30,8 +30,8 @@
 		"twemoji-parser": "14.0.0"
 	},
 	"devDependencies": {
-		"@swc/core": "1.2.233",
-		"@swc/helpers": "0.4.6",
+		"@swc/core": "1.2.239",
+		"@swc/helpers": "0.4.7",
 		"@types/chai": "4.3.3",
 		"@types/color": "3.0.3",
 		"@types/js-yaml": "4.0.5",
