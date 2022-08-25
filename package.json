@@ -22,7 +22,7 @@
 		"color": "4.2.3",
 		"dayjs": "1.11.5",
 		"deepl-node": "1.5.0",
-		"discord-api-types": "0.37.4",
+		"discord-api-types": "0.37.5",
 		"discord.js": "14.3.0",
 		"js-yaml": "4.1.0",
 		"libsodium-wrappers": "0.7.10",
@@ -31,15 +31,15 @@
 	},
 	"devDependencies": {
 		"@swc/core": "1.2.242",
-		"@swc/helpers": "0.4.9",
+		"@swc/helpers": "0.4.11",
 		"@types/chai": "4.3.3",
 		"@types/color": "3.0.3",
 		"@types/js-yaml": "4.0.5",
 		"@types/mocha": "9.1.1",
 		"@types/node": "18.0.6",
 		"@types/twemoji-parser": "13.1.1",
-		"@typescript-eslint/eslint-plugin": "5.34.0",
-		"@typescript-eslint/parser": "5.34.0",
+		"@typescript-eslint/eslint-plugin": "5.35.1",
+		"@typescript-eslint/parser": "5.35.1",
 		"chai": "4.3.6",
 		"eslint": "8.22.0",
 		"eslint-config-google": "0.14.0",
@@ -48,6 +48,6 @@
 		"mocha": "10.0.0",
 		"ts-node": "10.9.1",
 		"tsc-alias": "1.7.0",
-		"typescript": "4.7.4"
+		"typescript": "4.8.2"
 	}
 }
