@@ -30,7 +30,14 @@ export class Dice {
 			});
 			const diceQuery = number.match(/([0-9]+)[dD]([0-9]+)/);
 
-			if (diceQuery == null) return false;
+			// diceQueryのすべての要素がStringなのかを確認
+			// TODO: なんでindex1,2なの？？？
+			if (
+				diceQuery == null ||
+				diceQuery.length !== 2 ||
+				diceQuery[1] == null ||
+				diceQuery[2] == null
+			) return false;
 
 			const times = parseInt(diceQuery[1], 10);
 			const dice = parseInt(diceQuery[2], 10);
