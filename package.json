@@ -30,7 +30,7 @@
 		"twemoji-parser": "14.0.0"
 	},
 	"devDependencies": {
-		"@swc/core": "1.2.245",
+		"@swc/core": "1.2.246",
 		"@swc/helpers": "0.4.11",
 		"@types/chai": "4.3.3",
 		"@types/color": "3.0.3",
@@ -44,7 +44,7 @@
 		"eslint": "8.23.0",
 		"eslint-config-google": "0.14.0",
 		"eslint-plugin-import": "2.26.0",
-		"jest": "29.0.1",
+		"jest": "29.0.2",
 		"mocha": "10.0.0",
 		"ts-node": "10.9.1",
 		"tsc-alias": "1.7.0",
