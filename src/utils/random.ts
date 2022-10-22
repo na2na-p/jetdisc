@@ -12,9 +12,8 @@ export function random(options: {min: number, max: number}): number;
 export function random<T>(
 	options: {candidate?: Array<T>, min?: number, max?: number},
 ): T | number {
-	if (options.candidate) {
-		// options.candidate.lengthからランダムに選ぶ
-		return options.candidate[Math.floor(Math.random() * options.candidate.length)];
+	if (options.candidate !== undefined) {
+		return options.candidate[Math.floor(Math.random() * options.candidate.length)] as T;
 	} else {
 		// min/maxからランダムに選ぶ
 		const optionsRange = options as Required<Exclude<typeof options, 'candidate'>>; // TODO: Exculdeでみなかったことにするやつ
