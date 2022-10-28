@@ -22,7 +22,7 @@
 		"color": "4.2.3",
 		"dayjs": "1.11.6",
 		"deepl-node": "1.7.1",
-		"discord-api-types": "0.37.14",
+		"discord-api-types": "0.37.15",
 		"discord.js": "14.6.0",
 		"js-yaml": "4.1.0",
 		"libsodium-wrappers": "0.7.10",
