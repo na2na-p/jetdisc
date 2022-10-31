@@ -22,7 +22,7 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.PRIVATE_KEY }}
-      - run: gh pr review $NUMBER --approve
-      - run: gh pr edit $NUMBER --remove-reviewer $REVIEWER
-        env:
-          REVIEWER: ${{ github.event.requested_reviewer.login }}
+      # ghコマンドを利用して自身をreviewerに追加
+      - name: Approve
+        run: |
+          gh pr review ${{ env.NUMBER }} --approve --token ${{ steps.generate_token.outputs.token }}
