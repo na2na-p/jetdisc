@@ -8,7 +8,11 @@ jobs:
   approve:
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    if: ${{ github.event.label.name == 'Bypass approve' }}
+    if: >-
+      ${{
+        github.event.label.name == 'Bypass approve' &&
+        github.event.pull_request.user.login == 'na2na-p'
+      }}
     env:
       NUMBER: ${{ github.event.number }}
 
