@@ -1,0 +1,28 @@
+name: Approve
+
+on:
+  pull_request:
+    types: [review_requested]
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    if: ${{ github.event.requested_reviewer.login == '2na2-p' }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NUMBER: ${{ github.event.number }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Generate github token
+        id: generate_token
+        uses: ./.github/actions/github-app-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+      - run: gh pr review $NUMBER --approve
+      - run: gh pr edit $NUMBER --remove-reviewer $REVIEWER
+        env:
+          REVIEWER: ${{ github.event.requested_reviewer.login }}
