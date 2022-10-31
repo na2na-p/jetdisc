@@ -1,0 +1,28 @@
+name: Approve
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    if: ${{ github.event.label.name == 'Bypass approve' }}
+    env:
+      NUMBER: ${{ github.event.number }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Generate github token
+        id: generate_token
+        uses: ./.github/actions/github-app-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+      # ghコマンドを利用して自身をreviewerに追加
+      - name: Approve
+        run: gh pr review ${{ env.NUMBER }} --approve
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
