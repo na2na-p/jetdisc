@@ -25,7 +25,6 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.PRIVATE_KEY }}
-      # ghコマンドを利用して自身をreviewerに追加
       - name: Approve
         run: gh pr review ${{ env.NUMBER }} --approve
         env:
