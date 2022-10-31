@@ -25,4 +25,5 @@ jobs:
       # ghコマンドを利用して自身をreviewerに追加
       - name: Approve
         run: |
-          gh pr review ${{ env.NUMBER }} --approve --token ${{ steps.generate_token.outputs.token }}
+          gh auth login --with-token ${{ steps.generate_token.outputs.token }}
+          gh pr review ${{ env.NUMBER }} --approve
