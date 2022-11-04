@@ -1,6 +1,7 @@
 import { Na2Client } from '@/client.js';
 import _log from '@utils/log.js';
 import type { commandSetType } from '@/types/types.js';
+import { version } from '@utils/version.cjs';
 
 function log(msg: string): void {
 	_log(`[Init]: ${msg}`);
@@ -48,6 +49,7 @@ const commands: commandSetType[] = [
 	// VCJoinCommandSetter, TODO: このモジュールは未実装
 ];
 
+log(`2na2-Discord v${version}`);
 log('Starting Na2Client...');
 
 new Na2Client(hooks, commands);
