@@ -1,7 +1,9 @@
-import { queryMessage } from '@/types.js';
-import { config } from '@/config/index.js';
-import { Translator } from 'deepl-node';
+import { boundMethod } from 'autobind-decorator';
 import { Message } from 'discord.js';
+import { Translator } from 'deepl-node';
+
+import type { queryMessage } from '@/types.js';
+import { config } from '@/config/index.js';
 
 /**
  * ping module
@@ -15,6 +17,7 @@ export class Translate {
 		};
 	}
 
+	@boundMethod
 	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
 		if (query.queryContent?.endsWith('を英語で')) {
 			const translator = new Translator(config.deeplApiKey);

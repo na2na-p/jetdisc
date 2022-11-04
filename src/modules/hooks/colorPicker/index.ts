@@ -1,7 +1,9 @@
 import { boundMethod } from 'autobind-decorator';
-import { queryMessage } from '@/types.js';
-import { random } from '@utils/random.js';
 import { Message } from 'discord.js';
+
+import type { queryMessage } from '@/types.js';
+
+import { random } from '@utils/random.js';
 
 type rgb = {
 	r: number;
