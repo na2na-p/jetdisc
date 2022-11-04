@@ -1,7 +1,7 @@
-import {boundMethod} from 'autobind-decorator';
-import {CommandInteraction} from 'discord.js';
-import {commandSetType} from '@/types.js';
-import {Na2Voice} from '@/utils/voice.js';
+import { boundMethod } from 'autobind-decorator';
+import { CommandInteraction } from 'discord.js';
+import { commandSetType } from '@/types.js';
+import { Na2Voice } from '@/utils/voice.js';
 
 
 // コマンドセットする用
@@ -62,4 +62,4 @@ class VCJoin {
 	}
 }
 
-export {command as VCJoinCommandSetter, VCJoin};
+export { command as VCJoinCommandSetter, VCJoin };

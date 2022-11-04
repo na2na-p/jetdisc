@@ -1,7 +1,7 @@
-import {queryMessage} from '@/types.js';
-import {config} from '@/config/index.js';
-import {Translator} from 'deepl-node';
-import {Message} from 'discord.js';
+import { queryMessage } from '@/types.js';
+import { config } from '@/config/index.js';
+import { Translator } from 'deepl-node';
+import { Message } from 'discord.js';
 
 /**
  * ping module

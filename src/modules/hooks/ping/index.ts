@@ -1,6 +1,6 @@
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { queryMessage } from '@/types.js';
+import { Message } from 'discord.js';
 
 /**
  * ping module

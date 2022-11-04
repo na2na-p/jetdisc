@@ -1,11 +1,11 @@
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {config} from '@/config/index.js';
-import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { queryMessage } from '@/types.js';
+import { config } from '@/config/index.js';
+import { EmbedBuilder, ColorResolvable, EmbedFooterData, Message } from 'discord.js';
 import dayjs from 'dayjs';
-import {Translator} from 'deepl-node';
+import { Translator } from 'deepl-node';
 import color from 'color';
-import {getDivination} from './divitation.js';
+import { getDivination } from './divitation.js';
 
 export type divination = {
 	content: string,
@@ -76,7 +76,7 @@ export class Divination {
 				const sign = Object(horoscope)[signQuery] as horoscope;
 				const divination = await getDivination(sign, this.date);
 				const embed = await this.makeEmbed(divination);
-				message.reply({embeds: [embed]});
+				message.reply({ embeds: [embed] });
 			}
 			return false;
 		} else {
@@ -106,13 +106,13 @@ export class Divination {
 		embed.setColor(this.luckyColor);
 		embed.setTitle(`${divination.sign}の今日の運勢は...`);
 		embed.addFields([
-			{name: '総合運', value: `${divination.total}`, inline: false},
-			{name: '金運', value: `${divination.money}`, inline: true},
-			{name: '仕事運', value: `${divination.job}`, inline: true},
-			{name: '恋愛運', value: `${divination.love}`, inline: true},
-			{name: 'ラッキーアイテム', value: `${divination.item}`, inline: false},
-			{name: 'ラッキーカラー', value: `${divination.color}`, inline: true},
-			{name: 'コメント', value: `${divination.content}`, inline: false},
+			{ name: '総合運', value: `${divination.total}`, inline: false },
+			{ name: '金運', value: `${divination.money}`, inline: true },
+			{ name: '仕事運', value: `${divination.job}`, inline: true },
+			{ name: '恋愛運', value: `${divination.love}`, inline: true },
+			{ name: 'ラッキーアイテム', value: `${divination.item}`, inline: false },
+			{ name: 'ラッキーカラー', value: `${divination.color}`, inline: true },
+			{ name: 'コメント', value: `${divination.content}`, inline: false },
 		]);
 		embed.setTimestamp();
 		embed.setFooter(footerOptions);

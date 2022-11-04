@@ -1,24 +1,24 @@
-import {Na2Client} from '@/client.js';
+import { Na2Client } from '@/client.js';
 import _log from '@utils/log.js';
-import {commandSetType} from '@/types.js';
+import { commandSetType } from '@/types.js';
 
 function log(msg: string): void {
 	_log(`[Init]: ${msg}`);
 }
 
 // モジュール群のインポート
-import {Ping} from '@modules/hooks/ping/index.js';
-import {Dice} from '@modules/hooks/dice/index.js';
-import {Translate} from '@modules/hooks/translate/index.js';
-import {ColorPicker} from '@/modules/hooks/colorPicker/index.js';
-import {Divination} from '@modules/hooks/divination/index.js';
-import {Menu} from '@modules/hooks/menu/index.js';
-import {Search} from '@modules/hooks/search/index.js';
-import {EmojiReact} from '@modules/hooks/emoji-react/index.js';
+import { Ping } from '@modules/hooks/ping/index.js';
+import { Dice } from '@modules/hooks/dice/index.js';
+import { Translate } from '@modules/hooks/translate/index.js';
+import { ColorPicker } from '@/modules/hooks/colorPicker/index.js';
+import { Divination } from '@modules/hooks/divination/index.js';
+import { Menu } from '@modules/hooks/menu/index.js';
+import { Search } from '@modules/hooks/search/index.js';
+import { EmojiReact } from '@modules/hooks/emoji-react/index.js';
 
 // スラッシュコマンドあれこれ用
-import {pingCommandSetter, Ping as PingCommand} from '@modules/commands/ping/index.js';
-import {diceCommandSetter, Dice as DiceCommand} from '@modules/commands/dice/index.js';
+import { pingCommandSetter, Ping as PingCommand } from '@modules/commands/ping/index.js';
+import { diceCommandSetter, Dice as DiceCommand } from '@modules/commands/dice/index.js';
 // import {VCJoinCommandSetter, VCJoin} from '@modules/commands/voice/join/index.js';
 
 // モジュール群のインスタンス化

@@ -16,10 +16,11 @@ module.exports = {
 	],
 	'rules': {
 		'no-tabs': 'off',
-		'max-len': ['error', {'code': 120}],
+		'max-len': ['error', { 'code': 120 }],
 		'indent': ['error', 'tab'],
-		'@typescript-eslint/no-unused-vars': ['warn', {'argsIgnorePattern': '^_'}],
+		'@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
 		'no-unused-vars': 'off',
 		'require-jsdoc': 'off',
+		'object-curly-spacing': ['error', 'always'],
 	},
 };

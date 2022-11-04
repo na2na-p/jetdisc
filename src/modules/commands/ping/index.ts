@@ -1,6 +1,6 @@
-import {boundMethod} from 'autobind-decorator';
-import {ChatInputCommandInteraction} from 'discord.js';
-import {commandSetType} from '@/types.js';
+import { boundMethod } from 'autobind-decorator';
+import { ChatInputCommandInteraction } from 'discord.js';
+import { commandSetType } from '@/types.js';
 
 // コマンドセットする用
 const command: commandSetType = {
@@ -33,4 +33,4 @@ class Ping {
 	}
 }
 
-export {command as pingCommandSetter, Ping};
+export { command as pingCommandSetter, Ping };
