@@ -1,8 +1,7 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {random} from '@utils/random.js';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { queryMessage } from '@/types.js';
+import { random } from '@utils/random.js';
+import { Message } from 'discord.js';
 
 type rgb = {
 	r: number;

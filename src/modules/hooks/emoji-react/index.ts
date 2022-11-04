@@ -1,9 +1,8 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {parse} from 'twemoji-parser';
-import {queryMessage} from '@/types.js';
-import {Na2Client} from '@/client.js';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { parse } from 'twemoji-parser';
+import { queryMessage } from '@/types.js';
+import { Na2Client } from '@/client.js';
+import { Message } from 'discord.js';
 
 
 type wordReactType = Array<[RegExp, string]>;

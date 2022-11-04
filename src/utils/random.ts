@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 /* eslint-disable valid-jsdoc */
 /**
  * TODO JSDoc直す

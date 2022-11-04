@@ -1,7 +1,6 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {ChatInputCommandInteraction} from 'discord.js';
-import {commandSetType} from '@/types.js';
+import { boundMethod } from 'autobind-decorator';
+import { ChatInputCommandInteraction } from 'discord.js';
+import { commandSetType } from '@/types.js';
 
 const command: commandSetType = {
 	name: 'dice',
@@ -34,4 +33,4 @@ class Dice {
 	}
 }
 
-export {command as diceCommandSetter, Dice};
+export { command as diceCommandSetter, Dice };

@@ -1,5 +1,4 @@
 import _log from '@utils/log.js';
-// eslint-disable-next-line require-jsdoc
 function log(msg: string): void {
 	_log(`[Config]: ${msg}`);
 }

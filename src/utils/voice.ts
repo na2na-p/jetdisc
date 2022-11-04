@@ -1,7 +1,6 @@
 // @ts-nocheck
 // TODO: 未実装なので、ts-nocheckをしている
-/* eslint-disable require-jsdoc */
-import {Na2Client} from '@/client.js';
+import { Na2Client } from '@/client.js';
 import {
 	joinVoiceChannel,
 	entersState,
@@ -14,8 +13,8 @@ import {
 	generateDependencyReport,
 	VoiceConnection,
 } from '@discordjs/voice';
-import {boundMethod} from 'autobind-decorator';
-import {CacheType, CommandInteraction, Guild, GuildMember, VoiceBasedChannel} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { CacheType, CommandInteraction, Guild, GuildMember, VoiceBasedChannel } from 'discord.js';
 import log from '@/utils/log.js';
 console.log(generateDependencyReport());
 

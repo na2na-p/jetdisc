@@ -1,7 +1,6 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { queryMessage } from '@/types.js';
+import { Message } from 'discord.js';
 
 /**
  * menu module

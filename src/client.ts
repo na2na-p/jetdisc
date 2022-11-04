@@ -1,6 +1,5 @@
-/* eslint-disable require-jsdoc */
-import {CacheType, Client, GatewayIntentBits, Interaction, InteractionType, Message} from 'discord.js';
-import {config} from '@/config/index.js';
+import { CacheType, Client, GatewayIntentBits, Interaction, InteractionType, Message } from 'discord.js';
+import { config } from '@/config/index.js';
 import {
 	commandSetType,
 	interactionHookType,
@@ -10,10 +9,10 @@ import {
 	module,
 	queryMessage,
 } from '@/types.js';
-import {boundMethod} from 'autobind-decorator';
+import { boundMethod } from 'autobind-decorator';
 import log from '@utils/log.js';
 import chalk from 'chalk';
-import {exit} from 'process';
+import { exit } from 'process';
 
 
 export class Na2Client extends Client {
