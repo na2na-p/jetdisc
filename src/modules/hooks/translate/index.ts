@@ -2,7 +2,7 @@ import { boundMethod } from 'autobind-decorator';
 import { Message } from 'discord.js';
 import { Translator } from 'deepl-node';
 
-import type { queryMessage } from '@/types.js';
+import type { queryMessage } from '@/types/types.js';
 import { config } from '@/config/index.js';
 
 /**

@@ -13,7 +13,7 @@ import type {
 	installedHooksType,
 	module,
 	queryMessage,
-} from '@/types.js';
+} from '@/types/types.js';
 
 
 export class Na2Client extends Client {

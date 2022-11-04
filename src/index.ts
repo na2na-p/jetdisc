@@ -1,6 +1,6 @@
 import { Na2Client } from '@/client.js';
 import _log from '@utils/log.js';
-import type { commandSetType } from '@/types.js';
+import type { commandSetType } from '@/types/types.js';
 
 function log(msg: string): void {
 	_log(`[Init]: ${msg}`);

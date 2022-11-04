@@ -1,7 +1,7 @@
 import { boundMethod } from 'autobind-decorator';
 import { ChatInputCommandInteraction } from 'discord.js';
 
-import type { commandSetType } from '@/types.js';
+import type { commandSetType } from '@/types/types.js';
 
 // コマンドセットする用
 const command: commandSetType = {

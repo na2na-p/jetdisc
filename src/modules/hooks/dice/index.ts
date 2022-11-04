@@ -3,7 +3,7 @@ import { Message } from 'discord.js';
 
 import isNil from '@utils/isNil.js';
 
-import type { queryMessage } from '@/types.js';
+import type { queryMessage } from '@/types/types.js';
 
 /**
  * ping module

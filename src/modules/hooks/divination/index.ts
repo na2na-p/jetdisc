@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { Translator } from 'deepl-node';
 import color from 'color';
 
-import type { queryMessage } from '@/types.js';
+import type { queryMessage } from '@/types/types.js';
 import { config } from '@/config/index.js';
 
 import { getDivination } from './divitation.js';

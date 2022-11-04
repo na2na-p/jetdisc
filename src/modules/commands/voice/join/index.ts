@@ -1,6 +1,6 @@
 import { boundMethod } from 'autobind-decorator';
 import { CommandInteraction } from 'discord.js';
-import { commandSetType } from '@/types.js';
+import { commandSetType } from '@/types/types.js';
 import { Na2Voice } from '@/utils/voice.js';
 
 
