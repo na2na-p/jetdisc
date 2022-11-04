@@ -1,8 +1,8 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {CommandInteraction} from 'discord.js';
-import {commandSetType} from '@/types.js';
-import {Na2Voice} from '@/utils/voice.js';
+import { boundMethod } from 'autobind-decorator';
+import { ChatInputCommandInteraction } from 'discord.js';
+import { commandSetType } from '@/types/types.js';
+import { Na2Voice } from '@/utils/voice.js';
+import { Module } from '@/types/modules.js';
 
 
 // コマンドセットする用
@@ -14,8 +14,8 @@ const command: commandSetType = {
 /**
  * ping module
  */
-class VCJoin {
-	public readonly name = 'VCJoin';
+class VCJoin extends Module {
+	public override readonly name = 'VCJoin';
 
 	@boundMethod
 	public install() {
@@ -25,7 +25,7 @@ class VCJoin {
 	}
 
 	@boundMethod
-	private async interactionHook(interaction: CommandInteraction): Promise<boolean> {
+	private async interactionHook(interaction: Readonly<ChatInputCommandInteraction>): Promise<boolean> {
 		const voice = new Na2Voice(interaction);
 		if (interaction.commandName === 'vcjoin') {
 			const channel = await voice.getMemberJoinedVoiceChannel(interaction);
@@ -63,4 +63,4 @@ class VCJoin {
 	}
 }
 
-export {command as VCJoinCommandSetter, VCJoin};
+export { command as VCJoinCommandSetter, VCJoin };

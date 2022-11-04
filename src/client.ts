@@ -1,19 +1,26 @@
-/* eslint-disable require-jsdoc */
-import {CacheType, Client, GatewayIntentBits, Interaction, InteractionType, Message} from 'discord.js';
-import {config} from '@/config/index.js';
+import { boundMethod } from 'autobind-decorator';
 import {
+	Client,
+	GatewayIntentBits,
+	InteractionType,
+	Message,
+} from 'discord.js';
+import chalk from 'chalk';
+import { exit } from 'process';
+
+import { config } from '@/config/index.js';
+import log from '@utils/log.js';
+import type {
 	commandSetType,
 	interactionHookType,
 	mentionHookType,
 	streamHookType,
 	installedHooksType,
-	module,
 	queryMessage,
-} from '@/types.js';
-import {boundMethod} from 'autobind-decorator';
-import log from '@utils/log.js';
-import chalk from 'chalk';
-import {exit} from 'process';
+} from '@/types/types.js';
+import type {
+	Module,
+} from '@/types/modules.js';
 
 
 export class Na2Client extends Client {
@@ -23,7 +30,7 @@ export class Na2Client extends Client {
 	private interactionHooks: installedHooksType<interactionHookType>[] = [];
 	private isInteractionEnabled: boolean = true;
 
-	constructor(modules: Array<module<unknown>>, commands: commandSetType[]) {
+	constructor(modules: Array<Module>, commands: commandSetType[]) {
 		super({
 			intents: [
 				GatewayIntentBits.Guilds,
@@ -138,7 +145,8 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	private onInteractionCreate(interaction: Interaction<CacheType>): Promise<boolean> {
+	// TODO: 一生型定義合わん誰か助けて
+	private onInteractionCreate(interaction: any): Promise<boolean> {
 		if (!(interaction.type === InteractionType.ApplicationCommand)) {
 			return Promise.resolve(false);
 		}

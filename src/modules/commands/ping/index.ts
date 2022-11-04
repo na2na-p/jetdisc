@@ -1,7 +1,8 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {ChatInputCommandInteraction} from 'discord.js';
-import {commandSetType} from '@/types.js';
+import { boundMethod } from 'autobind-decorator';
+import { ChatInputCommandInteraction } from 'discord.js';
+
+import type { commandSetType } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 
 // コマンドセットする用
 const command: commandSetType = {
@@ -12,8 +13,8 @@ const command: commandSetType = {
 /**
  * ping module
  */
-class Ping {
-	public readonly name = 'Ping';
+class Ping extends Module {
+	public override readonly name = 'Ping';
 
 	@boundMethod
 	public install() {
@@ -34,4 +35,4 @@ class Ping {
 	}
 }
 
-export {command as pingCommandSetter, Ping};
+export { command as pingCommandSetter, Ping };

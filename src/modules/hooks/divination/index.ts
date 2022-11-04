@@ -1,13 +1,14 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {config} from '@/config/index.js';
-import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { EmbedBuilder, ColorResolvable, EmbedFooterData, Message } from 'discord.js';
 import dayjs from 'dayjs';
-import {Translator} from 'deepl-node';
+import { Translator } from 'deepl-node';
 import color from 'color';
-import {getDivination} from './divitation.js';
+
+import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
+import { config } from '@/config/index.js';
+
+import { getDivination } from './divitation.js';
 
 export type divination = {
 	content: string,
@@ -54,10 +55,10 @@ export const horoscope = {
 /**
  * 占い
  */
-export class Divination {
-	public readonly name = 'Divination';
+export class Divination extends Module {
+	public override readonly name = 'Divination';
 	private date: string = '';
-	private luckeyColor: ColorResolvable = 'White';
+	private luckyColor: ColorResolvable = 'White';
 
 	@boundMethod
 	public install() {
@@ -78,7 +79,7 @@ export class Divination {
 				const sign = Object(horoscope)[signQuery] as horoscope;
 				const divination = await getDivination(sign, this.date);
 				const embed = await this.makeEmbed(divination);
-				message.reply({embeds: [embed]});
+				message.reply({ embeds: [embed] });
 			}
 			return false;
 		} else {
@@ -94,35 +95,27 @@ export class Divination {
 	private async makeEmbed(divination: Readonly<divination>): Promise<EmbedBuilder> {
 		try {
 			const translator = new Translator(config.deeplApiKey);
-			// const colorEng = await translate({
-			// 	free_api: true,
-			// 	text: divination.color,
-			// 	target_lang: 'EN',
-			// 	source_lang: 'JA',
-			// 	auth_key: config.deeplApiKey,
-			// });
 			const colorEng = await translator.translateText(divination.color, null, 'en-US');
-			this.luckeyColor = color(colorEng.text).hex().toUpperCase() as ColorResolvable;
+			this.luckyColor = color(colorEng.text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
-			// console.log(error);
-			this.luckeyColor = 'White';
+			this.luckyColor = 'White';
 		}
 
 		const footerOptions: EmbedFooterData = {
-			text: 'powerd by JugemKey',
+			text: 'powered by JugemKey',
 			iconURL: 'http://jugemkey.jp/api/waf/api_free.php',
 		};
 		const embed = new EmbedBuilder();
-		embed.setColor(this.luckeyColor);
+		embed.setColor(this.luckyColor);
 		embed.setTitle(`${divination.sign}の今日の運勢は...`);
 		embed.addFields([
-			{name: '総合運', value: `${divination.total}`, inline: false},
-			{name: '金運', value: `${divination.money}`, inline: true},
-			{name: '仕事運', value: `${divination.job}`, inline: true},
-			{name: '恋愛運', value: `${divination.love}`, inline: true},
-			{name: 'ラッキーアイテム', value: `${divination.item}`, inline: false},
-			{name: 'ラッキーカラー', value: `${divination.color}`, inline: true},
-			{name: 'コメント', value: `${divination.content}`, inline: false},
+			{ name: '総合運', value: `${divination.total}`, inline: false },
+			{ name: '金運', value: `${divination.money}`, inline: true },
+			{ name: '仕事運', value: `${divination.job}`, inline: true },
+			{ name: '恋愛運', value: `${divination.love}`, inline: true },
+			{ name: 'ラッキーアイテム', value: `${divination.item}`, inline: false },
+			{ name: 'ラッキーカラー', value: `${divination.color}`, inline: true },
+			{ name: 'コメント', value: `${divination.content}`, inline: false },
 		]);
 		embed.setTimestamp();
 		embed.setFooter(footerOptions);

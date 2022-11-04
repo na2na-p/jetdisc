@@ -1,13 +1,14 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { Message } from 'discord.js';
+
+import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 
 /**
  * menu module
  */
-export class Menu {
-	public readonly name = 'Menu';
+export class Menu extends Module {
+	public override readonly name = 'Menu';
 
 	@boundMethod
 	public install() {

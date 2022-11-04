@@ -1,13 +1,14 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { Message } from 'discord.js';
+
+import { Module } from '@/types/modules.js';
+import type { queryMessage } from '@/types/types.js';
 
 /**
  * ping module
  */
-export class Ping {
-	public readonly name = 'Ping';
+export class Ping extends Module {
+	public override readonly name = 'Ping';
 
 	@boundMethod
 	public install() {

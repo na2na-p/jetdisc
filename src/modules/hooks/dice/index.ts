@@ -1,13 +1,16 @@
-/* eslint-disable require-jsdoc */
-import {boundMethod} from 'autobind-decorator';
-import {queryMessage} from '@/types.js';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { Message } from 'discord.js';
+
+import isNil from '@utils/isNil.js';
+
+import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 
 /**
  * ping module
  */
-export class Dice {
-	public readonly name = 'Dice';
+export class Dice extends Module {
+	public override readonly name = 'Dice';
 
 	@boundMethod
 	public install() {
@@ -18,7 +21,7 @@ export class Dice {
 
 	@boundMethod
 	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
-		if (query.queryContent == null) return false;
+		if (isNil(query.queryContent)) return false;
 		if (query.queryContent.includes('サイコロ')) {
 			const dice = Math.floor(Math.random() * 6) + 1;
 			message.reply(`(ｺﾛｺﾛ) ${dice}が出ました！`);

@@ -1,9 +1,9 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as _mocha from 'mocha';
-import {random} from '../built/utils/random.js';
+import { random } from '../built/utils/random.js';
 import dayjs from 'dayjs';
-import {getDivination} from '../built/modules/hooks/divination/divitation.js';
+import { getDivination } from '../built/modules/hooks/divination/divitation.js';
 
 // mochaを利用したテストコード
 describe('モジュール群のテスト', () => {

@@ -1,5 +1,6 @@
 import _log from '@utils/log.js';
-// eslint-disable-next-line require-jsdoc
+import isNil from '@utils/isNil.js';
+
 function log(msg: string): void {
 	_log(`[Config]: ${msg}`);
 }
@@ -22,35 +23,35 @@ if (process.env['NODE_ENV'] !== 'container') {
 
 export const config: configType = {
 	token: (() => {
-		if (process.env['TOKEN']) {
+		if (!isNil(process.env['TOKEN'])) {
 			return process.env['TOKEN'];
 		} else {
 			throw new Error('TOKEN is not defined.');
 		}
 	})(),
 	botMasterId: (() => {
-		if (process.env['BOT_MASTER_ID']) {
+		if (!isNil(process.env['BOT_MASTER_ID'])) {
 			return process.env['BOT_MASTER_ID'];
 		} else {
 			throw new Error('BOT_MASTER_ID is not defined.');
 		}
 	})(),
 	prefix: (() => {
-		if (process.env['PREFIX']) {
+		if (!isNil(process.env['PREFIX'])) {
 			return process.env['PREFIX'];
 		} else {
 			throw new Error('PREFIX is not defined.');
 		}
 	})(),
 	deeplApiKey: (() => {
-		if (process.env['DEEPL_API_KEY']) {
+		if (!isNil(process.env['DEEPL_API_KEY'])) {
 			return process.env['DEEPL_API_KEY'];
 		} else {
 			throw new Error('DEEPL_API_KEY is not defined.');
 		}
 	})(),
 	setCommandsTargetServers: (() => {
-		if (process.env['SET_COMMANDS_TARGET_SERVERS']) {
+		if (!isNil(process.env['SET_COMMANDS_TARGET_SERVERS'])) {
 			return process.env['SET_COMMANDS_TARGET_SERVERS'].split(',');
 		} else {
 			return [];

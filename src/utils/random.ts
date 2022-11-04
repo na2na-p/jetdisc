@@ -1,10 +1,7 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable valid-jsdoc */
 /**
  * TODO JSDoc直す
  * 引数で渡された配列 or 数値の範囲内でランダムに一つ返す
  * candidateを渡した場合はmin/max入れないで :TODO 型定義頑張る
- * @param {candidate?: T[], min?: number, max?: number} options
  */
 export function random<T>(options: {candidate: Array<T>}): T;
 export function random(options: {min: number, max: number}): number;

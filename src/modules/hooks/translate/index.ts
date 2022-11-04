@@ -1,14 +1,16 @@
-/* eslint-disable require-jsdoc */
-import {queryMessage} from '@/types.js';
-import {config} from '@/config/index.js';
-import {Translator} from 'deepl-node';
-import {Message} from 'discord.js';
+import { boundMethod } from 'autobind-decorator';
+import { Message } from 'discord.js';
+import { Translator } from 'deepl-node';
+
+import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
+import { config } from '@/config/index.js';
 
 /**
  * ping module
  */
-export class Translate {
-	public readonly name = 'Translate';
+export class Translate extends Module {
+	public override readonly name = 'Translate';
 
 	public install() {
 		return {
@@ -16,6 +18,7 @@ export class Translate {
 		};
 	}
 
+	@boundMethod
 	private async mentionHook(message: Readonly<Message<boolean>>, query: queryMessage): Promise<boolean> {
 		if (query.queryContent?.endsWith('を英語で')) {
 			const translator = new Translator(config.deeplApiKey);
