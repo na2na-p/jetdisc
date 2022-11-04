@@ -2,7 +2,7 @@
 /* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
-import {config} from '@/config.js';
+import {config} from '@/config/index.js';
 import {EmbedBuilder, ColorResolvable, EmbedFooterData, Message} from 'discord.js';
 import dayjs from 'dayjs';
 import {Translator} from 'deepl-node';

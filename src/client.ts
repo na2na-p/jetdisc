@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import {CacheType, Client, GatewayIntentBits, Interaction, InteractionType, Message} from 'discord.js';
-import {config} from '@/config.js';
+import {config} from '@/config/index.js';
 import {
 	commandSetType,
 	interactionHookType,

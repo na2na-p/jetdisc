@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import {queryMessage} from '@/types.js';
-import {config} from '@/config.js';
+import {config} from '@/config/index.js';
 import {Translator} from 'deepl-node';
 import {Message} from 'discord.js';
 
