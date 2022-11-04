@@ -2,12 +2,13 @@ import { boundMethod } from 'autobind-decorator';
 import { Message } from 'discord.js';
 
 import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 
 /**
  * ping module
  */
-export class Search {
-	public readonly name = 'Search';
+export class Search extends Module {
+	public override readonly name = 'Search';
 
 	@boundMethod
 	public install() {

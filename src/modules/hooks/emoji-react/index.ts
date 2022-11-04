@@ -3,6 +3,7 @@ import { Message } from 'discord.js';
 import { parse } from 'twemoji-parser';
 
 import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 import { Na2Client } from '@/client.js';
 
 type wordReactType = Array<[RegExp, string]>;
@@ -10,8 +11,8 @@ type wordReactType = Array<[RegExp, string]>;
 /**
  * EmojiReact module
  */
-export class EmojiReact {
-	public readonly name = 'EmojiReact';
+export class EmojiReact extends Module {
+	public override readonly name = 'EmojiReact';
 
 	@boundMethod
 	public install() {

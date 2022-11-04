@@ -2,6 +2,7 @@ import { boundMethod } from 'autobind-decorator';
 import { Message } from 'discord.js';
 
 import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 
 import { random } from '@utils/random.js';
 
@@ -14,8 +15,8 @@ type rgb = {
 /**
  * ping module
  */
-export class ColorPicker {
-	public readonly name = 'ColorPicker';
+export class ColorPicker extends Module {
+	public override readonly name = 'ColorPicker';
 
 	@boundMethod
 	public install() {

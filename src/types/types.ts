@@ -32,7 +32,7 @@ export type na2InteractionType<T>
 
 // これ使うってことはすでに型の絞り込みが済んでるので、ジェネリクスで指定できるように何か作るべき
 // それで出来たのがna2InteractionType<T>だけどなんか違う
-export type interactionHookType = (interaction: Readonly<na2InteractionType<Interaction>>) => Promise<boolean>;
+export type interactionHookType = (interaction: Readonly<ChatInputCommandInteraction>) => Promise<boolean>;
 export type mentionHookType = (message: Readonly<Message<boolean>>, query: queryMessage) => Promise<boolean>;
 export type streamHookType = (message: Readonly<Message<boolean>>, query: queryMessage) => Promise<boolean>;
 
@@ -41,8 +41,3 @@ export type installedHooksType<T>
 	: T extends mentionHookType ? mentionHookType
 	: T extends streamHookType ? streamHookType
 	: never;
-
-export type module<T> = {
-	name: string,
-	install(): installedHooksType<T>
-};
