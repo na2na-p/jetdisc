@@ -41,8 +41,3 @@ export type installedHooksType<T>
 	: T extends mentionHookType ? mentionHookType
 	: T extends streamHookType ? streamHookType
 	: never;
-
-export type module<T> = {
-	name: string,
-	install(): installedHooksType<T>
-};

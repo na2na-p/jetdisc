@@ -1,5 +1,5 @@
 import { boundMethod } from 'autobind-decorator';
-import { CommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 import { commandSetType } from '@/types/types.js';
 import { Na2Voice } from '@/utils/voice.js';
 import { Module } from '@/types/modules.js';
@@ -25,7 +25,7 @@ class VCJoin extends Module {
 	}
 
 	@boundMethod
-	private async interactionHook(interaction: CommandInteraction): Promise<boolean> {
+	private async interactionHook(interaction: Readonly<ChatInputCommandInteraction>): Promise<boolean> {
 		const voice = new Na2Voice(interaction);
 		if (interaction.commandName === 'vcjoin') {
 			const channel = await voice.getMemberJoinedVoiceChannel(interaction);

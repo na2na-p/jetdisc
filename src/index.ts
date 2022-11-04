@@ -19,11 +19,12 @@ import { EmojiReact } from '@modules/hooks/emoji-react/index.js';
 // スラッシュコマンドあれこれ用
 import { pingCommandSetter, Ping as PingCommand } from '@modules/commands/ping/index.js';
 import { diceCommandSetter, Dice as DiceCommand } from '@modules/commands/dice/index.js';
+import { Module } from './types/modules.js';
 // import {VCJoinCommandSetter, VCJoin} from '@modules/commands/voice/join/index.js';
 
 // モジュール群のインスタンス化
 // 上にあるほど高優先度
-const hooks: Array<any> = [ // TODO: anyなくす
+const hooks: Array<Module> = [
 	// mentionHook系
 	new Ping(),
 	new Dice(),

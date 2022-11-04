@@ -13,6 +13,7 @@ import {
 	generateDependencyReport,
 	VoiceConnection,
 } from '@discordjs/voice';
+import { ChatInputCommandInteraction } from 'discord.js';
 import { boundMethod } from 'autobind-decorator';
 import { CacheType, CommandInteraction, Guild, GuildMember, VoiceBasedChannel } from 'discord.js';
 import log from '@/utils/log.js';
@@ -21,7 +22,7 @@ console.log(generateDependencyReport());
 export class Na2Voice {
 	private guild: Guild;
 
-	constructor(interaction: CommandInteraction) {
+	constructor(interaction: Readonly<ChatInputCommandInteraction>) {
 		this.guild = interaction.guild as Guild;
 	}
 

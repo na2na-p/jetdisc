@@ -16,9 +16,11 @@ import type {
 	mentionHookType,
 	streamHookType,
 	installedHooksType,
-	module,
 	queryMessage,
 } from '@/types/types.js';
+import type {
+	Module,
+} from '@/types/modules.js';
 
 
 export class Na2Client extends Client {
@@ -28,7 +30,7 @@ export class Na2Client extends Client {
 	private interactionHooks: installedHooksType<interactionHookType>[] = [];
 	private isInteractionEnabled: boolean = true;
 
-	constructor(modules: Array<module<unknown>>, commands: commandSetType[]) {
+	constructor(modules: Array<Module>, commands: commandSetType[]) {
 		super({
 			intents: [
 				GatewayIntentBits.Guilds,
