@@ -20,6 +20,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/built ./built
 COPY --from=builder /app/package.json ./package.json
 
-ENV NODE_ENV=production
+ENV NODE_ENV=container
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["yarn", "start"]
