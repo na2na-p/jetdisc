@@ -19,9 +19,39 @@ if (process.env['NODE_ENV'] !== 'container') {
 };
 
 export const config: configType = {
-	token: process.env['TOKEN']!,
-	botMasterId: process.env['BOT_MASTER_ID']!,
-	prefix: process.env['PREFIX']!,
-	deeplApiKey: process.env['DEEPL_API_KEY']!,
-	setCommandsTargetServers: process.env['SET_COMMANDS_TARGET_SERVERS']!.split(','),
+	token: (() => {
+		if (process.env['TOKEN']) {
+			return process.env['TOKEN'];
+		} else {
+			throw new Error('TOKEN is not defined.');
+		}
+	})(),
+	botMasterId: (() => {
+		if (process.env['BOT_MASTER_ID']) {
+			return process.env['BOT_MASTER_ID'];
+		} else {
+			throw new Error('BOT_MASTER_ID is not defined.');
+		}
+	})(),
+	prefix: (() => {
+		if (process.env['PREFIX']) {
+			return process.env['PREFIX'];
+		} else {
+			throw new Error('PREFIX is not defined.');
+		}
+	})(),
+	deeplApiKey: (() => {
+		if (process.env['DEEPL_API_KEY']) {
+			return process.env['DEEPL_API_KEY'];
+		} else {
+			throw new Error('DEEPL_API_KEY is not defined.');
+		}
+	})(),
+	setCommandsTargetServers: (() => {
+		if (process.env['SET_COMMANDS_TARGET_SERVERS']) {
+			return process.env['SET_COMMANDS_TARGET_SERVERS'].split(',');
+		} else {
+			return [];
+		}
+	})(),
 };
