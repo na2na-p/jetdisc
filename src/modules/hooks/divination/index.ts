@@ -1,10 +1,12 @@
 import { boundMethod } from 'autobind-decorator';
-import { queryMessage } from '@/types.js';
-import { config } from '@/config/index.js';
 import { EmbedBuilder, ColorResolvable, EmbedFooterData, Message } from 'discord.js';
 import dayjs from 'dayjs';
 import { Translator } from 'deepl-node';
 import color from 'color';
+
+import type { queryMessage } from '@/types.js';
+import { config } from '@/config/index.js';
+
 import { getDivination } from './divitation.js';
 
 export type divination = {

@@ -1,6 +1,7 @@
 import { boundMethod } from 'autobind-decorator';
-import { queryMessage } from '@/types.js';
 import { Message } from 'discord.js';
+
+import type { queryMessage } from '@/types.js';
 
 /**
  * menu module
