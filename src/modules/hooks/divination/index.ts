@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
 import {config} from '@/config/index.js';
@@ -56,7 +55,7 @@ export const horoscope = {
 export class Divination {
 	public readonly name = 'Divination';
 	private date: string = '';
-	private luckeyColor: ColorResolvable = 'White';
+	private luckyColor: ColorResolvable = 'White';
 
 	@boundMethod
 	public install() {
@@ -93,26 +92,18 @@ export class Divination {
 	private async makeEmbed(divination: Readonly<divination>): Promise<EmbedBuilder> {
 		try {
 			const translator = new Translator(config.deeplApiKey);
-			// const colorEng = await translate({
-			// 	free_api: true,
-			// 	text: divination.color,
-			// 	target_lang: 'EN',
-			// 	source_lang: 'JA',
-			// 	auth_key: config.deeplApiKey,
-			// });
 			const colorEng = await translator.translateText(divination.color, null, 'en-US');
-			this.luckeyColor = color(colorEng.text).hex().toUpperCase() as ColorResolvable;
+			this.luckyColor = color(colorEng.text).hex().toUpperCase() as ColorResolvable;
 		} catch (error) {
-			// console.log(error);
-			this.luckeyColor = 'White';
+			this.luckyColor = 'White';
 		}
 
 		const footerOptions: EmbedFooterData = {
-			text: 'powerd by JugemKey',
+			text: 'powered by JugemKey',
 			iconURL: 'http://jugemkey.jp/api/waf/api_free.php',
 		};
 		const embed = new EmbedBuilder();
-		embed.setColor(this.luckeyColor);
+		embed.setColor(this.luckyColor);
 		embed.setTitle(`${divination.sign}の今日の運勢は...`);
 		embed.addFields([
 			{name: '総合運', value: `${divination.total}`, inline: false},
