@@ -11,7 +11,7 @@ function log(msg: string): void {
 import {Ping} from '@modules/hooks/ping/index.js';
 import {Dice} from '@modules/hooks/dice/index.js';
 import {Translate} from '@modules/hooks/translate/index.js';
-import {ColorPicker} from '@/modules/hooks/colorpicker/index.js';
+import {ColorPicker} from '@/modules/hooks/colorPicker/index.js';
 import {Divination} from '@modules/hooks/divination/index.js';
 import {Menu} from '@modules/hooks/menu/index.js';
 import {Search} from '@modules/hooks/search/index.js';
@@ -49,4 +49,5 @@ const commands: commandSetType[] = [
 ];
 
 log('Starting Na2Client...');
+
 new Na2Client(hooks, commands);
