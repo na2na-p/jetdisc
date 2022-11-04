@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
 import {random} from '@utils/random.js';

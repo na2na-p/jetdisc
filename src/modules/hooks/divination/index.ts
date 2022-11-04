@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {queryMessage} from '@/types.js';
 import {config} from '@/config/index.js';

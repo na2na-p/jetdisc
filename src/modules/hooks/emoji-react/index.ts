@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {parse} from 'twemoji-parser';
 import {queryMessage} from '@/types.js';

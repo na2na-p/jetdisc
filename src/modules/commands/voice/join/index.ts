@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import {boundMethod} from 'autobind-decorator';
 import {CommandInteraction} from 'discord.js';
 import {commandSetType} from '@/types.js';

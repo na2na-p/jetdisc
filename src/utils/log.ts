@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import chalk from 'chalk';
 
 export default function(msg: string) {

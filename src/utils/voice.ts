@@ -1,6 +1,5 @@
 // @ts-nocheck
 // TODO: 未実装なので、ts-nocheckをしている
-/* eslint-disable require-jsdoc */
 import {Na2Client} from '@/client.js';
 import {
 	joinVoiceChannel,

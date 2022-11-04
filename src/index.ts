@@ -2,7 +2,6 @@ import {Na2Client} from '@/client.js';
 import _log from '@utils/log.js';
 import {commandSetType} from '@/types.js';
 
-// eslint-disable-next-line require-jsdoc
 function log(msg: string): void {
 	_log(`[Init]: ${msg}`);
 }
