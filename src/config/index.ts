@@ -16,6 +16,8 @@ if (process.env['NODE_ENV'] !== 'container') {
 	log('Running in direct deployment mode. .env file loaded.');
 	const dotenv = await import('dotenv');
 	dotenv.config();
+} else {
+	log('Running in container mode. using environment variables.');
 };
 
 export const config: configType = {

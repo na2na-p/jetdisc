@@ -4,5 +4,5 @@ services:
     container_name: app
     image: na2na/2na2-discord:main
     restart: always
-    volumes:
-      - .config:/app/.config
+    env_file:
+      - ./.env
