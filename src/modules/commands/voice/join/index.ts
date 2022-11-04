@@ -2,6 +2,7 @@ import { boundMethod } from 'autobind-decorator';
 import { CommandInteraction } from 'discord.js';
 import { commandSetType } from '@/types/types.js';
 import { Na2Voice } from '@/utils/voice.js';
+import { Module } from '@/types/modules.js';
 
 
 // コマンドセットする用
@@ -13,8 +14,8 @@ const command: commandSetType = {
 /**
  * ping module
  */
-class VCJoin {
-	public readonly name = 'VCJoin';
+class VCJoin extends Module {
+	public override readonly name = 'VCJoin';
 
 	@boundMethod
 	public install() {

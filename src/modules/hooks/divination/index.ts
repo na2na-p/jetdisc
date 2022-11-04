@@ -5,6 +5,7 @@ import { Translator } from 'deepl-node';
 import color from 'color';
 
 import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 import { config } from '@/config/index.js';
 
 import { getDivination } from './divitation.js';
@@ -54,8 +55,8 @@ export const horoscope = {
 /**
  * 占い
  */
-export class Divination {
-	public readonly name = 'Divination';
+export class Divination extends Module {
+	public override readonly name = 'Divination';
 	private date: string = '';
 	private luckyColor: ColorResolvable = 'White';
 

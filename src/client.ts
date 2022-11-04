@@ -1,5 +1,10 @@
 import { boundMethod } from 'autobind-decorator';
-import { CacheType, Client, GatewayIntentBits, Interaction, InteractionType, Message } from 'discord.js';
+import {
+	Client,
+	GatewayIntentBits,
+	InteractionType,
+	Message,
+} from 'discord.js';
 import chalk from 'chalk';
 import { exit } from 'process';
 
@@ -138,7 +143,8 @@ export class Na2Client extends Client {
 	}
 
 	@boundMethod
-	private onInteractionCreate(interaction: Interaction<CacheType>): Promise<boolean> {
+	// TODO: 一生型定義合わん誰か助けて
+	private onInteractionCreate(interaction: any): Promise<boolean> {
 		if (!(interaction.type === InteractionType.ApplicationCommand)) {
 			return Promise.resolve(false);
 		}

@@ -2,6 +2,7 @@ import { boundMethod } from 'autobind-decorator';
 import { ChatInputCommandInteraction } from 'discord.js';
 
 import type { commandSetType } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 
 const command: commandSetType = {
 	name: 'dice',
@@ -12,8 +13,8 @@ const command: commandSetType = {
 /**
  * ping module
  */
-class Dice {
-	public readonly name = 'Dice';
+class Dice extends Module {
+	public override readonly name = 'Dice';
 
 	@boundMethod
 	public install() {

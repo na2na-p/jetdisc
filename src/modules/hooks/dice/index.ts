@@ -4,12 +4,13 @@ import { Message } from 'discord.js';
 import isNil from '@utils/isNil.js';
 
 import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 
 /**
  * ping module
  */
-export class Dice {
-	public readonly name = 'Dice';
+export class Dice extends Module {
+	public override readonly name = 'Dice';
 
 	@boundMethod
 	public install() {

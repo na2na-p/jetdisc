@@ -3,13 +3,14 @@ import { Message } from 'discord.js';
 import { Translator } from 'deepl-node';
 
 import type { queryMessage } from '@/types/types.js';
+import { Module } from '@/types/modules.js';
 import { config } from '@/config/index.js';
 
 /**
  * ping module
  */
-export class Translate {
-	public readonly name = 'Translate';
+export class Translate extends Module {
+	public override readonly name = 'Translate';
 
 	public install() {
 		return {
