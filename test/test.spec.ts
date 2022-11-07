@@ -2,7 +2,6 @@ import { random } from '../built/utils/random.js';
 import dayjs from 'dayjs';
 import { getDivination } from '../built/modules/hooks/divination/divitation.js';
 
-// mochaを利用したテストコード
 describe('モジュール群のテスト', () => {
 	describe('randomモジュールのテスト', () => {
 		it('2つのnumber型引数をとる場合のテスト', () => {

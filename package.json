@@ -12,7 +12,7 @@
 		"build": "yarn tsc -p tsconfig.json && yarn tsc-alias -p tsconfig.json",
 		"lint": "yarn eslint --ext .js,.ts .",
 		"lint:fix": "yarn eslint --ext .js,.ts . --fix",
-		"test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+		"test": "node --experimental-vm-modules --experimental-fetch ./node_modules/jest/bin/jest.js"
 	},
 	"dependencies": {
 		"@discordjs/opus": "0.9.0",

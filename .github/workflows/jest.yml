@@ -1,4 +1,4 @@
-name: mocha
+name: Jest
 on:
   push:
     branches-ignore:
