@@ -3,3 +3,5 @@ node_modules
 built
 default.yml
 files
+.idea
+.DS_Store

@@ -3,7 +3,7 @@
 		"incremental": false,
 		"target": "ESNext",
 		"module": "NodeNext",
-		"allowJs": false,
+		"allowJs": true,
 		"rootDir": "src",
 		"typeRoots": ["src/@types", "node_modules/@types"],
 		"baseUrl": ".",
