@@ -1,6 +1,3 @@
-import { expect } from 'chai';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as _mocha from 'mocha';
 import { random } from '../built/utils/random.js';
 import dayjs from 'dayjs';
 import { getDivination } from '../built/modules/hooks/divination/divitation.js';
@@ -16,14 +13,14 @@ describe('モジュール群のテスト', () => {
 			// 1~10までの数字の正規表現
 			const regex = /^[1-9]|[1-9][0-9]$/;
 			const result = random(options);
-			expect(regex.test(result.toString())).to.be.true;
+			expect(regex.test(result.toString())).toBe(true);
 		});
 		it('2つのnumber型引数をとる場合のテスト(大小が同値のパターン)', () => {
 			const options = {
 				min: 10,
 				max: 10,
 			};
-			expect(random(options)).to.equal(10);
+			expect(random(options)).toBe(10);
 		});
 		it('2つのnumber型引数をとる場合のテスト(大小が逆転のパターン)', () => {
 			const options = {
@@ -31,13 +28,13 @@ describe('モジュール群のテスト', () => {
 				max: 1,
 			};
 			// エラーがthrowされることを確認
-			expect(() => random(options)).to.throw('random()で生成した数値がmin/maxの範囲外です');
+			expect(() => random(options)).toThrow('random()で生成した数値がmin/maxの範囲外です');
 		});
 		it('一つのArray<string>を引数にとる場合のテスト', () => {
 			const options = {
 				candidate: ['a'],
 			};
-			expect(random(options)).to.equal('a');
+			expect(random(options)).toBe('a');
 		});
 	});
 	describe('divinationモジュールのテスト', () => {
@@ -45,7 +42,7 @@ describe('モジュール群のテスト', () => {
 		const sign = '天秤座';
 		it('正しく返ってくるか(毎日変わるのでresult.signだけ確認してます。)', async () => {
 			const result = await getDivination(sign, dateStr);
-			expect(result.sign).to.equal(sign);
+			expect(result.sign).toBe(sign);
 		});
 	});
 });
