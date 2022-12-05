@@ -9,6 +9,7 @@ import {
 	ModalSubmitInteraction,
 	SelectMenuInteraction,
 	UserContextMenuCommandInteraction,
+	ChatInputApplicationCommandData,
 } from 'discord.js';
 
 export type queryMessage = {
@@ -16,7 +17,9 @@ export type queryMessage = {
 	memberName: string;
 };
 
-export type commandSetType = {name: string, description: string};
+export type commandSetType = Omit<ChatInputApplicationCommandData, 'name'> & {
+	name: Lowercase<string>;
+};
 
 // TODO: 型見直し
 export type na2InteractionType<T>

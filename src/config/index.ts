@@ -10,6 +10,7 @@ type configType = {
 	botMasterId: string;
 	prefix: string;
 	deeplApiKey: string;
+	openAiApiKey: string;
 	setCommandsTargetServers: string[];
 }
 
@@ -48,6 +49,13 @@ export const config: configType = {
 			return process.env['DEEPL_API_KEY'];
 		} else {
 			throw new Error('DEEPL_API_KEY is not defined.');
+		}
+	})(),
+	openAiApiKey: (() => {
+		if (!isNil(process.env['OPENAI_API_KEY'])) {
+			return process.env['OPENAI_API_KEY'];
+		} else {
+			throw new Error('OPENAI_API_KEY is not defined.');
 		}
 	})(),
 	setCommandsTargetServers: (() => {
