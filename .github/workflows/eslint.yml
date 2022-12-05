@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: ci
+      - name: Install dependencies
         run: yarn install --immutable --immutable-cache --check-cache
       - name: ESLint
         run: yarn lint
