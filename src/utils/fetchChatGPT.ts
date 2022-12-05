@@ -30,9 +30,13 @@ async function fetchChatGPT({ prompt }: {prompt: string}): Promise<string> {
 	});
 
 	const results = await response.json();
-	// results.choicesの中からランダムに返す
-	const randomIndex = Math.floor(Math.random() * results.choices.length);
-	return results.choices[randomIndex].text;
+	try {
+		// results.choicesの中からランダムに返す
+		const randomIndex = Math.floor(Math.random() * results.choices.length);
+		return results.choices[randomIndex].text;
+	} catch (e) {
+		return results.message;
+	}
 }
 
 export default fetchChatGPT;
