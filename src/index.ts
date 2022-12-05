@@ -21,6 +21,7 @@ import { ChatGPT } from '@modules/hooks/chatGPT/index.js';
 // スラッシュコマンドあれこれ用
 import { pingCommandSetter, Ping as PingCommand } from '@modules/commands/ping/index.js';
 import { diceCommandSetter, Dice as DiceCommand } from '@modules/commands/dice/index.js';
+import { chatGPTCommandSetter, ChatGPT as ChatGPTCommand } from './modules/commands/ChatGPT/index.js';
 import { Module } from './types/modules.js';
 // import {VCJoinCommandSetter, VCJoin} from '@modules/commands/voice/join/index.js';
 
@@ -41,6 +42,7 @@ const hooks: Array<Module> = [
 	// interactionHook系
 	new PingCommand(),
 	new DiceCommand(),
+	new ChatGPTCommand(),
 	// new VCJoin(), TODO: このモジュールは未実装
 ];
 
@@ -48,6 +50,7 @@ const hooks: Array<Module> = [
 const commands: commandSetType[] = [
 	pingCommandSetter,
 	diceCommandSetter,
+	chatGPTCommandSetter,
 	// VCJoinCommandSetter, TODO: このモジュールは未実装
 ];
 
