@@ -20,7 +20,7 @@
 		"autobind-decorator": "2.4.0",
 		"chalk": "5.1.2",
 		"color": "4.2.3",
-		"dayjs": "1.11.6",
+		"dayjs": "1.11.7",
 		"deepl-node": "1.7.2",
 		"discord-api-types": "0.37.21",
 		"discord.js": "14.7.1",
