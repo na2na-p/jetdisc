@@ -26,7 +26,7 @@
 		"discord.js": "14.7.1",
 		"dotenv": "^16.0.3",
 		"libsodium-wrappers": "0.7.10",
-		"lodash": "^4.17.21",
+		"lodash": "~4.17.21",
 		"spotify-web-api-node": "5.0.2",
 		"twemoji-parser": "14.0.0"
 	},
@@ -49,6 +49,6 @@
 		"ts-jest": "^29.0.3",
 		"ts-node": "10.9.1",
 		"tsc-alias": "1.8.2",
-		"typescript": "^4.8.4"
+		"typescript": "^4.9.3"
 	}
 }
