@@ -22,5 +22,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: tflint
-        run: cd infra/ && tflint
+      - name: TFLint
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          fail_on_error: true
+          working_directory: infra
