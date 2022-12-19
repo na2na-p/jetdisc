@@ -17,7 +17,7 @@ jobs:
         run: yarn install --immutable --immutable-cache --check-cache
       - name: ESLint
         run: yarn lint
-  Infra:
+  Infra_ECR:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,3 +29,19 @@ jobs:
           reporter: github-pr-review
           fail_on_error: true
           working_directory: infra
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+      - name: Terraform Init
+        working-directory: infra/aws/ecr
+        run: terraform init
+      - name: Terraform Validate
+        id: validate
+        working-directory: infra/aws/ecr
+        run: terraform validate -no-color
+      - name: Terraform Plan
+        working-directory: infra/aws/ecr
+        run: terraform plan
