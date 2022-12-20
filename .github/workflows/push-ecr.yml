@@ -1,0 +1,26 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Build and push to ECR
+        run: |
+          docker build -t na2na-discord-bot:latest .
+          docker tag na2na-discord-bot:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/na2na-discord-bot:latest
+
+          $(aws ecr get-login --no-include-email --region us-east-1)
+          docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/na2na-discord-bot:latest
