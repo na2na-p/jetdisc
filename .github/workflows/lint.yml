@@ -26,9 +26,10 @@ jobs:
         uses: reviewdog/action-tflint@master
         with:
           github_token: ${{ secrets.github_token }}
+          working_directory: infra
           reporter: github-pr-review
           fail_on_error: true
-          working_directory: infra
+          tflint_rulesets: aws
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
