@@ -6,6 +6,7 @@
 		"discordjs",
 		"divitation",
 		"JugemKey",
-		"libsodium"
+		"libsodium",
+		"reviewdog"
 	]
 }
