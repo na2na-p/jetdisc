@@ -7,8 +7,9 @@ phases:
       nodejs: latest
   pre_build:
     commands:
-      - apk --update add curl
-      - apk --update add py-pip
+      - apt-get update
+      - apt-get install -y curl
+      - apt-get install -y python3-pip
       - pip install awscli
       - yarn install --immutable --immutable-cache --check-cache
       - yarn lint
