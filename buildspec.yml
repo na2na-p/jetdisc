@@ -9,7 +9,6 @@ phases:
     commands:
       - apk --update add curl
       - apk --update add py-pip
-      - apk --update add jq
       - pip install awscli
       - yarn install --immutable --immutable-cache --check-cache
       - yarn lint
