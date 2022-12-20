@@ -5,12 +5,6 @@ phases:
   install:
     runtime-versions:
       nodejs: latest
-  pre_build:
-    commands:
-      - apt-get update
-      - apt-get install -y curl
-      - apt-get install -y python3-pip
-      - pip install awscli
   build:
     commands:
       - docker build -t $ECR_REPOSITORY:latest .
@@ -20,5 +14,9 @@ phases:
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
-      # ECRへPUSH
+      - docker tag $ECR_REPOSITORY:latest $ECR_REGISTRY:latest
       - docker push $ECR_REGISTRY:latest
+      - printf '[{"name":"2na2-discord","imageUri":"%s"}]' $ECR_REGISTRY:latest > imagedefinitions.json
+
+artifacts:
+  files: imagedefinitions.json
