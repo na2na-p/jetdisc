@@ -8,8 +8,7 @@ phases:
   pre_build:
     commands:
       - apt-get update
-      - apt-get install -y curl
-      - apt-get install -y python3-pip
+      - apt-get install -y python3-pip curl --no-install-recommends
       - pip install awscli
   build:
     commands:
