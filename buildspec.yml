@@ -16,7 +16,7 @@ phases:
       - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
       - docker tag $ECR_REPOSITORY:latest $ECR_REGISTRY:latest
       - docker push $ECR_REGISTRY:latest
-      - printf '[{"name":"2na2-discord","imageUri":"%s", "secrets":[{"name":"TOKEN","valueFrom":"$TOKEN"},{"name":"OPENAI_API_KEY","valueForm":"$OPENAI_API_KEY"},{"name":"DEEPL_API_KEY","valueForm":"$DEEPL_API_KEY"},{"name":"BOT_MASTER_ID","valueForm":"$BOT_MASTER_ID"},{"name":"SET_COMMANDS_TARGET_SERVERS","valueForm":"$SET_COMMANDS_TARGET_SERVERS"},{"name":"PREFIX","valueForm":"$PREFIX"}]' $ECR_REGISTRY:latest > imagedefinitions.json
+      - printf '[{"name":"2na2-discord","imageUri":"%s", "secrets":[{"name":"TOKEN","valueFrom":"$TOKEN"},{"name":"OPENAI_API_KEY","valueForm":"$OPENAI_API_KEY"},{"name":"DEEPL_API_KEY","valueForm":"$DEEPL_API_KEY"},{"name":"BOT_MASTER_ID","valueForm":"$BOT_MASTER_ID"},{"name":"SET_COMMANDS_TARGET_SERVERS","valueForm":"$SET_COMMANDS_TARGET_SERVERS"},{"name":"PREFIX","valueForm":"$PREFIX"}]}]' $ECR_REGISTRY:latest > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json
