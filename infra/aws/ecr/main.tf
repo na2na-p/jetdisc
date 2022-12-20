@@ -26,6 +26,9 @@ locals {
           countNumber = 1
           countType   = "imageCountMoreThan"
           tagStatus   = "any"
+        },
+        action = {
+          type = "expire"
         }
       },
     ]
