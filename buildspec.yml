@@ -5,11 +5,6 @@ phases:
   install:
     runtime-versions:
       nodejs: latest
-  pre_build:
-    commands:
-      - apt-get update
-      - apt-get install -y python3-pip curl --no-install-recommends
-      - pip install awscli
   build:
     commands:
       - docker build -t $ECR_REPOSITORY:latest .
