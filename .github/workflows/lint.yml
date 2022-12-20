@@ -1,0 +1,48 @@
+name: Lint
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  ESLint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+      - name: ESLint
+        run: yarn lint
+  Infra_ECR:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: TFLint
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          working_directory: infra
+          reporter: github-pr-review
+          fail_on_error: true
+          tflint_rulesets: aws
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+      - name: Terraform Init
+        working-directory: infra/aws/ecr
+        run: terraform init
+      - name: Terraform Validate
+        id: validate
+        working-directory: infra/aws/ecr
+        run: terraform validate -no-color
+      - name: Terraform Plan
+        working-directory: infra/aws/ecr
+        run: terraform plan
