@@ -6,6 +6,8 @@ const GPT3_MODELS = {
 	curie: 'text-curie-001',
 	babbage: 'text-babbage-001',
 	ada: 'text-ada-001',
+} as const satisfies {
+	[key in string]: string;
 };
 
 export default GPT3_MODELS;
