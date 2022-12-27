@@ -13,6 +13,7 @@ module.exports = {
 	},
 	'plugins': [
 		'@typescript-eslint',
+		'import',
 	],
 	'rules': {
 		'no-tabs': 'off',
@@ -22,5 +23,37 @@ module.exports = {
 		'no-unused-vars': 'off',
 		'require-jsdoc': 'off',
 		'object-curly-spacing': ['error', 'always'],
+		'import/order': [
+			'error',
+			{
+				'groups': ['builtin', 'external'],
+				'pathGroups': [
+					{
+						'pattern': '@utils/**',
+						'group': 'external',
+						'position': 'after',
+					},
+					{
+						'pattern': '@modules/hooks/**',
+						'group': 'external',
+						'position': 'after',
+					},
+					{
+						'pattern': '@modules/commands/**',
+						'group': 'external',
+						'position': 'after',
+					},
+				],
+				'pathGroupsExcludedImportTypes': ['builtin'],
+				'alphabetize': {
+					'order': 'asc',
+				},
+				'newlines-between': 'always',
+			},
+		],
+		'@typescript-eslint/consistent-type-imports': [
+			'error',
+			{ 'prefer': 'type-imports' },
+		],
 	},
 };
