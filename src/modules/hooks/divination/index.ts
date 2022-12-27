@@ -1,14 +1,15 @@
 import { boundMethod } from 'autobind-decorator';
-import { EmbedBuilder, ColorResolvable, EmbedFooterData, Message } from 'discord.js';
+import color from 'color';
 import dayjs from 'dayjs';
 import { Translator } from 'deepl-node';
-import color from 'color';
-
-import type { queryMessage } from '@/types/types.js';
-import { Module } from '@/types/modules.js';
-import { config } from '@/config/index.js';
+import type { ColorResolvable, EmbedFooterData, Message } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 
 import { getDivination } from './divitation.js';
+import { config } from '@/config/index.js';
+import { Module } from '@/types/modules.js';
+import type { queryMessage } from '@/types/types.js';
+
 
 export type divination = {
 	content: string,

@@ -1,4 +1,4 @@
-import { divination, horoscope } from './index.js';
+import type { divination, horoscope } from './index.js';
 
 type parsedDivination = {
 	[key in horoscope]: divination;

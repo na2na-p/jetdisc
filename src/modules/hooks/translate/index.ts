@@ -1,10 +1,10 @@
 import { boundMethod } from 'autobind-decorator';
-import { Message } from 'discord.js';
 import { Translator } from 'deepl-node';
+import type { Message } from 'discord.js';
 
-import type { queryMessage } from '@/types/types.js';
-import { Module } from '@/types/modules.js';
 import { config } from '@/config/index.js';
+import { Module } from '@/types/modules.js';
+import type { queryMessage } from '@/types/types.js';
 
 /**
  * ping module

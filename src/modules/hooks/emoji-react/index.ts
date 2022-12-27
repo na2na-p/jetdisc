@@ -1,10 +1,10 @@
 import { boundMethod } from 'autobind-decorator';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import { parse } from 'twemoji-parser';
 
-import type { queryMessage } from '@/types/types.js';
-import { Module } from '@/types/modules.js';
 import { Na2Client } from '@/client.js';
+import { Module } from '@/types/modules.js';
+import type { queryMessage } from '@/types/types.js';
 
 type wordReactType = Array<[RegExp, string]>;
 

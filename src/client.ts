@@ -1,15 +1,21 @@
+import { exit } from 'process';
+
 import { boundMethod } from 'autobind-decorator';
+import chalk from 'chalk';
+import type {
+	Message } from 'discord.js';
 import {
 	Client,
 	GatewayIntentBits,
 	InteractionType,
-	Message,
 } from 'discord.js';
-import chalk from 'chalk';
-import { exit } from 'process';
+
+import log from '@utils/log.js';
 
 import { config } from '@/config/index.js';
-import log from '@utils/log.js';
+import type {
+	Module,
+} from '@/types/modules.js';
 import type {
 	commandSetType,
 	interactionHookType,
@@ -18,9 +24,6 @@ import type {
 	installedHooksType,
 	queryMessage,
 } from '@/types/types.js';
-import type {
-	Module,
-} from '@/types/modules.js';
 
 
 export class Na2Client extends Client {
