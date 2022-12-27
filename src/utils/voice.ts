@@ -1,6 +1,7 @@
 // @ts-nocheck
 // TODO: 未実装なので、ts-nocheckをしている
-import { Na2Client } from '@/client.js';
+import type {
+	VoiceConnection } from '@discordjs/voice';
 import {
 	joinVoiceChannel,
 	entersState,
@@ -11,11 +12,12 @@ import {
 	AudioPlayerStatus,
 	NoSubscriberBehavior,
 	generateDependencyReport,
-	VoiceConnection,
 } from '@discordjs/voice';
-import { ChatInputCommandInteraction } from 'discord.js';
 import { boundMethod } from 'autobind-decorator';
-import { CacheType, CommandInteraction, Guild, GuildMember, VoiceBasedChannel } from 'discord.js';
+import type { ChatInputCommandInteraction } from 'discord.js';
+import type { CacheType, CommandInteraction, Guild, GuildMember, VoiceBasedChannel } from 'discord.js';
+
+import { Na2Client } from '@/client.js';
 import log from '@/utils/log.js';
 console.log(generateDependencyReport());
 

@@ -1,8 +1,9 @@
 import { boundMethod } from 'autobind-decorator';
-import { ChatInputCommandInteraction } from 'discord.js';
-import { commandSetType } from '@/types/types.js';
-import { Na2Voice } from '@/utils/voice.js';
+import type { ChatInputCommandInteraction } from 'discord.js';
+
 import { Module } from '@/types/modules.js';
+import type { commandSetType } from '@/types/types.js';
+import { Na2Voice } from '@/utils/voice.js';
 
 
 // コマンドセットする用

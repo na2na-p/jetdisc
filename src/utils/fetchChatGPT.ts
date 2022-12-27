@@ -1,5 +1,5 @@
-import ENDPOINTS from '@/constants/ENDPOINTS.js';
 import { config } from '@/config/index.js';
+import ENDPOINTS from '@/constants/ENDPOINTS.js';
 import GPT3_MODELS from '@/constants/GPT3_MODELS.js';
 
 const COMPLETION_ENDPOINT = `${ENDPOINTS.OPEN_AI}/completions`;

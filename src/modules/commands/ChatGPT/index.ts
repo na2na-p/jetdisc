@@ -1,9 +1,9 @@
 import { boundMethod } from 'autobind-decorator';
-import { ChatInputCommandInteraction } from 'discord.js';
+import type { ChatInputCommandInteraction } from 'discord.js';
 
-import fetchChatGPT from '@/utils/fetchChatGPT.js';
-import type { commandSetType } from '@/types/types.js';
 import { Module } from '@/types/modules.js';
+import type { commandSetType } from '@/types/types.js';
+import fetchChatGPT from '@/utils/fetchChatGPT.js';
 
 // コマンドセットする用
 const command: commandSetType = {

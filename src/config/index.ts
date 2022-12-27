@@ -1,5 +1,5 @@
-import _log from '@utils/log.js';
 import isNil from '@utils/isNil.js';
+import _log from '@utils/log.js';
 
 function log(msg: string): void {
 	_log(`[Config]: ${msg}`);

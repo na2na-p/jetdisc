@@ -1,5 +1,5 @@
 import { boundMethod } from 'autobind-decorator';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 
 import { Module } from '@/types/modules.js';
 import type { queryMessage } from '@/types/types.js';
