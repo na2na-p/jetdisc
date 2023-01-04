@@ -21,7 +21,7 @@
 		"chalk": "5.2.0",
 		"color": "4.2.3",
 		"dayjs": "1.11.7",
-		"deepl-node": "1.7.2",
+		"deepl-node": "1.7.3",
 		"discord-api-types": "0.37.25",
 		"discord.js": "14.7.1",
 		"dotenv": "^16.0.3",
