@@ -14,8 +14,14 @@ import {
 	generateDependencyReport,
 } from '@discordjs/voice';
 import { boundMethod } from 'autobind-decorator';
-import type { ChatInputCommandInteraction } from 'discord.js';
-import type { CacheType, CommandInteraction, Guild, GuildMember, VoiceBasedChannel } from 'discord.js';
+import type {
+	ChatInputCommandInteraction,
+	CacheType,
+	CommandInteraction,
+	Guild,
+	GuildMember,
+	VoiceBasedChannel,
+} from 'discord.js';
 
 import { Na2Client } from '@/client.js';
 import log from '@/utils/log.js';

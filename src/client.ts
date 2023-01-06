@@ -1,5 +1,6 @@
 import { exit } from 'process';
 
+import log from '@utils/log.js';
 import { boundMethod } from 'autobind-decorator';
 import chalk from 'chalk';
 import type {
@@ -10,7 +11,6 @@ import {
 	InteractionType,
 } from 'discord.js';
 
-import log from '@utils/log.js';
 
 import { config } from '@/config/index.js';
 import type {
@@ -112,10 +112,10 @@ export class Na2Client extends Client {
 	private onMessageCreate(message: Message<boolean>): Promise<boolean> {
 		// prefixで始まる投稿 && Botによるものではないもの
 		const mentionedRoleId = this.mentionHasOwnRole(message);
-		if ((message.content.startsWith(config.prefix) || // prefixで始まる場合
-				message.mentions.users.has(this.user!.id) || // ユーザーメンションされた場合
-				mentionedRoleId) && // ロールメンションされた場合
-			!message.author.bot) {
+		if ((message.content.startsWith(config.prefix) // prefixで始まる場合
+				|| message.mentions.users.has(this.user!.id) // ユーザーメンションされた場合
+				|| mentionedRoleId) // ロールメンションされた場合
+			&& !message.author.bot) {
 			// messageからconfig.prefixを除去
 
 			const regExp = new RegExp(`^${config.prefix}|^<@${this.user!.id}> |^<@&${mentionedRoleId}> `);

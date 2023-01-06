@@ -20,26 +20,23 @@ module.exports = {
 		'max-len': ['error', { 'code': 120 }],
 		'indent': ['error', 'tab'],
 		'@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
+		'@typescript-eslint/no-redeclare': ['error'],
 		'no-unused-vars': 'off',
 		'require-jsdoc': 'off',
 		'object-curly-spacing': ['error', 'always'],
 		'import/order': [
 			'error',
 			{
-				'groups': ['builtin', 'external'],
+				'groups': [
+					'builtin',
+					'external',
+					'internal',
+					['sibling', 'parent'],
+					'object',
+				],
 				'pathGroups': [
 					{
-						'pattern': '@utils/**',
-						'group': 'external',
-						'position': 'after',
-					},
-					{
-						'pattern': '@modules/hooks/**',
-						'group': 'external',
-						'position': 'after',
-					},
-					{
-						'pattern': '@modules/commands/**',
+						'pattern': '@/**',
 						'group': 'external',
 						'position': 'after',
 					},
@@ -47,6 +44,7 @@ module.exports = {
 				'pathGroupsExcludedImportTypes': ['builtin'],
 				'alphabetize': {
 					'order': 'asc',
+					'caseInsensitive': true,
 				},
 				'newlines-between': 'always',
 			},
@@ -55,5 +53,7 @@ module.exports = {
 			'error',
 			{ 'prefer': 'type-imports' },
 		],
+		'import/no-duplicates': 'error',
+		'operator-linebreak': ['error', 'before'],
 	},
 };
