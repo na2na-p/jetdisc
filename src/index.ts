@@ -5,6 +5,7 @@ import { pingCommandSetter, Ping as PingCommand } from '@modules/commands/ping/i
 import { ChatGPT } from '@modules/hooks/chatGPT/index.js';
 import { Dice } from '@modules/hooks/dice/index.js';
 import { Divination } from '@modules/hooks/divination/index.js';
+import { DlsiteReact } from '@modules/hooks/dlsite/index.js';
 import { EmojiReact } from '@modules/hooks/emoji-react/index.js';
 import { Menu } from '@modules/hooks/menu/index.js';
 import { Ping } from '@modules/hooks/ping/index.js';
@@ -40,6 +41,7 @@ const hooks: Array<Module> = [
 	new Menu(),
 	new ChatGPT(),
 	// streamHook系
+	new DlsiteReact(),
 	new Search(),
 	new EmojiReact(),
 	// interactionHook系
