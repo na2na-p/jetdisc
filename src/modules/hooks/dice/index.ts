@@ -1,7 +1,6 @@
+import isNil from '@utils/isNil.js';
 import { boundMethod } from 'autobind-decorator';
 import type { Message } from 'discord.js';
-
-import isNil from '@utils/isNil.js';
 
 
 import { Module } from '@/types/modules.js';
@@ -37,10 +36,10 @@ export class Dice extends Module {
 			// diceQueryのすべての要素がStringなのかを確認
 			// TODO: なんでindex1,2なの？？？
 			if (
-				diceQuery == null ||
-				diceQuery.length !== 2 ||
-				diceQuery[1] == null ||
-				diceQuery[2] == null
+				diceQuery == null
+				|| diceQuery.length !== 2
+				|| diceQuery[1] == null
+				|| diceQuery[2] == null
 			) return false;
 
 			const times = parseInt(diceQuery[1], 10);

@@ -1,7 +1,7 @@
-import type { divination, horoscope } from './index.js';
+import type { divination, horoscopeType } from './index.js';
 
 type parsedDivination = {
-	[key in horoscope]: divination;
+	[key in horoscopeType]: divination;
 };
 
 /**
@@ -9,7 +9,7 @@ type parsedDivination = {
 	 * @param {string} dateStr
 	 * @return {divination} 引数で渡した星座の運勢を返す
 	 */
-export async function getDivination(sign: horoscope, dateStr: String): Promise<divination> {
+export async function getDivination(sign: horoscopeType, dateStr: String): Promise<divination> {
 	const jugemkey = 'http://api.jugemkey.jp/api/horoscope/free/' + dateStr;
 	const options = {
 		method: 'GET',
@@ -18,8 +18,8 @@ export async function getDivination(sign: horoscope, dateStr: String): Promise<d
 			'Content-Type': 'application/json',
 		},
 	};
-	const response: Array<divination> =
-			JSON.parse(await (await fetch(options.url, options)).text()).horoscope[`${dateStr}`];
+	const response: Array<divination>
+			= JSON.parse(await (await fetch(options.url, options)).text()).horoscope[`${dateStr}`];
 	const protoResult: Partial<parsedDivination> = {};
 
 	response.forEach((eachResults) => {
