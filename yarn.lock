@@ -1618,10 +1618,10 @@ deep-is@^0.1.3:
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.4.tgz#a6f2dce612fadd2ef1f519b73551f17e85199831"
   integrity sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==
 
-deepl-node@1.7.5:
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/deepl-node/-/deepl-node-1.7.5.tgz#105962e442e02dccd14732fc5e2b77b77295dc04"
-  integrity sha512-udOw1i95NUapU5PxAuQa2GVE4RI/+D0t8YDBKTbJ8RcNH2Zoc3HEf+ewskxM8aqdIbMnY20qHe3ahG1q7nWOiA==
+deepl-node@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/deepl-node/-/deepl-node-1.8.0.tgz#4f77b752c5ab275f990c83dbbc7718968befd2e0"
+  integrity sha512-q8fQaQ2/HXvXWV9j5mABCH9tIlfWghFeVQfad4yPm8ZcYdhLNLwdmPMqXptL9oVueSRo+UtJR1OlnIm/EvvtAA==
   dependencies:
     "@types/node" ">=12.0"
     axios ">=0.21.2 <1.2.0 || >=1.2.1"
@@ -1683,10 +1683,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-api-types@0.37.29:
-  version "0.37.29"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.29.tgz#7ab0b5b39225a5381636712da08fe5ba4cc5491a"
-  integrity sha512-OPqoPq71MYEIK4asZJJWFOdG5f3wN/yPySlM0ivwSRiV3XpTzpa5S8y5Ujo59WiKx7ADDEsUA560/VgrBuvwjQ==
+discord-api-types@0.37.30:
+  version "0.37.30"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.30.tgz#04b43ec92b48f20a1bd055681c126f5d5b0840b2"
+  integrity sha512-TzNF28zWV63clYW1+rbKT2+2qSI+lw/aNG3lyP2fIj5NioGPz4C+bCSvwhP3Ly3uLwL7v8FxIiu8XKGDsvuwWA==
 
 discord-api-types@^0.37.20:
   version "0.37.20"
