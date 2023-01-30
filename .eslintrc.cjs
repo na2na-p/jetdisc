@@ -55,5 +55,6 @@ module.exports = {
 		],
 		'import/no-duplicates': 'error',
 		'operator-linebreak': ['error', 'before'],
+		'semi': ['error', 'always'],
 	},
 };
