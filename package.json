@@ -22,10 +22,10 @@
 		"color": "4.2.3",
 		"dayjs": "1.11.7",
 		"deepl-node": "1.8.0",
-		"discord-api-types": "0.37.33",
+		"discord-api-types": "0.37.35",
 		"discord.js": "14.7.1",
 		"dotenv": "^16.0.3",
-		"libsodium-wrappers": "0.7.10",
+		"libsodium-wrappers": "0.7.11",
 		"lodash": "~4.17.21",
 		"spotify-web-api-node": "5.0.2",
 		"twemoji-parser": "14.0.0"
