@@ -4,7 +4,4 @@
 .idea
 .git
 Dockerfile
-built/
 docker-compose.yml
-node_modules/
-files/
