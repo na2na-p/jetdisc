@@ -1,0 +1,13 @@
+[package]
+authors = ["na2na"]
+edition = "2021"
+name = "discord-2na2"
+version = "0.0.0"
+
+[dependencies]
+dotenv = "0.15.0"
+env_logger = "0.10.0"
+log = "0.4.17"
+thiserror = "1.0.40"
+poise = { version = "0.5.5" }
+tokio = { version = "1.28.1", features = ["macros", "rt-multi-thread"] }

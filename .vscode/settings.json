@@ -1,14 +1,17 @@
 {
 	"files.eol": "\n",
 	"cSpell.words": [
+		"builtins",
 		"chatgpt",
 		"davinci",
 		"discordjs",
 		"divitation",
+		"dotenv",
 		"imagedefinitions",
 		"JugemKey",
 		"libsodium",
 		"reviewdog",
-		"swcrc"
+		"swcrc",
+		"timespan"
 	]
 }
