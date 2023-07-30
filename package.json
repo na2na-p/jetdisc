@@ -37,7 +37,7 @@
 		"@types/color": "3.0.3",
 		"@types/jest": "^29.2.2",
 		"@types/lodash": "^4.14.187",
-		"@types/node": "18.16.19",
+		"@types/node": "18.17.1",
 		"@types/twemoji-parser": "13.1.1",
 		"@typescript-eslint/eslint-plugin": "6.2.0",
 		"@typescript-eslint/parser": "6.2.0",
