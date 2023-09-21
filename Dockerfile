@@ -1,4 +1,4 @@
-FROM node:19-bullseye AS builder
+FROM node:20-bullseye AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . ./
 RUN yarn install \
 		&& yarn build
 
-FROM node:19-bullseye-slim AS runner
+FROM node:20-bullseye-slim AS runner
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
