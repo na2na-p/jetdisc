@@ -31,7 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
       - name: Build and push to ECR
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         env:
           ECR_REPOSITORY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/na2na-discord-bot
         with:
