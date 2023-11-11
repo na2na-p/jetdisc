@@ -18,7 +18,7 @@
 		}
 	},
 	"module": {
-		"type": "nodenext"
+		"type": "es6"
 	},
 	"minify": false
 }
