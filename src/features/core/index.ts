@@ -1,1 +1,1 @@
-export { Client } from './internal/Client.js';
+export { Client } from './internal/Client.class.js';
