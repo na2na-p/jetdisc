@@ -1,0 +1,24 @@
+{
+	"$schema": "https://json.schemastore.org/swcrc",
+	"jsc": {
+		"baseUrl": ".",
+		"parser": {
+			"syntax": "typescript",
+			"dynamicImport": false,
+			"decorators": false
+		},
+		"target": "esnext",
+		"loose": false,
+		"externalHelpers": false,
+		"keepClassNames": false,
+		"paths": {
+			"@/*": [
+				"src/*"
+			]
+		}
+	},
+	"module": {
+		"type": "nodenext"
+	},
+	"minify": false
+}
