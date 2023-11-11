@@ -4,8 +4,6 @@ export abstract class CommandBase {
   public abstract readonly name: string;
   public abstract readonly description: string;
 
-  public constructor() {}
-
   public register = () => this;
 
   public isInteract({ interaction }: InteractArgs): boolean {
