@@ -8,13 +8,6 @@ export abstract class CommandBase {
 
   public register = () => this;
 
-  public getRegisterInfo() {
-    return {
-      name: this.name,
-      description: this.description,
-    };
-  }
-
   public isInteract({ interaction }: InteractArgs): boolean {
     return interaction.commandName === this.name;
   }

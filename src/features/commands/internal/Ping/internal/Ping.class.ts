@@ -3,7 +3,7 @@ import { CommandBase } from '../../CommandBase/index.js';
 
 export class Ping extends CommandBase {
   public readonly name = 'ping';
-  public readonly description = 'ping';
+  public readonly description = 'Ping the bot.';
 
   public override async interact({ interaction }: InteractArgs): Promise<void> {
     interaction.reply(

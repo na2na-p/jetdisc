@@ -32,13 +32,17 @@ export class Client extends DiscordJsClient {
       exit(1);
     }
 
-    const modulesInstallResult: boolean = this.installModules(commands);
-    this.on('ready', () => {
+    const commandsRegisteredResult = this.#installModules(commands);
+
+    this.on('ready', client => {
       this.log(chalk.green(`Logged in as ${chalk.underline(this.user?.tag)}`));
-      if (modulesInstallResult && this.installCommands(commands)) {
+      if (
+        commandsRegisteredResult &&
+        this.#installCommands({ commands, application: client.application })
+      ) {
         this.on('interactionCreate', async interaction => {
           if (interaction.isChatInputCommand()) {
-            this.onInteractionCreate({ interaction });
+            this.#onInteractionCreate({ interaction });
           }
           return;
         });
@@ -54,7 +58,7 @@ export class Client extends DiscordJsClient {
     });
   }
 
-  private installModules(commands: ReadonlyArray<CommandBase>): boolean {
+  #installModules(commands: ReadonlyArray<CommandBase>): boolean {
     commands.forEach(command => {
       this.interactionCommands = [
         ...this.interactionCommands,
@@ -64,7 +68,13 @@ export class Client extends DiscordJsClient {
     return true;
   }
 
-  private installCommands(commands: ReadonlyArray<CommandBase>): boolean {
+  #installCommands({
+    commands,
+    application,
+  }: {
+    commands: ReadonlyArray<CommandBase>;
+    application: Client['application'];
+  }): boolean {
     if (commands.length === 0) {
       this.log(
         chalk.yellow(
@@ -79,19 +89,18 @@ export class Client extends DiscordJsClient {
 
     try {
       this.#config.SET_COMMANDS_TARGET_SERVERS.forEach(async serverId => {
-        this.application?.commands.set(commands, serverId);
-        // this.on('ready')になってないとthis.applicationがnull。そうでないならok
-        this.log(
-          `Installed commands to ${chalk.underline(this.application?.name)}`
-        );
+        // this.on('ready')になってないとthis.applicationがnull。そうでないならok?
+        // HACK: なぜかnullでも動く
+        application?.commands.set(commands, serverId);
+        this.log(`Installed commands to ${chalk.underline(serverId)}`);
       });
       return true;
     } catch (error) {
-      throw new Error('コマンドのインストールに失敗しました。');
+      throw new Error('Failed to install commands');
     }
   }
 
-  private onInteractionCreate({
+  #onInteractionCreate({
     interaction,
   }: {
     interaction: Readonly<ChatInputCommandInteraction>;
