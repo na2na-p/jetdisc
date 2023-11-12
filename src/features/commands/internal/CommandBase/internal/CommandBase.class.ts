@@ -12,9 +12,9 @@ export abstract class CommandBase {
    */
   public abstract readonly description: string;
 
-  public register = () => this;
+  public readonly register = () => this;
 
-  public isInteract({ interaction }: InteractArgs): boolean {
+  public isInteract({ interaction }: InteractArgs): Readonly<boolean> {
     return interaction.commandName === this.name;
   }
 
