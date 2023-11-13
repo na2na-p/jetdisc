@@ -1,6 +1,6 @@
 import { chalk } from '@/features/library/index.js';
 
-import { log } from './log.js';
+import { log } from './log.func.js';
 
 describe('log', () => {
   let mockStdout: jest.SpyInstance;

@@ -1,1 +1,1 @@
-export { getConfig } from './internal/getConfig.js';
+export { getConfig } from './internal/getConfig.func.js';

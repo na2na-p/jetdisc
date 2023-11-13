@@ -1,1 +1,1 @@
-export { log } from './internal/log.js';
+export { log } from './internal/log.func.js';

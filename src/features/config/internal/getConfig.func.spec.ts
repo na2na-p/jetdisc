@@ -1,4 +1,4 @@
-import { getConfig } from './getConfig.js';
+import { getConfig } from './getConfig.func.js';
 
 describe('getConfig', () => {
   const originalProcessEnv = process.env;
