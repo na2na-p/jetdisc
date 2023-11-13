@@ -6,3 +6,4 @@ export {
   GatewayIntentBits,
   ChatInputCommandInteraction,
 } from 'discord.js';
+export type { CacheType } from 'discord.js';
