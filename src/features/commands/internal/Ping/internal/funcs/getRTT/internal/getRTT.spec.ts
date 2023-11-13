@@ -1,4 +1,4 @@
-import { getRTT } from './getRTT.js';
+import { getRTT } from './getRTT.func.js';
 
 describe('getRTT', () => {
   it('should return the correct RTT', () => {

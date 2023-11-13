@@ -1,1 +1,1 @@
-export { getRTT } from './internal/getRTT.js';
+export { getRTT } from './internal/getRTT.func.js';

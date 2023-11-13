@@ -1,3 +1,5 @@
+import type { ApplicationCommandOptionData } from '@/features/library/index.js';
+
 import type { InteractArgs } from './CommandBase.types.js';
 
 export abstract class CommandBase {
@@ -11,6 +13,10 @@ export abstract class CommandBase {
    * この値がそのままコマンドの説明として表示される
    */
   public abstract readonly description: string;
+  /**
+   * オプション
+   */
+  public readonly options?: ReadonlyArray<ApplicationCommandOptionData>;
 
   public readonly register = () => this;
 
