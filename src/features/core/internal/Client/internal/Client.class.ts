@@ -60,10 +60,9 @@ export class Client extends DiscordJsClient {
 
   #installModules(commands: ReadonlyArray<CommandBase>): boolean {
     commands.forEach(command => {
-      this.interactionCommands = [
-        ...this.interactionCommands,
-        command.register(),
-      ];
+      this.interactionCommands = this.interactionCommands.concat(
+        command.register()
+      );
     });
     return true;
   }
