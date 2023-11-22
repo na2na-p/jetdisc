@@ -10,3 +10,8 @@ asdfを使っている場合はそのまま入ります。
 - Python
 
 Pythonは、`@discordjs/opus`の入れるのに必要です。
+
+# 登場するドメイン
+
+- Actor
+  - Userの子概念で、interactしたUserを指す。
