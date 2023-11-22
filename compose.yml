@@ -1,0 +1,11 @@
+services:
+  app:
+    build: .
+    restart: always
+    networks:
+      - external_network
+    env_file:
+      - .env
+
+networks:
+  external_network:
