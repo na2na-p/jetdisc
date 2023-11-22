@@ -3,11 +3,11 @@ import { chalk } from '@/features/library/index.js';
 import { log } from './log.func.js';
 
 describe('log', () => {
-  let mockStdout: jest.SpyInstance;
+  let mockStdout: vi.SpyInstance;
   const originalConsoleLog = console.log;
 
   beforeEach(() => {
-    mockStdout = jest.spyOn(console, 'log').mockImplementation(() => {});
+    mockStdout = vi.spyOn(console, 'log').mockImplementation(() => {});
   });
 
   afterEach(() => {
@@ -30,7 +30,7 @@ describe('log', () => {
 
   it('should use the provided stdout method if given', () => {
     const message = 'test message';
-    const mockStdoutMethod = jest.fn();
+    const mockStdoutMethod = vi.fn();
 
     log({ message, stdoutMethod: mockStdoutMethod });
 

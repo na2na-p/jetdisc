@@ -4,7 +4,7 @@ describe('getConfig', () => {
   const originalProcessEnv = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
+    vi.resetModules();
     process.env = { ...originalProcessEnv };
   });
 

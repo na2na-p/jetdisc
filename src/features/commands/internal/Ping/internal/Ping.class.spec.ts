@@ -16,13 +16,13 @@ describe('Ping', () => {
     it('should reply with the RTT in milliseconds', async () => {
       const interaction = {
         createdAt: new Date('2022-01-01T00:00:00.000Z'),
-        reply: jest.fn(),
+        reply: vi.fn(),
       } as unknown as Readonly<ChatInputCommandInteraction<CacheType>>;
       const expectedRTT = 100;
 
-      jest
-        .spyOn(Date, 'now')
-        .mockReturnValueOnce(new Date('2022-01-01T00:00:00.100Z').getTime());
+      vi.spyOn(Date, 'now').mockReturnValueOnce(
+        new Date('2022-01-01T00:00:00.100Z').getTime()
+      );
 
       await ping.interact({ interaction });
 
