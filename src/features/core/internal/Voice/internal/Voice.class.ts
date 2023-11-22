@@ -17,7 +17,10 @@ import { getInteractionMemberId } from '@/features/others/discord/index.js';
  */
 export class Voice {
   static #instance: Voice | null = null;
-  #connection: VoiceConnection | undefined = undefined;
+  #connection: Array<{
+    guildId: string;
+    connection: VoiceConnection;
+  }> = [];
   private constructor() {}
 
   public static getInstance(): Voice {
@@ -40,10 +43,15 @@ export class Voice {
 
     if (checkJoinableResult.isJoinable === false) return false;
 
-    this.#connection = joinVoiceChannel({
+    const connection = joinVoiceChannel({
       channelId: checkJoinableResult.channel.id,
       guildId: checkJoinableResult.channel.guild.id,
       adapterCreator: checkJoinableResult.channel.guild.voiceAdapterCreator,
+    });
+
+    this.#connection.push({
+      guildId: checkJoinableResult.channel.guild.id,
+      connection,
     });
 
     return true;
@@ -54,17 +62,27 @@ export class Voice {
   }: {
     interaction: Readonly<ChatInputCommandInteraction>;
   }): Promise<boolean> {
-    if (isNil(this.#connection)) {
+    const guildId = interaction.guildId;
+    if (isNil(guildId)) return false;
+
+    const targetConnection = this.#connection.find(
+      connection => connection.guildId === guildId
+    );
+
+    if (isNil(targetConnection)) {
       const member = await getInteractionMemberId(interaction);
       const connection = getVoiceConnection(member.guild.id);
       if (isNil(connection)) {
         return false;
       } else {
-        this.#connection = connection;
+        connection.destroy();
         return true;
       }
     } else {
-      this.#connection.destroy();
+      targetConnection.connection.destroy();
+      this.#connection = this.#connection.filter(
+        connection => connection.guildId !== guildId
+      );
       return true;
     }
   }
