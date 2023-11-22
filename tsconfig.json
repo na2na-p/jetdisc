@@ -28,9 +28,6 @@
 				"src/utils/*"
 			]
 		},
-		"types": [
-			"vitest/globals"
-		]
 	},
 	"include": [
 		"src",
