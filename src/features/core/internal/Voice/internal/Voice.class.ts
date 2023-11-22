@@ -88,14 +88,12 @@ export class Voice {
         ephemeral: false,
       };
     } else if (!channel.joinable) {
-      // やっぱりchannelの型が謎
       return {
         isJoinable: false,
         content: '接続先のVCに参加できません。権限の見直しをしてください。',
         ephemeral: true,
       };
     } else if (!channel.viewable) {
-      // channelの型が謎
       return {
         isJoinable: false,
         content: '接続先のVCに参加できません。権限の見直しをしてください。',
