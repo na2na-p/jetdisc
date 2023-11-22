@@ -11,6 +11,8 @@ import {
 } from '@/features/library/index.js';
 import { getInteractionMemberId } from '@/features/others/discord/index.js';
 
+import { JOINABLE_TYPE_MAP } from './Voice.constants.js';
+
 export class Voice {
   #connection: Array<{
     guildId: string;
@@ -23,11 +25,12 @@ export class Voice {
     interaction: Readonly<ChatInputCommandInteraction>;
   }) {
     const member = await getInteractionMemberId(interaction);
-    const checkJoinableResult = this.#checkJoinable({
+    const checkJoinableResult = this.checkJoinable({
       channel: member.voice.channel,
     });
 
-    if (checkJoinableResult.isJoinable === false) return false;
+    if (checkJoinableResult.joinableType !== JOINABLE_TYPE_MAP.JOINABLE)
+      return false;
 
     const connection = joinVoiceChannel({
       channelId: checkJoinableResult.channel.id,
@@ -73,34 +76,37 @@ export class Voice {
     }
   }
 
-  #checkJoinable({ channel }: { channel: VoiceBasedChannel | null }):
+  checkJoinable({ channel }: { channel: VoiceBasedChannel | null }):
     | (Pick<InteractionReplyOptions, 'content' | 'ephemeral'> & {
-        isJoinable: false;
+        joinableType: Exclude<
+          (typeof JOINABLE_TYPE_MAP)[keyof typeof JOINABLE_TYPE_MAP],
+          typeof JOINABLE_TYPE_MAP.JOINABLE
+        >;
       })
     | {
-        isJoinable: true;
+        joinableType: typeof JOINABLE_TYPE_MAP.JOINABLE;
         channel: VoiceBasedChannel;
       } {
     if (isNil(channel)) {
       return {
-        isJoinable: false,
+        joinableType: JOINABLE_TYPE_MAP.NOT_FOUND,
         content: '接続先のVCが見つかりません。',
         ephemeral: false,
       };
     } else if (!channel.joinable) {
       return {
-        isJoinable: false,
+        joinableType: JOINABLE_TYPE_MAP.NOT_JOINABLE,
         content: '接続先のVCに参加できません。権限の見直しをしてください。',
         ephemeral: true,
       };
     } else if (!channel.viewable) {
       return {
-        isJoinable: false,
+        joinableType: JOINABLE_TYPE_MAP.NOT_VIEWABLE,
         content: '接続先のVCに参加できません。権限の見直しをしてください。',
         ephemeral: true,
       };
     } else {
-      return { isJoinable: true, channel };
+      return { joinableType: JOINABLE_TYPE_MAP.JOINABLE, channel };
     }
   }
 }
