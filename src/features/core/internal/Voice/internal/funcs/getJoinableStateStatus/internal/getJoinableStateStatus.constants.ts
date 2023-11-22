@@ -1,7 +1,7 @@
-export const JOINABLE_TYPE_MAP = {
+export const JOINABLE_STATE_STATUS = {
   JOINABLE: 'JOINABLE',
   NOT_JOINABLE: 'NOT_JOINABLE',
   NOT_FOUND: 'NOT_FOUND',
   NOT_VIEWABLE: 'NOT_VIEWABLE',
   ALREADY_JOINED: 'ALREADY_JOINED',
-} as const;
+} as const satisfies Record<string, string>;

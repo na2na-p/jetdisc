@@ -14,9 +14,9 @@ import { getInteractionMemberId } from '@/features/others/discord/index.js';
 
 import { Voice } from './Voice.class.js';
 import {
-  JOINABLE_TYPE_MAP,
-  checkJoinable,
-} from './funcs/checkJoinable/index.js';
+  JOINABLE_STATE_STATUS,
+  getJoinableStateStatus,
+} from './funcs/getJoinableStateStatus/index.js';
 
 vi.mock('@/features/others/discord/index.js', async () => {
   const actual = (await vi.importActual(
@@ -39,13 +39,13 @@ vi.mock('@/features/library/index.js', async () => {
   };
 });
 
-vi.mock('./funcs/checkJoinable/index.js', async () => {
+vi.mock('./funcs/getJoinableStateStatus/index.js', async () => {
   const actual = (await vi.importActual(
-    './funcs/checkJoinable/index.js'
+    './funcs/getJoinableStateStatus/index.js'
   )) as object;
   return {
     ...actual,
-    checkJoinable: vi.fn(),
+    getJoinableStateStatus: vi.fn(),
   };
 });
 
@@ -69,11 +69,13 @@ describe('Voice', () => {
       (getInteractionMemberId as Mock).mockResolvedValueOnce({
         voice: { channel: null },
       });
-      (checkJoinable as Mock).mockReturnValueOnce(JOINABLE_TYPE_MAP.NOT_FOUND);
+      (getJoinableStateStatus as Mock).mockReturnValueOnce(
+        JOINABLE_STATE_STATUS.NOT_FOUND
+      );
 
       await voice.join({ interaction: mockedInteraction });
 
-      expect(checkJoinable).toHaveBeenCalledWith({ channel: null });
+      expect(getJoinableStateStatus).toHaveBeenCalledWith({ channel: null });
       expect(mockedInteraction.reply).toHaveBeenCalledWith({
         content: '接続先のVCが見つかりません。',
         ephemeral: false,
@@ -88,13 +90,13 @@ describe('Voice', () => {
       (getInteractionMemberId as Mock).mockResolvedValueOnce({
         voice: { channel: { joinable: true } },
       });
-      (checkJoinable as Mock).mockReturnValueOnce(
-        JOINABLE_TYPE_MAP.NOT_JOINABLE
+      (getJoinableStateStatus as Mock).mockReturnValueOnce(
+        JOINABLE_STATE_STATUS.NOT_JOINABLE
       );
 
       await voice.join({ interaction: mockedInteraction });
 
-      expect(checkJoinable).toHaveBeenCalledWith({
+      expect(getJoinableStateStatus).toHaveBeenCalledWith({
         channel: { joinable: true },
       });
       expect(mockedInteraction.reply).toHaveBeenCalledWith({
@@ -111,13 +113,13 @@ describe('Voice', () => {
       (getInteractionMemberId as Mock).mockResolvedValueOnce({
         voice: { channel: { joinable: true, viewable: false } },
       });
-      (checkJoinable as Mock).mockReturnValueOnce(
-        JOINABLE_TYPE_MAP.NOT_VIEWABLE
+      (getJoinableStateStatus as Mock).mockReturnValueOnce(
+        JOINABLE_STATE_STATUS.NOT_VIEWABLE
       );
 
       await voice.join({ interaction: mockedInteraction });
 
-      expect(checkJoinable).toHaveBeenCalledWith({
+      expect(getJoinableStateStatus).toHaveBeenCalledWith({
         channel: { joinable: true, viewable: false },
       });
       expect(mockedInteraction.reply).toHaveBeenCalledWith({
@@ -132,11 +134,13 @@ describe('Voice', () => {
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
       (getInteractionMemberId as Mock).mockRejectedValueOnce(
-        new LogicException('Channel is null. Please check checkJoinable()')
+        new LogicException(
+          'Channel is null. Please check getJoinableStateStatus()'
+        )
       );
 
       await expect(voice.join({ interaction })).rejects.toThrowError(
-        'Channel is null. Please check checkJoinable()'
+        'Channel is null. Please check getJoinableStateStatus()'
       );
     });
 
@@ -148,11 +152,15 @@ describe('Voice', () => {
       (getInteractionMemberId as Mock).mockResolvedValueOnce({
         voice: { channel: null },
       });
-      (checkJoinable as Mock).mockReturnValueOnce(JOINABLE_TYPE_MAP.JOINABLE);
+      (getJoinableStateStatus as Mock).mockReturnValueOnce(
+        JOINABLE_STATE_STATUS.JOINABLE
+      );
 
       await expect(
         voice.join({ interaction: mockedInteraction })
-      ).rejects.toThrowError('Channel is null. Please check checkJoinable()');
+      ).rejects.toThrowError(
+        'Channel is null. Please check getJoinableStateStatus()'
+      );
     });
 
     it('should join the voice channel and return true', async () => {
@@ -176,11 +184,15 @@ describe('Voice', () => {
 
       (getInteractionMemberId as Mock).mockResolvedValueOnce(mockedGuildMember);
       (joinVoiceChannel as Mock).mockReturnValueOnce('connection');
-      (checkJoinable as Mock).mockReturnValueOnce(JOINABLE_TYPE_MAP.JOINABLE);
+      (getJoinableStateStatus as Mock).mockReturnValueOnce(
+        JOINABLE_STATE_STATUS.JOINABLE
+      );
 
       const result = await voice.join({ interaction: mockedInteraction });
 
-      expect(checkJoinable).toHaveBeenCalledWith(mockedGuildMember.voice);
+      expect(getJoinableStateStatus).toHaveBeenCalledWith(
+        mockedGuildMember.voice
+      );
       expect(joinVoiceChannel).toHaveBeenCalledWith({
         channelId: 'channelId',
         guildId: 'guildId',
@@ -202,7 +214,7 @@ describe('Voice', () => {
         voice: { channel: null },
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (checkJoinable as Mock).mockReturnValueOnce('unknown' as any);
+      (getJoinableStateStatus as Mock).mockReturnValueOnce('unknown' as any);
 
       await expect(voice.join({ interaction })).rejects.toThrowError(
         'Unknown joinable type.'

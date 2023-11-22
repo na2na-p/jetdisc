@@ -1,16 +1,16 @@
 import type { VoiceBasedChannel } from '@/features/library/index.js';
 
-import { checkJoinable } from './checkJoinable.func.js';
+import { getJoinableStateStatus } from './getJoinableStateStatus.func.js';
 
-describe('checkJoinable', () => {
+describe('getJoinableStateStatus', () => {
   it('should return NOT_FOUND if the channel is null', () => {
-    const result = checkJoinable({ channel: null });
+    const result = getJoinableStateStatus({ channel: null });
 
     expect(result).toBe('NOT_FOUND');
   });
 
   it('should return NOT_JOINABLE if the channel is not joinable', () => {
-    const result = checkJoinable({
+    const result = getJoinableStateStatus({
       channel: { joinable: false } as VoiceBasedChannel,
     });
 
@@ -18,7 +18,7 @@ describe('checkJoinable', () => {
   });
 
   it('should return NOT_VIEWABLE if the channel is not viewable', () => {
-    const result = checkJoinable({
+    const result = getJoinableStateStatus({
       channel: { joinable: true, viewable: false } as VoiceBasedChannel,
     });
 
@@ -26,7 +26,7 @@ describe('checkJoinable', () => {
   });
 
   it('should return JOINABLE if the channel is joinable and viewable', () => {
-    const result = checkJoinable({
+    const result = getJoinableStateStatus({
       channel: { joinable: true, viewable: true } as VoiceBasedChannel,
     });
 
