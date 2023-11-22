@@ -230,7 +230,7 @@ describe('Voice', () => {
         .mockReturnValueOnce('unknown' as any);
 
       await expect(voice.join({ interaction })).rejects.toThrowError(
-        'Unknown joinable type.'
+        'unknown is unexpected value. Should have been never.'
       );
     });
   });
