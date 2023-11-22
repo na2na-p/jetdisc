@@ -31,6 +31,7 @@ const fakeInteraction = {
   member: { user: { id: '123' } },
 } as ChatInputCommandInteraction;
 
+// TODO: 命名変更に追従する
 describe('getActorId', () => {
   it('should fetch the member ID from the interaction', async () => {
     (

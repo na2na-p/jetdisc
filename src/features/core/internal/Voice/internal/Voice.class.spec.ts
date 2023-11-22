@@ -13,7 +13,8 @@ import { LogicException } from '@/features/others/Error/LogicException.js';
 import { getActorId } from '@/features/others/discord/index.js';
 
 import { Voice } from './Voice.class.js';
-import { getActorConnection } from './funcs/getActorConnection/index.js';
+import type { ConnectionState } from './Voice.types.js';
+import { getActorConnectionState } from './funcs/getActorConnectionState/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,
@@ -50,9 +51,9 @@ vi.mock('./funcs/getJoinableStateStatus/index.js', async () => {
   };
 });
 
-vi.mock('./funcs/getActorConnection/index.js', () => {
+vi.mock('./funcs/getActorConnectionState/index.js', () => {
   return {
-    getActorConnection: vi.fn(),
+    getActorConnectionState: vi.fn(),
   };
 });
 
@@ -251,10 +252,14 @@ describe('Voice', () => {
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
       (
-        getActorConnection as MockedFunction<typeof getActorConnection>
+        getActorConnectionState as MockedFunction<
+          typeof getActorConnectionState
+        >
       ).mockResolvedValueOnce({
-        destroy: vi.fn(),
-      } as unknown as VoiceConnection);
+        connection: {
+          destroy: vi.fn(),
+        },
+      } as unknown as ConnectionState);
 
       const result = await voice.leave({ interaction });
 

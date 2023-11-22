@@ -3,5 +3,7 @@ export {
   Voice,
   getJoinableStateStatus,
   JOINABLE_STATE_STATUS,
-  getActorConnection,
+  getActorConnectionState,
+  type ConnectionState,
+  getVoiceInstance,
 } from './internal/Voice/index.js';
