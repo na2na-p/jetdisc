@@ -111,11 +111,9 @@ export class Voice {
 
       default:
         assertNever(joinable);
-        // HACK: ここでrejectするとSwitch外のカバレッジがuncoveredになる
-        break;
     }
-
-    return Promise.reject(new LogicException('Unknown joinable type.'));
+    /* c8 ignore next */
+    return;
   }
 
   public async leave({
