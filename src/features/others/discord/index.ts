@@ -1,2 +1,2 @@
 export { getGuildFromInteraction } from './internal/getGuildFromInteraction/index.js';
-export { getInteractionMemberId } from './internal/getInteractionMemberId/index.js';
+export { getActorId } from './internal/getActorId/index.js';
