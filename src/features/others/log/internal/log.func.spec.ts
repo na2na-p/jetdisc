@@ -1,9 +1,11 @@
+import type { SpyInstance } from 'vitest';
+
 import { chalk } from '@/features/library/index.js';
 
 import { log } from './log.func.js';
 
 describe('log', () => {
-  let mockStdout: vi.SpyInstance;
+  let mockStdout: SpyInstance;
   const originalConsoleLog = console.log;
 
   beforeEach(() => {

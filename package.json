@@ -13,7 +13,7 @@
     "fmt": "prettier --config ./.prettierrc  --list-different \"src/**/*.{js,json,ts,tsx,css,md}\"",
     "fmt:fix": "yarn fmt --write",
     "test": "vitest src/",
-    "test:coverage": "vitest src/ --coverage"
+    "test:coverage": "vitest src/ --coverage --silent"
   },
   "keywords": [],
   "author": "",
