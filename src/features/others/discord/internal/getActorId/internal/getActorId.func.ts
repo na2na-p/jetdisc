@@ -5,7 +5,7 @@ import {
 } from '@/features/library/index.js';
 import { getGuildFromInteraction } from '@/features/others/discord/index.js';
 
-export const getInteractionMemberId = async (
+export const getActorId = async (
   interaction: Readonly<ChatInputCommandInteraction>
 ): Promise<GuildMember> => {
   const guild = getGuildFromInteraction({ interaction });

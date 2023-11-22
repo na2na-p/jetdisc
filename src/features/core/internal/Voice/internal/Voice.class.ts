@@ -2,14 +2,11 @@ import type {
   VoiceConnection,
   ChatInputCommandInteraction,
 } from '@/features/library/index.js';
-import {
-  getVoiceConnection,
-  isNil,
-  joinVoiceChannel,
-} from '@/features/library/index.js';
+import { isNil, joinVoiceChannel } from '@/features/library/index.js';
 import { LogicException } from '@/features/others/Error/LogicException.js';
-import { getInteractionMemberId } from '@/features/others/discord/index.js';
+import { getActorId } from '@/features/others/discord/index.js';
 
+import { getActorConnection } from './funcs/getActorConnection/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,
@@ -28,7 +25,7 @@ export class Voice {
   }) {
     const {
       voice: { channel },
-    } = await getInteractionMemberId(interaction);
+    } = await getActorId(interaction);
     const joinable = getJoinableStateStatus({
       channel,
     });
@@ -85,27 +82,14 @@ export class Voice {
   }: {
     interaction: Readonly<ChatInputCommandInteraction>;
   }): Promise<boolean> {
-    const guildId = interaction.guildId;
-    if (isNil(guildId)) return false;
+    const actorConnection = await getActorConnection({
+      interaction,
+      connections: this.connection,
+    });
 
-    const targetConnection = this.connection.find(
-      connection => connection.guildId === guildId
-    );
-
-    if (isNil(targetConnection)) {
-      const member = await getInteractionMemberId(interaction);
-      const connection = getVoiceConnection(member.guild.id);
-      if (isNil(connection)) {
-        return false;
-      } else {
-        connection.destroy();
-        return true;
-      }
-    } else {
-      targetConnection.connection.destroy();
-      this.connection = this.connection.filter(
-        connection => connection.guildId !== guildId
-      );
+    if (isNil(actorConnection)) return false;
+    else {
+      actorConnection.destroy();
       return true;
     }
   }

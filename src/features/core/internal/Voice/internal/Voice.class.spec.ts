@@ -1,4 +1,4 @@
-import type { Mock } from 'vitest';
+import type { MockedFunction } from 'vitest';
 
 import {
   joinVoiceChannel,
@@ -10,9 +10,10 @@ import type {
   VoiceConnection,
 } from '@/features/library/index.js';
 import { LogicException } from '@/features/others/Error/LogicException.js';
-import { getInteractionMemberId } from '@/features/others/discord/index.js';
+import { getActorId } from '@/features/others/discord/index.js';
 
 import { Voice } from './Voice.class.js';
+import { getActorConnection } from './funcs/getActorConnection/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,
@@ -24,7 +25,7 @@ vi.mock('@/features/others/discord/index.js', async () => {
   )) as object;
   return {
     ...actual,
-    getInteractionMemberId: vi.fn(),
+    getActorId: vi.fn(),
   };
 });
 
@@ -49,6 +50,12 @@ vi.mock('./funcs/getJoinableStateStatus/index.js', async () => {
   };
 });
 
+vi.mock('./funcs/getActorConnection/index.js', () => {
+  return {
+    getActorConnection: vi.fn(),
+  };
+});
+
 describe('Voice', () => {
   let voice: Voice;
 
@@ -66,12 +73,12 @@ describe('Voice', () => {
         reply: vi.fn(),
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockResolvedValueOnce({
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
         voice: { channel: null },
-      });
-      (getJoinableStateStatus as Mock).mockReturnValueOnce(
-        JOINABLE_STATE_STATUS.NOT_FOUND
-      );
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.NOT_FOUND);
 
       await voice.join({ interaction: mockedInteraction });
 
@@ -87,12 +94,12 @@ describe('Voice', () => {
         reply: vi.fn(),
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockResolvedValueOnce({
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
         voice: { channel: { joinable: true } },
-      });
-      (getJoinableStateStatus as Mock).mockReturnValueOnce(
-        JOINABLE_STATE_STATUS.NOT_JOINABLE
-      );
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.NOT_JOINABLE);
 
       await voice.join({ interaction: mockedInteraction });
 
@@ -110,12 +117,12 @@ describe('Voice', () => {
         reply: vi.fn(),
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockResolvedValueOnce({
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
         voice: { channel: { joinable: true, viewable: false } },
-      });
-      (getJoinableStateStatus as Mock).mockReturnValueOnce(
-        JOINABLE_STATE_STATUS.NOT_VIEWABLE
-      );
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.NOT_VIEWABLE);
 
       await voice.join({ interaction: mockedInteraction });
 
@@ -133,7 +140,7 @@ describe('Voice', () => {
         reply: vi.fn(),
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockRejectedValueOnce(
+      (getActorId as MockedFunction<typeof getActorId>).mockRejectedValueOnce(
         new LogicException(
           'Channel is null. Please check getJoinableStateStatus()'
         )
@@ -149,12 +156,12 @@ describe('Voice', () => {
         reply: vi.fn(),
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockResolvedValueOnce({
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
         voice: { channel: null },
-      });
-      (getJoinableStateStatus as Mock).mockReturnValueOnce(
-        JOINABLE_STATE_STATUS.JOINABLE
-      );
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.JOINABLE);
 
       await expect(
         voice.join({ interaction: mockedInteraction })
@@ -182,11 +189,15 @@ describe('Voice', () => {
         reply: vi.fn(),
       } as const as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockResolvedValueOnce(mockedGuildMember);
-      (joinVoiceChannel as Mock).mockReturnValueOnce('connection');
-      (getJoinableStateStatus as Mock).mockReturnValueOnce(
-        JOINABLE_STATE_STATUS.JOINABLE
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce(
+        mockedGuildMember as GuildMember
       );
+      (
+        joinVoiceChannel as MockedFunction<typeof joinVoiceChannel>
+      ).mockReturnValueOnce({} as VoiceConnection);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.JOINABLE);
 
       const result = await voice.join({ interaction: mockedInteraction });
 
@@ -199,7 +210,7 @@ describe('Voice', () => {
         adapterCreator: expect.any(Function),
       });
       expect(voice['connection']).toEqual([
-        { guildId: 'guildId', connection: 'connection' },
+        { guildId: 'guildId', connection: {} },
       ]);
       expect(result).toBe(true);
     });
@@ -210,11 +221,12 @@ describe('Voice', () => {
         reply: vi.fn(),
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockResolvedValueOnce({
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
         voice: { channel: null },
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (getJoinableStateStatus as Mock).mockReturnValueOnce('unknown' as any);
+      } as GuildMember);
+      (getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .mockReturnValueOnce('unknown' as any);
 
       await expect(voice.join({ interaction })).rejects.toThrowError(
         'Unknown joinable type.'
@@ -238,36 +250,15 @@ describe('Voice', () => {
         guildId: 'guildId',
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      voice['connection'] = [
-        {
-          guildId: 'guildId',
-          connection: {
-            destroy: vi.fn(),
-          } as unknown as VoiceConnection,
-        },
-      ];
+      (
+        getActorConnection as MockedFunction<typeof getActorConnection>
+      ).mockResolvedValueOnce({
+        destroy: vi.fn(),
+      } as unknown as VoiceConnection);
 
       const result = await voice.leave({ interaction });
 
       expect(voice['connection']).toEqual([]);
-      expect(result).toBe(true);
-    });
-
-    it('should destroy the connection and return true if the target connection does not exist but the member has a connection', async () => {
-      const interaction = {
-        guildId: 'guildId',
-      } as unknown as Readonly<ChatInputCommandInteraction>;
-
-      (getInteractionMemberId as Mock).mockResolvedValueOnce({
-        guild: { id: 'guildId' },
-      });
-      (getVoiceConnection as Mock).mockReturnValueOnce({
-        destroy: vi.fn(),
-      });
-
-      const result = await voice.leave({ interaction });
-
-      expect(getVoiceConnection).toHaveBeenCalledWith('guildId');
       expect(result).toBe(true);
     });
 
@@ -276,10 +267,12 @@ describe('Voice', () => {
         guildId: 'guildId',
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
-      (getInteractionMemberId as Mock).mockResolvedValueOnce({
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
         guild: { id: 'guildId' },
-      });
-      (getVoiceConnection as Mock).mockReturnValueOnce(null);
+      } as GuildMember);
+      (
+        getVoiceConnection as MockedFunction<typeof getVoiceConnection>
+      ).mockReturnValueOnce(undefined);
 
       const result = await voice.leave({ interaction });
 
