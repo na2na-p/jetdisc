@@ -1,3 +1,8 @@
+export {
+  joinVoiceChannel,
+  getVoiceConnection,
+  VoiceConnection,
+} from '@discordjs/voice';
 export { default as chalk } from 'chalk';
 export {
   Client,
