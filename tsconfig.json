@@ -1,10 +1,13 @@
 {
 	"extends": "@tsconfig/strictest",
 	"compilerOptions": {
+		"lib": [
+			"ESNext"
+		],
 		"incremental": false,
 		"target": "ESNext",
 		"module": "NodeNext",
-		"rootDir": "src",
+		"rootDir": ".",
 		"typeRoots": [
 			"src/@types",
 			"node_modules/@types"
@@ -24,9 +27,14 @@
 			"@utils/*": [
 				"src/utils/*"
 			]
-		}
+		},
+		"types": [
+			"vitest/globals"
+		]
 	},
 	"include": [
-		"./src/**/*.ts"
-	]
+		"src",
+		"node_modules/vitest/globals.d.ts",
+		"vite.config.ts"
+	],
 }
