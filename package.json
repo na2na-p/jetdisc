@@ -46,6 +46,7 @@
     "libsodium-wrappers": "^0.7.13",
     "lodash-es": "^4.17.21",
     "resolve": "^1.22.8",
+    "ytdl-core": "^4.11.5",
     "zod": "^3.22.4"
   }
 }
