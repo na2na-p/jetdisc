@@ -5,18 +5,14 @@ import type {
 } from '@/features/library/index.js';
 import { isNil, joinVoiceChannel } from '@/features/library/index.js';
 import { LogicException } from '@/features/others/Error/LogicException.js';
-import { assertNever } from '@/features/others/assertNever.js';
+import { assertNever } from '@/features/others/assertNever/index.js';
 import { getActorId } from '@/features/others/discord/index.js';
-import { singleton } from '@/features/others/singleton/index.js';
 
 import { getActorConnectionState } from './funcs/getActorConnectionState/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,
 } from './funcs/getJoinableStateStatus/index.js';
-
-const createVoiceInstance = () => new Voice();
-export const getVoiceInstance = singleton(createVoiceInstance);
 
 export class Voice {
   connection: Array<{
@@ -80,7 +76,7 @@ export class Voice {
             adapterCreator: channel.guild.voiceAdapterCreator,
           });
           this.connection.push({
-            guildId: actor.guild.id,
+            guildId: channel.guildId,
             connection: connectedChannel,
             player: undefined,
           });
@@ -110,10 +106,11 @@ export class Voice {
         return true;
 
       default:
-        assertNever(joinable);
+        assertNever(joinable, false);
+        break;
+      // HACK: カバレッジを100%にするための処置
     }
-    /* c8 ignore next */
-    return;
+    return Promise.reject(new LogicException('Unknown joinable type.'));
   }
 
   public async leave({

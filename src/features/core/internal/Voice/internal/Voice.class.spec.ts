@@ -171,6 +171,59 @@ describe('Voice', () => {
       );
     });
 
+    it('should throw an error if the channel is null', async () => {
+      const mockedInteraction = {
+        reply: vi.fn(),
+      } as unknown as Readonly<ChatInputCommandInteraction>;
+
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
+        voice: { channel: null },
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.ALREADY_JOINED);
+
+      await expect(
+        voice.join({ interaction: mockedInteraction })
+      ).rejects.toThrowError(
+        'Channel is null. Please check getJoinableStateStatus()'
+      );
+    });
+
+    // JOINABLE_STATE_STATUS.ALREADY_JOINED
+    it('should return false if the channel is already joined', async () => {
+      const mockedInteraction = {
+        reply: vi.fn(),
+      } as unknown as Readonly<ChatInputCommandInteraction>;
+
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
+        voice: {
+          channel: {
+            id: 'channelId',
+            guild: {
+              id: 'guildId',
+            },
+          },
+        },
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.ALREADY_JOINED);
+
+      const result = await voice.join({ interaction: mockedInteraction });
+
+      expect(getJoinableStateStatus).toHaveBeenCalledWith({
+        channel: {
+          id: 'channelId',
+          guild: {
+            id: 'guildId',
+          },
+        },
+      });
+
+      expect(result).toBe(false);
+    });
+
     it('should join the voice channel and return true', async () => {
       const mockedGuildMember = {
         voice: {
@@ -230,7 +283,7 @@ describe('Voice', () => {
         .mockReturnValueOnce('unknown' as any);
 
       await expect(voice.join({ interaction })).rejects.toThrowError(
-        'unknown is unexpected value. Should have been never.'
+        'Unknown joinable type.'
       );
     });
   });

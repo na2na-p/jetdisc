@@ -1,7 +1,7 @@
 import type { VoiceBasedChannel } from '@/features/library/index.js';
 
-import { getJoinableStateStatus } from './getJoinableStateStatus.func.js';
 import { JOINABLE_STATE_STATUS } from './getJoinableStateStatus.constants.js';
+import { getJoinableStateStatus } from './getJoinableStateStatus.func.js';
 
 describe('getJoinableStateStatus', () => {
   it('should return NOT_FOUND if the channel is null', () => {
