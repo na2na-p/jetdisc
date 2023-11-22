@@ -5,6 +5,7 @@ import {
 } from '@/features/library/index.js';
 import { getGuildFromInteraction } from '@/features/others/discord/index.js';
 
+// TODO: 命名変更 -> getActor
 export const getActorId = async (
   interaction: Readonly<ChatInputCommandInteraction>
 ): Promise<GuildMember> => {
