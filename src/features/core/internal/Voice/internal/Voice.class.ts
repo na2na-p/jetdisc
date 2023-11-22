@@ -11,25 +11,11 @@ import {
 } from '@/features/library/index.js';
 import { getInteractionMemberId } from '@/features/others/discord/index.js';
 
-/**
- * Singleton class for voice.
- * NOTE: シングルトンの影響で複数サーバにしたときのテストしないと困るかも
- */
 export class Voice {
-  static #instance: Voice | null = null;
   #connection: Array<{
     guildId: string;
     connection: VoiceConnection;
   }> = [];
-  private constructor() {}
-
-  public static getInstance(): Voice {
-    if (Voice.#instance === null) {
-      Voice.#instance = new Voice();
-    }
-
-    return Voice.#instance;
-  }
 
   public async join({
     interaction,

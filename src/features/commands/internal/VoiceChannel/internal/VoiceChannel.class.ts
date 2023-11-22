@@ -1,5 +1,6 @@
 import { Voice } from '@/features/core/index.js';
 import { LogicException } from '@/features/others/Error/LogicException.js';
+import { singleton } from '@/features/others/singleton/index.js';
 
 import { VoiceChannelCommandOptions } from './VoiceChannel.constants.js';
 import type { InteractArgs } from '../../CommandBase/index.js';
@@ -12,7 +13,9 @@ export class VoiceChannel extends CommandBase {
 
   public override async interact({ interaction }: InteractArgs): Promise<void> {
     const subcommand = interaction.options.getSubcommand();
-    const voice = Voice.getInstance();
+    const createVoiceInstance = () => new Voice();
+    const getVoiceInstance = singleton(createVoiceInstance);
+    const voice = getVoiceInstance();
 
     switch (subcommand) {
       case VoiceChannelCommandOptions.join.name:
