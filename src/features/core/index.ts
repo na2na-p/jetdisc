@@ -3,4 +3,5 @@ export {
   Voice,
   getJoinableStateStatus,
   JOINABLE_STATE_STATUS,
+  getActorConnection,
 } from './internal/Voice/index.js';
