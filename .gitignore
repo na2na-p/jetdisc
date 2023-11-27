@@ -4,3 +4,4 @@ built/
 .env
 .idea
 configmap.yml
+values.yaml

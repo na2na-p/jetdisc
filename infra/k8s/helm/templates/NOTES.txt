@@ -1,0 +1,27 @@
+1. `jetdisc` アプリケーションがKubernetesクラスターにデプロイされました。
+
+2. アプリケーションは、指定された設定に基づいて起動しています。設定の詳細は `values.yaml` ファイルを参照してください。
+
+3. アプリケーションは、PythonとNode.js環境で構築されており、Dockerfileに定義された手順に従ってコンテナイメージがビルドされています。
+
+4. このデプロイメントには、Kubernetes APIへのアクセスが必要な場合に使用するための `ServiceAccount` が含まれているかもしれません。APIとの直接のやり取りが必要ない場合は、このアカウントは使用されません。
+
+5. アプリケーションのスケーリングにはHPA（Horizontal Pod Autoscaler）が設定されており、CPU使用率やメモリ使用率に基づいて自動的にポッドの数が調整されます。HPAの設定は `values.yaml` で確認および変更が可能です。
+
+6. デプロイメントの状況を確認するには、以下のコマンドを実行してください:
+
+```
+kubectl get deployment {{ include "jetdisc.fullname" . }}
+```
+
+7. リリースの削除には、以下のコマンドを実行してください:
+
+```
+helm delete {{ include "jetdisc.fullname" . }}
+```
+
+8. アプリケーションのログを確認するには、以下のコマンドを実行してください:
+
+```
+kubectl logs -f deployment/{{ include "jetdisc.fullname" . }}
+```
