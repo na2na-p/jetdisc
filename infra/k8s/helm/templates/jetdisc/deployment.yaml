@@ -20,12 +20,8 @@ spec:
         - name: {{ .Chart.Name }}
           image: '{{ .Values.image.repository }}:{{ .Values.image.tag }}'
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: DISCORD_APP_TOKEN
-              value: {{ .Values.secret.DISCORD_APP_TOKEN }}
-            - name: BOT_NAME
-              value: {{ .Values.secret.BOT_NAME }}
-            - name: SET_COMMANDS_TARGET_SERVERS
-              value: {{ .Values.secret.SET_COMMANDS_TARGET_SERVERS }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secret.name }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
       restartPolicy: Always
