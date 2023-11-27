@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - v3
-      - topic/argocd
   workflow_dispatch:
 
 env:

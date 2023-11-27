@@ -12,7 +12,8 @@ spec:
             path: infra/k8s/helm
             destServer: https://kubernetes.default.svc
             destNamespace: jetdisc
-            targetRevision: topic/argocd
+            # TODO: v3のマージ進んできたらブランチ名ごとmainに変更する
+            targetRevision: v3
   template:
     metadata:
       name: "{{name}}"
