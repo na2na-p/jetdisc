@@ -3,3 +3,4 @@ pnpm 8.10.5
 python 3.11.6
 ffmpeg 6.1
 kubectl 1.28.4
+argocd 2.9.2
