@@ -10,6 +10,12 @@
     {
       "matchUpdateTypes": ["major"],
       "addLabels": ["major update"]
+    },
+    {
+      "datasources": ["docker"],
+      "packageNames": ["na2na/jetdisc"],
+      "fileMatch": ["^helm/chart/values\\.yaml$"],
+      "matchManagers": ["helm-values"]
     }
   ]
 }
