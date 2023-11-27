@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: na2na/jetdisc
-  tag: "preview"
+  tag: preview
   pullPolicy: IfNotPresent
 
 secret:
