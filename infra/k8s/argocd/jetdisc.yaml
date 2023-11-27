@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: jetdisc-applicationset
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: jetdisc
+            repo: https://github.com/na2na-p/jetdisc.git
+            path: infra/k8s/helm
+            destServer: https://kubernetes.default.svc
+            destNamespace: jetdisc
+            targetRevision: topic/argocd
+  template:
+    metadata:
+      name: "{{name}}"
+    spec:
+      project: default
+      source:
+        repoURL: "{{repo}}"
+        targetRevision: "{{targetRevision}}"
+        path: "{{path}}"
+      destination:
+        server: "{{destServer}}"
+        namespace: "{{destNamespace}}"
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
