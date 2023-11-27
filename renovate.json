@@ -21,5 +21,6 @@
       "addLabels": ["Infra"],
       "matchPackageNames": ["docker.io/na2na/jetdisc"]
     }
-  ]
+  ],
+  "ignoreDeps": ["python"]
 }
