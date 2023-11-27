@@ -20,8 +20,8 @@ spec:
         - name: jetdisc
           image: na2na/jetdisc:preview
           envFrom:
-            - configMapRef:
-                name: jetdisc-config
+            - secretRef:
+                name: jetdisc-secret
           resources:
             limits:
               cpu: 500m
