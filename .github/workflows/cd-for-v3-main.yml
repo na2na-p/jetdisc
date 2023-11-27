@@ -30,7 +30,7 @@ jobs:
         id: check_docker_hub
         run: |
           DOCKER_HUB_TAGS=$(curl -s ${{ env.DOCKER_TAG_API_URI }} | jq -r '.results[] | .name')
-          if [ $(echo $DOCKER_HUB_TAGS | grep -c $JETDISC_VERSION) -eq 1 ]; then
+          if echo "$DOCKER_HUB_TAGS" | grep -q "^$JETDISC_VERSION$"; then
             echo "Tag $JETDISC_VERSION already exists on Docker Hub."
           else
             echo "Tag $JETDISC_VERSION does not exist on Docker Hub."
