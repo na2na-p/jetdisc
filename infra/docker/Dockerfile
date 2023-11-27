@@ -29,15 +29,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	wget
 
 RUN wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz \
- && tar -xzf Python-${PYTHON_VERSION}.tgz \
- && cd Python-${PYTHON_VERSION} \
- && ./configure --enable-optimizations \
- && make -j 8 \
- && make altinstall \
- && cd .. \
- && rm -rf Python-${PYTHON_VERSION}.tgz Python-${PYTHON_VERSION} \
- && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
- && rm -rf /var/lib/apt/lists/*
+	&& tar -xzf Python-${PYTHON_VERSION}.tgz \
+	&& cd Python-${PYTHON_VERSION} \
+	&& ./configure --enable-optimizations \
+	&& make -j 8 \
+	&& make altinstall \
+	&& cd .. \
+	&& rm -rf Python-${PYTHON_VERSION}.tgz Python-${PYTHON_VERSION} \
+	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+	&& rm -rf /var/lib/apt/lists/*
 
 FROM node:${NODE_VERSION} as builder
 
