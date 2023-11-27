@@ -12,9 +12,11 @@
       "addLabels": ["major update"]
     },
     {
+      "groupName": "JetDisc updates",
       "datasources": ["docker"],
-      "packageNames": ["docker.io/na2na/jetdisc"],
-      "matchManagers": ["helm-values"]
+      "packageNames": ["na2na/jetdisc"],
+      "matchManagers": ["helm-values"],
+      "addLabels": ["Infra"]
     }
   ]
 }
