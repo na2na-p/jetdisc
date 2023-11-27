@@ -12,6 +12,9 @@ on:
       IMAGE_NAME:
         required: true
         type: string
+      LATEST_TAG:
+        required: true
+        type: string
     secrets: {}
 
 jobs:
@@ -20,10 +23,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Prepare for build
-        id: prepare-for-build
-        run: |
-          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Cache Docker Build Cache
         uses: actions/cache@v3
         with:
@@ -47,7 +46,7 @@ jobs:
           docker buildx bake \
               -f 'infra/docker/image-bake.hcl' \
               --builder="${{ steps.buildx.outputs.name }}" \
-              --set='web.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:${{ inputs.JETDISC_VERSION }}' \
-              --set='web.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:${{ steps.prepare-for-build.outputs.sha_short }}' \
-              --set='web.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:release' \
+              --set='app.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:${{ inputs.JETDISC_VERSION }}' \
+              --set='app.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:${{ inputs.LATEST_TAG }}' \
+              --set='app.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:release' \
               --push

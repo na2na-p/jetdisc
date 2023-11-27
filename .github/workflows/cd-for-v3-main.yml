@@ -16,6 +16,8 @@ jobs:
     outputs:
       tag_exists: ${{ steps.check_docker_hub.outputs.tag_exists }}
       JETDISC_VERSION: ${{ steps.check_docker_hub.outputs.JETDISC_VERSION }}
+      PREVIOIUS_LATEST_TAG: ${{ steps.get_previous_latest_tag.outputs.PREVIOIUS_LATEST_TAG }}
+      LATEST_TAG: ${{ steps.genelate_latest_tag.outputs.LATEST_TAG }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4.1.1
@@ -34,6 +36,14 @@ jobs:
             echo "tag_exists=false" >> $GITHUB_OUTPUT
             echo "JETDISC_VERSION=$JETDISC_VERSION" >> $GITHUB_OUTPUT
           fi
+      - name: Get Current Latest Tag
+        id: get_previous_latest_tag
+        run: |
+          echo "PREVIOIUS_LATEST_TAG=$(curl -s $DOCKER_TAG_API_URI | jq -r '.results | sort_by(.last_updated) | last | .name')" >> $GITHUB_OUTPUT
+      - name: Genelate Latest Tag by commit hash
+        id: genelate_latest_tag
+        run: |
+          echo "LATEST_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
   Build-and-Push-to-Docker-Hub:
     needs:
@@ -43,5 +53,6 @@ jobs:
       JETDISC_VERSION: ${{ needs.Prepare.outputs.JETDISC_VERSION }}
       IMAGE_REPOSITORY: na2na
       IMAGE_NAME: jetdisc
+      LATEST_TAG: ${{ needs.Prepare.outputs.LATEST_TAG }}
     uses: ./.github/workflows/image-build-and-publish.yml
     secrets: inherit
