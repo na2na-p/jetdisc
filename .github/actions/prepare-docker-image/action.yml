@@ -1,0 +1,48 @@
+name: Prepare Docker Image
+description: Prepare Docker Image for CI
+inputs:
+  docker_image_tag_ci:
+    description: Docker Image Tag for CI
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: Prepare for ci
+      shell: bash
+      id: prepare-for-ci
+      run: |
+        echo "WWWUSER=$(id -u)" >> $GITHUB_ENV
+        echo "WWWUSER=$(id -u)" >> $GITHUB_OUTPUT
+        echo "WWWGROUP=$(id -g)" >> $GITHUB_ENV
+        echo "WWWGROUP=$(id -g)" >> $GITHUB_OUTPUT
+    - name: Cache Docker Registry
+      uses: actions/cache@v3
+      with:
+        path: /tmp/docker-registry
+        key: docker-registry-${{ github.ref }}-${{ github.sha }}
+        restore-keys: |
+          docker-registry-${{ github.ref }}
+          docker-registry-
+    - name: Boot-up Local Docker Registry
+      shell: bash
+      run: docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-registry:/var/lib/registry registry:2
+    - name: Wait for Docker Registry
+      shell: bash
+      run: npx wait-on tcp:5000
+    - name: Get Docker Image Tag
+      shell: bash
+      env:
+        TAG: ${{ inputs.docker_image_tag_ci }}
+      run: |
+        echo "DOCKER_IMAGE_TAG_CI=$TAG" >> $GITHUB_ENV
+        echo TAG $TAG
+    - name: Docker Compose Pull
+      shell: bash
+      run: |
+        docker pull localhost:5000/jetdisc-ci:${{ inputs.docker_image_tag_ci }}
+    # - name: List docker images in registry
+    #   shell: bash
+    #   run: |
+    #     curl -X GET http://localhost:5000/v2/_catalog

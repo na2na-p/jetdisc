@@ -44,3 +44,7 @@ jobs:
     uses: ./.github/workflows/ci.yml
     secrets: inherit
     needs: prepare
+  image-build-for-ci:
+    uses: ./.github/workflows/image-build.yml
+    secrets: inherit
+    needs: prepare
