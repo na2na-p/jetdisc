@@ -94,7 +94,11 @@ export class YouTube extends CommandBase {
       const stream = ytdl(ytdl.getURLVideoID(url), {
         filter: format => format.audioCodec === 'opus', //webm opus
         quality: 'highestaudio',
-        highWaterMark: 32 * 1024 * 1024, // https://github.com/fent/node-ytdl-core/issues/902
+        /**
+         * @see https://github.com/fent/node-ytdl-core/issues/902
+         * NOTE: infra/k8s/helm/values.yamlによるリソース制限も考慮してください
+         */
+        highWaterMark: 32 * 1024 * 1024,
       });
 
       const resource = createAudioResource(stream, {
