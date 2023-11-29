@@ -1,2 +1,2 @@
 export { getActorConnectionState } from './internal/getActorConnectionState.func.js';
-export type { getActorConnectionStateInterface } from './internal/getActorConnectionState.types.js';
+export type { GetActorConnectionStateInterface } from './internal/getActorConnectionState.types.js';

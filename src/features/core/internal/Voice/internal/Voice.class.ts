@@ -8,7 +8,7 @@ import { LogicException } from '@/features/others/Error/LogicException.js';
 import { assertNever } from '@/features/others/assertNever/index.js';
 import { getActorId } from '@/features/others/discord/index.js';
 
-import { getActorConnectionState } from './funcs/getActorConnectionState/index.js';
+import { GetActorConnectionStateInterface } from './funcs/getActorConnectionState/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,
@@ -20,6 +20,15 @@ export class Voice {
     connection: VoiceConnection;
     player: AudioPlayer | undefined;
   }> = [];
+  getActorConnectionState: GetActorConnectionStateInterface;
+
+  constructor({
+    getActorConnectionState,
+  }: {
+    getActorConnectionState: GetActorConnectionStateInterface;
+  }) {
+    this.getActorConnectionState = getActorConnectionState;
+  }
 
   public async join({
     interaction,
@@ -118,7 +127,7 @@ export class Voice {
   }: {
     interaction: Readonly<ChatInputCommandInteraction>;
   }): Promise<boolean> {
-    const actorConnectionState = await getActorConnectionState({
+    const actorConnectionState = await this.getActorConnectionState({
       interaction,
       connections: this.connection,
     });

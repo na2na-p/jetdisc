@@ -1,8 +1,8 @@
 import { isNil, getVoiceConnection } from '@/features/library/index.js';
 import { getActorId } from '@/features/others/discord/index.js';
-import { getActorConnectionStateInterface } from './getActorConnectionState.types.js';
+import { GetActorConnectionStateInterface } from './getActorConnectionState.types.js';
 
-export const getActorConnectionState: getActorConnectionStateInterface =
+export const getActorConnectionState: GetActorConnectionStateInterface =
   async ({ interaction, connections }) => {
     const guildId = interaction.guildId;
     if (isNil(guildId)) return null;
