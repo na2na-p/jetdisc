@@ -20,5 +20,12 @@
 	"module": {
 		"type": "es6"
 	},
+	"exclude": [
+		".*.spec.tsx?$",
+		".*.test.tsx?$",
+		"./src/jest-setup.ts$",
+		"./**/jest-setup.ts$",
+		".*.js$"
+	],
 	"minify": false
 }
