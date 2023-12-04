@@ -1,7 +1,7 @@
 import { singleton } from '@/features/others/singleton/index.js';
-import { getActorConnectionState } from './internal/funcs/getActorConnectionState/index.js';
 
 import { Voice } from './internal/Voice.class.js';
+import { getActorConnectionState } from './internal/funcs/getActorConnectionState/index.js';
 
 export type { Voice } from './internal/Voice.class.js';
 export type { ConnectionState } from './internal/Voice.types.js';
@@ -13,6 +13,6 @@ export { getActorConnectionState };
 
 const createVoiceInstance = () =>
   new Voice({
-    getActorConnectionState: getActorConnectionState,
+    getActorConnectionState,
   });
 export const getVoiceInstance = singleton(createVoiceInstance);

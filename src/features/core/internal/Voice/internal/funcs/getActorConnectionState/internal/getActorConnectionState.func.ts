@@ -1,6 +1,7 @@
 import { isNil, getVoiceConnection } from '@/features/library/index.js';
 import { getActorId } from '@/features/others/discord/index.js';
-import { GetActorConnectionStateInterface } from './getActorConnectionState.types.js';
+
+import type { GetActorConnectionStateInterface } from './getActorConnectionState.types.js';
 
 export const getActorConnectionState: GetActorConnectionStateInterface =
   async ({ interaction, connections }) => {

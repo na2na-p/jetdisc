@@ -8,7 +8,7 @@ import { LogicException } from '@/features/others/Error/LogicException.js';
 import { assertNever } from '@/features/others/assertNever/index.js';
 import { getActorId } from '@/features/others/discord/index.js';
 
-import { GetActorConnectionStateInterface } from './funcs/getActorConnectionState/index.js';
+import type { GetActorConnectionStateInterface } from './funcs/getActorConnectionState/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,

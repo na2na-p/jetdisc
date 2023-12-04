@@ -1,24 +1,23 @@
 import type { MockedFunction } from 'vitest';
 
+import type {
+  ChatInputCommandInteraction,
+  GuildMember,
+} from '@/features/library/index.js';
 import {
   joinVoiceChannel,
   getVoiceConnection,
-} from '@/features/library/index.js';
-import {
-  ChatInputCommandInteraction,
-  GuildMember,
   VoiceConnection,
 } from '@/features/library/index.js';
 import { LogicException } from '@/features/others/Error/LogicException.js';
 import { getActorId } from '@/features/others/discord/index.js';
 
 import { Voice } from './Voice.class.js';
-import { GetActorConnectionStateInterface } from './funcs/getActorConnectionState/index.js';
+import type { GetActorConnectionStateInterface } from './funcs/getActorConnectionState/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,
 } from './funcs/getJoinableStateStatus/index.js';
-import { ConnectionState } from './Voice.types.js';
 
 vi.mock('@/features/others/discord/index.js', async () => {
   const actual = (await vi.importActual(
