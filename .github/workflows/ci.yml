@@ -1,0 +1,71 @@
+name: CI
+on: workflow_call
+
+jobs:
+  Build:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v3.0.2
+        continue-on-error: true
+      - name: asdf install
+        uses: asdf-vm/actions/install@v3.0.2
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+
+  TypeCheck:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v3.0.2
+        continue-on-error: true
+      - name: asdf install
+        uses: asdf-vm/actions/install@v3.0.2
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: typecheck
+        run: pnpm tsc --noEmit
+
+  Lint:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v3.0.2
+        continue-on-error: true
+      - name: asdf install
+        uses: asdf-vm/actions/install@v3.0.2
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: fmt
+        run: pnpm fmt
+      - name: lint
+        run: pnpm lint
+
+  Test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v3.0.2
+        continue-on-error: true
+      - name: asdf install
+        uses: asdf-vm/actions/install@v3.0.2
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: test
+        run: pnpm test:coverage
+        env:
+          TZ: Asia/Tokyo
