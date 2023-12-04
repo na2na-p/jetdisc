@@ -21,6 +21,7 @@ export class Client extends DiscordJsClient {
       intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.MessageContent,
       ],
     });

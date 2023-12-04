@@ -1,6 +1,12 @@
 export {
+  StreamType,
+  entersState,
+  AudioPlayerStatus,
+  AudioPlayer,
   joinVoiceChannel,
   getVoiceConnection,
+  createAudioPlayer,
+  createAudioResource,
   VoiceConnection,
 } from '@discordjs/voice';
 export { default as chalk } from 'chalk';

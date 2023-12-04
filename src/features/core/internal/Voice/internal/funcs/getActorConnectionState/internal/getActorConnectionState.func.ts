@@ -1,21 +1,15 @@
-import {
-  isNil,
-  type ChatInputCommandInteraction,
-  type VoiceConnection,
-  getVoiceConnection,
-} from '@/features/library/index.js';
+import type { ConnectionState } from '@/features/core/index.js';
+import { isNil, getVoiceConnection } from '@/features/library/index.js';
+import type { ChatInputCommandInteraction } from '@/features/library/index.js';
 import { getActorId } from '@/features/others/discord/index.js';
 
-export const getActorConnection = async ({
+export const getActorConnectionState = async ({
   interaction,
   connections,
 }: {
   interaction: Readonly<ChatInputCommandInteraction>;
-  connections: Array<{
-    guildId: string;
-    connection: VoiceConnection;
-  }>;
-}): Promise<VoiceConnection | null> => {
+  connections: Array<ConnectionState>;
+}): Promise<ConnectionState | null> => {
   const guildId = interaction.guildId;
   if (isNil(guildId)) return null;
 
@@ -28,8 +22,13 @@ export const getActorConnection = async ({
     const connection = getVoiceConnection(actor.guild.id);
 
     if (isNil(connection)) return null;
-    else return connection;
+    else
+      return {
+        guildId: actor.guild.id,
+        connection,
+        player: undefined,
+      };
   } else {
-    return connection.connection;
+    return connection;
   }
 };

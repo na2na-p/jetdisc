@@ -1,7 +1,9 @@
 export { Client } from './internal/Client/index.js';
 export {
-  Voice,
   getJoinableStateStatus,
   JOINABLE_STATE_STATUS,
-  getActorConnection,
+  getActorConnectionState,
+  type ConnectionState,
+  getVoiceInstance,
 } from './internal/Voice/index.js';
+export type { Voice } from './internal/Voice/index.js';

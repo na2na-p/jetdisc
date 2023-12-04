@@ -2,6 +2,7 @@ import { chalk } from '@/features/library/index.js';
 
 export const log = ({
   message,
+  // eslint-disable-next-line no-console
   stdoutMethod = console.log,
 }: {
   message: string;

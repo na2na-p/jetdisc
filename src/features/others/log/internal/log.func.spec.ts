@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { SpyInstance } from 'vitest';
 
 import { chalk } from '@/features/library/index.js';

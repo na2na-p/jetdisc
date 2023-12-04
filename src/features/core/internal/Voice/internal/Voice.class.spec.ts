@@ -13,7 +13,8 @@ import { LogicException } from '@/features/others/Error/LogicException.js';
 import { getActorId } from '@/features/others/discord/index.js';
 
 import { Voice } from './Voice.class.js';
-import { getActorConnection } from './funcs/getActorConnection/index.js';
+import type { ConnectionState } from './Voice.types.js';
+import { getActorConnectionState } from './funcs/getActorConnectionState/index.js';
 import {
   JOINABLE_STATE_STATUS,
   getJoinableStateStatus,
@@ -50,9 +51,9 @@ vi.mock('./funcs/getJoinableStateStatus/index.js', async () => {
   };
 });
 
-vi.mock('./funcs/getActorConnection/index.js', () => {
+vi.mock('./funcs/getActorConnectionState/index.js', () => {
   return {
-    getActorConnection: vi.fn(),
+    getActorConnectionState: vi.fn(),
   };
 });
 
@@ -170,6 +171,59 @@ describe('Voice', () => {
       );
     });
 
+    it('should throw an error if the channel is null', async () => {
+      const mockedInteraction = {
+        reply: vi.fn(),
+      } as unknown as Readonly<ChatInputCommandInteraction>;
+
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
+        voice: { channel: null },
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.ALREADY_JOINED);
+
+      await expect(
+        voice.join({ interaction: mockedInteraction })
+      ).rejects.toThrowError(
+        'Channel is null. Please check getJoinableStateStatus()'
+      );
+    });
+
+    // JOINABLE_STATE_STATUS.ALREADY_JOINED
+    it('should return false if the channel is already joined', async () => {
+      const mockedInteraction = {
+        reply: vi.fn(),
+      } as unknown as Readonly<ChatInputCommandInteraction>;
+
+      (getActorId as MockedFunction<typeof getActorId>).mockResolvedValueOnce({
+        voice: {
+          channel: {
+            id: 'channelId',
+            guild: {
+              id: 'guildId',
+            },
+          },
+        },
+      } as GuildMember);
+      (
+        getJoinableStateStatus as MockedFunction<typeof getJoinableStateStatus>
+      ).mockReturnValueOnce(JOINABLE_STATE_STATUS.ALREADY_JOINED);
+
+      const result = await voice.join({ interaction: mockedInteraction });
+
+      expect(getJoinableStateStatus).toHaveBeenCalledWith({
+        channel: {
+          id: 'channelId',
+          guild: {
+            id: 'guildId',
+          },
+        },
+      });
+
+      expect(result).toBe(false);
+    });
+
     it('should join the voice channel and return true', async () => {
       const mockedGuildMember = {
         voice: {
@@ -251,10 +305,14 @@ describe('Voice', () => {
       } as unknown as Readonly<ChatInputCommandInteraction>;
 
       (
-        getActorConnection as MockedFunction<typeof getActorConnection>
+        getActorConnectionState as MockedFunction<
+          typeof getActorConnectionState
+        >
       ).mockResolvedValueOnce({
-        destroy: vi.fn(),
-      } as unknown as VoiceConnection);
+        connection: {
+          destroy: vi.fn(),
+        },
+      } as unknown as ConnectionState);
 
       const result = await voice.leave({ interaction });
 
