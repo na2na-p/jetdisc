@@ -6,53 +6,40 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  DOCKER_TAG_API_URI: https://registry.hub.docker.com/v2/repositories/na2na/jetdisc/tags
-
 jobs:
-  Prepare:
-    name: Prepare
-    runs-on: ubuntu-latest
-    outputs:
-      tag_exists: ${{ steps.check_docker_hub.outputs.tag_exists }}
-      JETDISC_VERSION: ${{ steps.check_docker_hub.outputs.JETDISC_VERSION }}
-      PREVIOIUS_LATEST_TAG: ${{ steps.get_previous_latest_tag.outputs.PREVIOIUS_LATEST_TAG }}
-      LATEST_TAG: ${{ steps.genelate_latest_tag.outputs.LATEST_TAG }}
+  prepare:
+    timeout-minutes: 60
+    runs-on:
+      - ubuntu-latest
     steps:
-      - name: Check out the repo
+      - uses: actions/checkout@v4.1.1
+      - name: Checkout repository
         uses: actions/checkout@v4.1.1
-      - name: Get current version
-        id: get_version
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v3.0.2
+        continue-on-error: true
+      - name: install ffmpeg dependencies
         run: |
-          echo "JETDISC_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
-      - name: Check Docker Hub
-        id: check_docker_hub
-        run: |
-          DOCKER_HUB_TAGS=$(curl -s ${{ env.DOCKER_TAG_API_URI }} | jq -r '.results[] | .name')
-          if echo "$DOCKER_HUB_TAGS" | grep -q "^$JETDISC_VERSION$"; then
-            echo "Tag $JETDISC_VERSION already exists on Docker Hub."
-          else
-            echo "Tag $JETDISC_VERSION does not exist on Docker Hub."
-            echo "tag_exists=false" >> $GITHUB_OUTPUT
-            echo "JETDISC_VERSION=$JETDISC_VERSION" >> $GITHUB_OUTPUT
-          fi
-      - name: Get Current Latest Tag
-        id: get_previous_latest_tag
-        run: |
-          echo "PREVIOIUS_LATEST_TAG=$(curl -s $DOCKER_TAG_API_URI | jq -r '.results | sort_by(.last_updated) | last | .name')" >> $GITHUB_OUTPUT
-      - name: Genelate Latest Tag by commit hash
-        id: genelate_latest_tag
-        run: |
-          echo "LATEST_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-  Build-and-Push-to-Docker-Hub:
-    needs:
-      - Prepare
-    if: ${{ needs.Prepare.outputs.tag_exists == 'false' }}
-    with:
-      JETDISC_VERSION: ${{ needs.Prepare.outputs.JETDISC_VERSION }}
-      IMAGE_REPOSITORY: na2na
-      IMAGE_NAME: jetdisc
-      LATEST_TAG: ${{ needs.Prepare.outputs.LATEST_TAG }}
-    uses: ./.github/workflows/image-build-and-publish.yml
+          sudo apt-get update
+          sudo apt-get install -y nasm
+      - name: Cache asdf
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.asdf
+          key: ${{ runner.os }}-asdf-${{ hashFiles('**/.tool-versions') }}
+      - name: asdf install
+        uses: asdf-vm/actions/install@v3.0.2
+  ci:
+    uses: ./.github/workflows/ci.yml
     secrets: inherit
+    needs: prepare
+  image-build-for-ci:
+    uses: ./.github/workflows/image-build.yml
+    secrets: inherit
+  image-scan:
+    uses: ./.github/workflows/image-scan.yml
+    secrets: inherit
+    needs: image-build-for-ci
+    with:
+      docker_image_tag_ci: ${{ needs.image-build-for-ci.outputs.docker_image_tag_ci }}
