@@ -15,9 +15,6 @@ on:
       LATEST_TAG:
         required: true
         type: string
-      RELEASE:
-        type: boolean
-        default: false
     secrets: {}
 
 jobs:
@@ -55,5 +52,5 @@ jobs:
               --builder="${{ steps.buildx.outputs.name }}" \
               --set="app.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:${{ inputs.JETDISC_VERSION }}" \
               --set="app.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:${{ inputs.LATEST_TAG }}" \
-              ${{ inputs.RELEASE && '--set="app.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:release"' || '' }}
+              --set="app.tags=${{ inputs.IMAGE_REPOSITORY }}/${{ inputs.IMAGE_NAME }}:release" \
               --push
