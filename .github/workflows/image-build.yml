@@ -1,0 +1,59 @@
+name: Image build
+on:
+  workflow_call:
+    outputs:
+      docker_image_tag_ci:
+        description: Docker image tag for CI
+        value: ${{ jobs.image-build.outputs.docker_image_tag_ci }}
+  workflow_dispatch:
+
+jobs:
+  image-build:
+    runs-on:
+      - ubuntu-latest
+    outputs:
+      docker_image_tag_ci: ${{ steps.generate_docker_image_tag.outputs.docker_image_tag_ci }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cache Docker Build Cache
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: docker-build-cache-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            docker-build-cache-${{ github.ref }}
+            docker-build-cache-
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: network=host
+      - name: Generate Docker Image Tag
+        id: generate_docker_image_tag
+        run: |
+          SHA=${{ github.sha }}
+          TAG=$(TZ=UTC-9 date '+%Y%m')-${SHA:0:7}
+          echo "DOCKER_IMAGE_TAG_CI=$TAG" >> $GITHUB_ENV
+          echo TAG $TAG
+          echo "docker_image_tag_ci=$TAG" >> $GITHUB_OUTPUT
+      - name: Cache Docker Registry
+        uses: actions/cache@v3
+        with:
+          path: /tmp/docker-registry
+          key: docker-registry-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            docker-registry-${{ github.ref }}
+            docker-registry-
+      - name: Boot-up Local Docker Registry
+        run: docker run -d -p 5000:5000 --restart=always --name registry -v /tmp/docker-registry:/var/lib/registry registry:2
+      - name: Wait for Docker Registry
+        run: npx wait-on tcp:5000
+      - name: Build Docker Image
+        run: |
+          docker buildx bake \
+              -f 'infra/docker/image-bake.hcl' \
+              --builder="${{ steps.buildx.outputs.name }}" \
+              --set='app.tags=localhost:5000/jetdisc-ci:${{ steps.generate_docker_image_tag.outputs.docker_image_tag_ci }}' \
+              --set='app.platform=linux/amd64' \
+              --push

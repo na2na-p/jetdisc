@@ -44,3 +44,12 @@ jobs:
     uses: ./.github/workflows/ci.yml
     secrets: inherit
     needs: prepare
+  image-build-for-ci:
+    uses: ./.github/workflows/image-build.yml
+    secrets: inherit
+  image-scan:
+    uses: ./.github/workflows/image-scan.yml
+    secrets: inherit
+    needs: image-build-for-ci
+    with:
+      docker_image_tag_ci: ${{ needs.image-build-for-ci.outputs.docker_image_tag_ci }}
