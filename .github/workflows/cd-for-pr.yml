@@ -3,7 +3,6 @@ on:
   pull_request:
     branches:
       - main
-      - v3
     types:
       - opened
       - reopened
@@ -24,6 +23,23 @@ jobs:
       - ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v3.0.2
+        continue-on-error: true
+      - name: install ffmpeg dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nasm
+      - name: Cache asdf
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.asdf
+          key: ${{ runner.os }}-asdf-${{ hashFiles('**/.tool-versions') }}
+      - name: asdf install
+        uses: asdf-vm/actions/install@v3.0.2
   ci:
     uses: ./.github/workflows/ci.yml
     secrets: inherit

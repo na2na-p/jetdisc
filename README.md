@@ -18,14 +18,35 @@ Pythonは、`@discordjs/opus`の入れるのに必要です。
 
 ## Helmを利用してデプロイする
 
-### リソースの作成
+### ArgoCDを使わない場合
 
-1. `infra/k8s/manifests/secret.example.yml`を参考に、同ディレクトリに`secret.yml`を作成する
+#### リソースの作成
+
+1. `kubectl create namespace jetdisc`でNamespaceを作成する
+2. `infra/k8s/manifests/secret.example.yml`を参考に、同ディレクトリに`secret.yml`を作成する
    1. SecretはBase64エンコードすること
-2. `kubectl apply -f infra/k8s/manifests/secret.yml`でSecretの適用をする
-3. `helm install {任意の名前/バージョン名など} ./infra/k8s/helm`
+3. `kubectl apply -f infra/k8s/manifests/secret.yml -n jetdisc`でSecretの適用をする
+4. `helm install -n jetdisc {任意の名前/バージョン名など} ./infra/k8s/helm`
 
-### リソースの削除
+#### リソースの削除
 
 1. `helm uninstall {任意の名前/バージョン名など}`
-2. `kubectl delete -f infra/k8s/manifests/secret.yml`
+2. `kubectl delete -f infra/k8s/manifests/secret.yml`でSecretの削除をする
+3. `kubectl delete namespace jetdisc`でNamespaceの削除をする
+
+### ArgoCDを使う場合
+
+#### リソースの作成
+
+1. ArgoCDと同じクラスターにログインする
+2. `kubectl create namespace jetdisc`でNamespaceを作成する
+3. `infra/k8s/manifests/secret.example.yml`を参考に、同ディレクトリに`secret.yml`を作成する
+   1. SecretはBase64エンコードすること
+4. `kubectl apply -f infra/k8s/manifests/secret.yml -n jetdisc`でSecretの適用をする
+5. `kubectl apply -f infra/k8s/argocd/jetdisc.yaml`でArgoCDの適用をする
+
+#### リソースの削除
+
+1. `kubectl delete -f infra/k8s/argocd/jetdisc.yaml`
+2. `kubectl delete -f infra/k8s/manifests/secret.yml`でSecretの削除をする
+3. `kubectl delete namespace jetdisc`でNamespaceの削除をする

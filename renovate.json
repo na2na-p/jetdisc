@@ -10,6 +10,17 @@
     {
       "matchUpdateTypes": ["major"],
       "addLabels": ["major update"]
+    },
+    {
+      "datasources": ["docker"],
+      "packageNames": ["na2na/jetdisc"],
+      "matchManagers": ["helm-values"]
+    },
+    {
+      "groupName": "JetDisc updates",
+      "addLabels": ["Infra"],
+      "matchPackageNames": ["docker.io/na2na/jetdisc"]
     }
-  ]
+  ],
+  "ignoreDeps": ["python"]
 }

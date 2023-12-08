@@ -7,7 +7,6 @@ on:
       - ready_for_review
     branches:
       - main
-      - v3
 
 jobs:
   enable-auto-merge:

@@ -2,7 +2,8 @@ replicaCount: 1
 
 image:
   repository: na2na/jetdisc
-  tag: "preview"
+  tag: "3.0.1"
+  registry: docker.io
   pullPolicy: IfNotPresent
 
 secret:
