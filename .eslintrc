@@ -85,6 +85,16 @@
 				]
 			}
 		],
-		"object-shorthand": "error"
+		"object-shorthand": "error",
+		"import/no-extraneous-dependencies": [
+			"error",
+			{
+				"devDependencies": [
+					"**/*.spec.[jt]s"
+				],
+				"optionalDependencies": false,
+				"peerDependencies": false
+			}
+		]
 	}
 }
