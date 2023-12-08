@@ -13,7 +13,7 @@
     },
     {
       "datasources": ["docker"],
-      "packageNames": ["na2na/jetdisc"],
+      "packageNames": ["docker.io/na2na/jetdisc"],
       "matchManagers": ["helm-values"]
     },
     {
