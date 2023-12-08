@@ -2,7 +2,7 @@
 
 ## 必要なもの
 
-.tool-versionsを参照してください。
+基本的には`.tool-versions`を参照してください。
 asdfを使っている場合はそのまま入ります。
 
 - Node.js
@@ -10,6 +10,7 @@ asdfを使っている場合はそのまま入ります。
 - Python
 
 Pythonは、`@discordjs/opus`の入れるのに必要です。
+ただし、ランタイムで`ffmpeg`が必要になります。
 
 ## 登場するドメイン
 
