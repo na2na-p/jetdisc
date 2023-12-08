@@ -3,4 +3,5 @@ coverage
 built/
 .env
 .idea
-configmap.yml
+secret.yml
+*.tgz
