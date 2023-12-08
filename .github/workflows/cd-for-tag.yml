@@ -52,6 +52,5 @@ jobs:
       IMAGE_REPOSITORY: na2na
       IMAGE_NAME: jetdisc
       LATEST_TAG: ${{ needs.Prepare.outputs.LATEST_TAG }}
-      RELEASE: true
     uses: ./.github/workflows/image-build-and-publish.yml
     secrets: inherit
