@@ -3,3 +3,4 @@ coverage
 built/
 .env
 .idea
+configmap.yml

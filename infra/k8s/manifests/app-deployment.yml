@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jetdisc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jetdisc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jetdisc
+        environment: production
+        version: "1.0.0"
+    spec:
+      containers:
+        - name: jetdisc
+          image: na2na/jetdisc:preview
+          envFrom:
+            - configMapRef:
+                name: jetdisc-config
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+      restartPolicy: Always

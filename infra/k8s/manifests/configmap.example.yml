@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jetdisc-config
+data:
+  DISCORD_APP_TOKEN: ""
+  BOT_NAME: "2na2"
+  SET_COMMANDS_TARGET_SERVERS: ""
