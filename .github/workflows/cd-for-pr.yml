@@ -47,7 +47,6 @@ jobs:
   image-build-for-ci:
     uses: ./.github/workflows/image-build.yml
     secrets: inherit
-    needs: prepare
   image-scan:
     uses: ./.github/workflows/image-scan.yml
     secrets: inherit
