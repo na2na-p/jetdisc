@@ -5,6 +5,7 @@
 			"ESNext"
 		],
 		"incremental": false,
+		"verbatimModuleSyntax": true,
 		"target": "ESNext",
 		"module": "NodeNext",
 		"rootDir": ".",
