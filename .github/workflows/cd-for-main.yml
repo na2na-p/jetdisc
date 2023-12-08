@@ -1,9 +1,9 @@
-name: CD for v3(main)
+name: CD for main
 
 on:
   push:
     branches:
-      - v3
+      - main
   workflow_dispatch:
 
 env:
