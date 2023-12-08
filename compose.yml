@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    restart: always
+    networks:
+      - external_network
+    env_file:
+      - .env
+
+networks:
+  external_network:

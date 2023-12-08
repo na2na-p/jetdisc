@@ -1,0 +1,47 @@
+name: CD for v3(main)
+
+on:
+  push:
+    branches:
+      - v3
+  workflow_dispatch:
+
+env:
+  DOCKER_TAG_API_URI: https://registry.hub.docker.com/v2/repositories/na2na/jetdisc/tags
+
+jobs:
+  Prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    outputs:
+      tag_exists: ${{ steps.check_docker_hub.outputs.tag_exists }}
+      JETDISC_VERSION: ${{ steps.check_docker_hub.outputs.JETDISC_VERSION }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4.1.1
+      - name: Get current version
+        id: get_version
+        run: |
+          echo "JETDISC_VERSION=$(cat package.json | jq -r '.version')" >> $GITHUB_ENV
+      - name: Check Docker Hub
+        id: check_docker_hub
+        run: |
+          DOCKER_HUB_TAGS=$(curl -s ${{ env.DOCKER_TAG_API_URI }} | jq -r '.results[] | .name')
+          if [ $(echo $DOCKER_HUB_TAGS | grep -c $JETDISC_VERSION) -eq 1 ]; then
+            echo "Tag $JETDISC_VERSION already exists on Docker Hub."
+          else
+            echo "Tag $JETDISC_VERSION does not exist on Docker Hub."
+            echo "tag_exists=false" >> $GITHUB_OUTPUT
+            echo "JETDISC_VERSION=$JETDISC_VERSION" >> $GITHUB_OUTPUT
+          fi
+
+  Build-and-Push-to-Docker-Hub:
+    needs:
+      - Prepare
+    if: ${{ needs.Prepare.outputs.tag_exists == 'false' }}
+    with:
+      JETDISC_VERSION: ${{ needs.Prepare.outputs.JETDISC_VERSION }}
+      IMAGE_REPOSITORY: na2na
+      IMAGE_NAME: jetdisc
+    uses: ./.github/workflows/image-build-and-publish.yml
+    secrets: inherit

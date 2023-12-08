@@ -3,10 +3,10 @@
   "version": "3.0.0-beta1",
   "description": "",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "built/index.js",
   "scripts": {
-    "start": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"./loader.mjs\", pathToFileURL(\"./\"));' dist/index.js",
-    "build": "swc ./src -s -d ./dist",
+    "start": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"./loader.mjs\", pathToFileURL(\"./\"));' built/index.js",
+    "build": "swc ./src -s -d ./built",
     "dev": "tsx src/index.ts --watch",
     "lint": "eslint --ext .js,.ts,.tsx \"./src/**/*.{js,ts,tsx}\"",
     "lint:fix": "yarn lint --fix",

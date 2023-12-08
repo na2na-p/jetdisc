@@ -1,0 +1,10 @@
+.github
+.travis
+.vscode
+Dockerfile
+built/
+compose.yml
+node_modules/
+.pnp.*
+.pnpm-store
+.idea/
