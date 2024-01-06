@@ -16,5 +16,6 @@ export const getConfig = () => {
   return {
     ...envs,
     SET_COMMANDS_TARGET_SERVERS: envs.SET_COMMANDS_TARGET_SERVERS.split(','),
+    CLIENT_ID: `${envs.BOT_NAME}-${Date.now()}`,
   } as const;
 };
