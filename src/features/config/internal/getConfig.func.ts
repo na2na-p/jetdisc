@@ -9,6 +9,7 @@ export const getConfig = () => {
       SET_COMMANDS_TARGET_SERVERS: z.string().min(1).readonly(),
       SPOTIFY_CLIENT_ID: z.string().min(1).readonly(),
       SPOTIFY_CLIENT_SECRET: z.string().min(1).readonly(),
+      SPOTIFY_AUTH_CALLBACK_URL: z.string().min(1).readonly(),
     } as const,
     runtimeEnv: process.env,
   });

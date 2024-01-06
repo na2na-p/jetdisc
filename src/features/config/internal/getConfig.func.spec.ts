@@ -20,6 +20,7 @@ describe('getConfig', () => {
     process.env['SET_COMMANDS_TARGET_SERVERS'] = 'server1,server2';
     process.env['SPOTIFY_CLIENT_ID'] = 'test_client_id';
     process.env['SPOTIFY_CLIENT_SECRET'] = 'test_client_secret';
+    process.env['SPOTIFY_AUTH_CALLBACK_URL'] = 'test_callback_url';
 
     const expectedConfig = {
       DISCORD_APP_TOKEN: 'test_token',
@@ -28,6 +29,7 @@ describe('getConfig', () => {
       SPOTIFY_CLIENT_ID: 'test_client_id',
       SPOTIFY_CLIENT_SECRET: 'test_client_secret',
       CLIENT_ID: 'test_bot-1700000000000',
+      SPOTIFY_AUTH_CALLBACK_URL: 'test_callback_url',
     };
 
     expect(getConfig()).toEqual(expectedConfig);
@@ -38,6 +40,7 @@ describe('getConfig', () => {
     process.env['SET_COMMANDS_TARGET_SERVERS'] = 'server1,server2';
     process.env['SPOTIFY_CLIENT_ID'] = 'test_client_id';
     process.env['SPOTIFY_CLIENT_SECRET'] = 'test_client_secret';
+    process.env['SPOTIFY_AUTH_CALLBACK_URL'] = 'test_callback_url';
 
     expect(getConfig).toThrow();
   });
@@ -47,6 +50,7 @@ describe('getConfig', () => {
     process.env['SET_COMMANDS_TARGET_SERVERS'] = 'server1,server2';
     process.env['SPOTIFY_CLIENT_ID'] = 'test_client_id';
     process.env['SPOTIFY_CLIENT_SECRET'] = 'test_client_secret';
+    process.env['SPOTIFY_AUTH_CALLBACK_URL'] = 'test_callback_url';
 
     expect(getConfig).toThrow();
   });
@@ -56,6 +60,7 @@ describe('getConfig', () => {
     process.env['BOT_NAME'] = 'test_bot';
     process.env['SPOTIFY_CLIENT_ID'] = 'test_client_id';
     process.env['SPOTIFY_CLIENT_SECRET'] = 'test_client_secret';
+    process.env['SPOTIFY_AUTH_CALLBACK_URL'] = 'test_callback_url';
 
     expect(getConfig).toThrow();
   });

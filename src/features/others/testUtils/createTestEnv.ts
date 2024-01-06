@@ -4,5 +4,6 @@ export const createTestEnv = () => {
   process.env['SET_COMMANDS_TARGET_SERVERS'] = 'server1,server2';
   process.env['SPOTIFY_CLIENT_ID'] = 'test_client_id';
   process.env['SPOTIFY_CLIENT_SECRET'] = 'test_client_secret';
+  process.env['SPOTIFY_AUTH_CALLBACK_URL'] = 'test_callback_url';
   return;
 };
