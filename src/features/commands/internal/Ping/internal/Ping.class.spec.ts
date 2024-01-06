@@ -4,6 +4,9 @@ import type {
 } from '@/features/library/index.js';
 
 import { Ping } from './Ping.class.js';
+import { createTestEnv } from '@/features/others/testUtils/createTestEnv.js';
+
+createTestEnv();
 
 describe('Ping', () => {
   let ping: Ping;

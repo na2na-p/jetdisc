@@ -4,6 +4,9 @@ import type {
 } from '@/features/library/index.js';
 
 import { CommandBase } from './CommandBase.class.js';
+import { createTestEnv } from '@/features/others/testUtils/createTestEnv.js';
+
+createTestEnv();
 
 describe('CommandBase', () => {
   class TestCommand extends CommandBase {

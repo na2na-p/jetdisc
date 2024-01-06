@@ -1,6 +1,7 @@
 import type { ApplicationCommandOptionData } from '@/features/library/index.js';
 
 import type { InteractArgs } from './CommandBase.types.js';
+import { getConfig } from '@/features/config/index.js';
 
 export abstract class CommandBase {
   /**
@@ -25,4 +26,6 @@ export abstract class CommandBase {
   }
 
   public abstract interact({ interaction }: InteractArgs): Promise<void>;
+
+  protected readonly config = getConfig();
 }
