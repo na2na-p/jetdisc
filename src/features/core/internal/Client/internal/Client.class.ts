@@ -1,6 +1,7 @@
 import { exit } from 'process';
 
 import type { CommandBase } from '@/features/commands/index.js';
+import type { getConfig } from '@/features/config/index.js';
 import type { ChatInputCommandInteraction } from '@/features/library/index.js';
 import {
   Client as DiscordJsClient,
@@ -13,7 +14,7 @@ import { log } from '@/features/others/log/index.js';
 import type { ClassConstructorArgs } from './Client.types.js';
 
 export class Client extends DiscordJsClient {
-  readonly #config;
+  readonly #config: ReturnType<typeof getConfig>;
   private interactionCommands: ReadonlyArray<CommandBase> = [];
 
   constructor({ config, commands }: ClassConstructorArgs) {
