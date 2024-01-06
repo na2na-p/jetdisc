@@ -1,5 +1,5 @@
-import { getAuthUrl } from './getAuthUrl.func.js';
 import { APPLICATION_SCOPES } from './getAuthUrl.constants.js';
+import { getAuthUrl } from './getAuthUrl.func.js';
 
 describe('getAuthUrl Function', () => {
   it('should return the correct URL format with custom parameters', () => {

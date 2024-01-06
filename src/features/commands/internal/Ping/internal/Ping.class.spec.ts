@@ -2,9 +2,9 @@ import type {
   CacheType,
   ChatInputCommandInteraction,
 } from '@/features/library/index.js';
+import { createTestEnv } from '@/features/others/testUtils/createTestEnv.js';
 
 import { Ping } from './Ping.class.js';
-import { createTestEnv } from '@/features/others/testUtils/createTestEnv.js';
 
 createTestEnv();
 

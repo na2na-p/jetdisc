@@ -1,7 +1,7 @@
+import { getConfig } from '@/features/config/index.js';
 import type { ApplicationCommandOptionData } from '@/features/library/index.js';
 
 import type { InteractArgs } from './CommandBase.types.js';
-import { getConfig } from '@/features/config/index.js';
 
 export abstract class CommandBase {
   /**

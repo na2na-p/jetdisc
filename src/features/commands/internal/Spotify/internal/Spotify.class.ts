@@ -1,5 +1,3 @@
-import type { InteractArgs } from '../../CommandBase/index.js';
-import { CommandBase } from '../../CommandBase/index.js';
 import {
   SpotifyAuthCommandOptions,
   SpotifyCommandOptions,
@@ -10,6 +8,8 @@ import {
   GRANT_TYPE,
   type SpotifyTokenResponse,
 } from './funcs/index.js';
+import type { InteractArgs } from '../../CommandBase/index.js';
+import { CommandBase } from '../../CommandBase/index.js';
 
 export class Spotify extends CommandBase {
   public readonly name = 'spotify';
