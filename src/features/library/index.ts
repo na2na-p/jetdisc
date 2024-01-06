@@ -25,5 +25,6 @@ export type {
   VoiceBasedChannel,
   InteractionReplyOptions,
   ApplicationCommandOptionData,
+  ApplicationCommandSubCommandData,
 } from 'discord.js';
 export { isNil } from 'lodash-es';
