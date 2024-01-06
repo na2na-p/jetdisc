@@ -1,12 +1,12 @@
 import { getAuthUrl } from './getAuthUrl.func.js';
-import { APPLICATION_SCOPES, REDIRECT_URI } from './getAuthUrl.constants.js';
+import { APPLICATION_SCOPES } from './getAuthUrl.constants.js';
 
 describe('getAuthUrl Function', () => {
   it('should return the correct URL format with custom parameters', () => {
     const state = 'teststate';
     const spotifyClientId = 'testclientid';
     const applicationScopes = ['scope1', 'scope2'];
-    const redirectUri = 'http://testredirect.com';
+    const redirectUri = 'http://example.com';
 
     const expectedUrl = `https://accounts.spotify.com/authorize?client_id=${spotifyClientId}&response_type=code&redirect_uri=${encodeURI(
       redirectUri
@@ -25,11 +25,12 @@ describe('getAuthUrl Function', () => {
   it('should use default values for applicationScopes and redirectUri if they are not provided', () => {
     const state = 'defaulttest';
     const spotifyClientId = 'defaultclientid';
+    const redirectUri = 'http://example.com';
 
     const expectedUrl = `https://accounts.spotify.com/authorize?client_id=${spotifyClientId}&response_type=code&redirect_uri=${encodeURI(
-      REDIRECT_URI
+      'http://example.com'
     )}&scope=${APPLICATION_SCOPES.join('+')}&state=${state}`;
-    const url = getAuthUrl({ state, spotifyClientId });
+    const url = getAuthUrl({ state, spotifyClientId, redirectUri });
 
     expect(url).toBe(expectedUrl);
     expect(() => new URL(url)).not.toThrow();
