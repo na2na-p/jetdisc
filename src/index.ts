@@ -4,18 +4,12 @@ import {
   Ping,
   VoiceChannel,
   YouTube,
-  getSpotifyInstance,
+  Spotify,
 } from './features/commands/index.js';
 import { getConfig } from './features/config/index.js';
 import { Client } from './features/core/index.js';
 
 new Client({
   config: getConfig(),
-  commands: [
-    new Ping(),
-    new VoiceChannel(),
-    new YouTube(),
-    // TODO: シングルトンやめる
-    getSpotifyInstance(),
-  ],
+  commands: [new Ping(), new VoiceChannel(), new YouTube(), new Spotify()],
 });
