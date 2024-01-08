@@ -10,6 +10,8 @@ import {
 } from './funcs/index.js';
 import type { InteractArgs } from '../../CommandBase/index.js';
 import { CommandBase } from '../../CommandBase/index.js';
+import type { Guild } from 'discord.js';
+import { getGuildFromInteraction } from '@/features/others/discord/index.js';
 
 export class Spotify extends CommandBase {
   public readonly name = 'spotify';
@@ -19,7 +21,9 @@ export class Spotify extends CommandBase {
   /**
    * TODO: Store系を一か所に集約してシングルトンの多用やめる
    */
-  #tokens: Array<SpotifyTokenResponse> = [];
+  #tokens: {
+    [key: Guild['id']]: SpotifyTokenResponse;
+  } = {};
 
   public override async interact({ interaction }: InteractArgs): Promise<void> {
     switch (interaction.options.getSubcommand()) {
@@ -44,7 +48,7 @@ export class Spotify extends CommandBase {
           spotifyClientId: this.config.SPOTIFY_CLIENT_ID,
           spotifyClientSecret: this.config.SPOTIFY_CLIENT_SECRET,
         });
-        this.#tokens.push(token);
+        this.#tokens[getGuildFromInteraction({ interaction }).id] = token;
 
         interaction.reply({
           content: 'Authenticated!',
