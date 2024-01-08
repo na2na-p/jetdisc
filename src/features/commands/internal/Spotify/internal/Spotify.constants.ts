@@ -25,11 +25,25 @@ export const SpotifyAuthCommandOptions = {
   },
 } as const satisfies Record<string, ApplicationCommandSubCommandData>;
 
+export const SpotifyPlayerCommandOptions = {
+  stop: {
+    name: 'stop',
+    description: 'Stop the player.',
+    type: ApplicationCommandOptionType.Subcommand,
+  },
+} as const satisfies Record<string, ApplicationCommandSubCommandData>;
+
 export const SpotifyCommandOptions = {
   auth: {
     name: 'auth',
     description: 'Authenticate with Spotify.',
     type: ApplicationCommandOptionType.SubcommandGroup,
     options: Object.values(SpotifyAuthCommandOptions),
+  },
+  player: {
+    name: 'player',
+    description: 'Control the Spotify player.',
+    type: ApplicationCommandOptionType.SubcommandGroup,
+    options: Object.values(SpotifyPlayerCommandOptions),
   },
 } as const satisfies Record<string, ApplicationCommandOptionData>;
