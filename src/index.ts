@@ -4,7 +4,7 @@ import {
   Ping,
   VoiceChannel,
   YouTube,
-  // getSpotifyInstance,
+  getSpotifyInstance,
 } from './features/commands/index.js';
 import { getConfig } from './features/config/index.js';
 import { Client } from './features/core/index.js';
@@ -16,6 +16,6 @@ new Client({
     new VoiceChannel(),
     new YouTube(),
     // TODO: シングルトンやめる
-    // getSpotifyInstance(),
+    getSpotifyInstance(),
   ],
 });

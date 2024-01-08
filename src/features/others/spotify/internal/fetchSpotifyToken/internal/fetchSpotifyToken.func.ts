@@ -1,5 +1,6 @@
+import type { SpotifyTokenResponse } from '@/features/others/spotify/index.js';
+
 import { GRANT_TYPE } from './fetchSpotifyToken.constants.js';
-import type { SpotifyTokenResponse } from './fetchSpotifyToken.types.js';
 
 type FetchSpotifyTokenParams =
   | {
@@ -11,6 +12,7 @@ type FetchSpotifyTokenParams =
       spotifyClientId: string;
       spotifyClientSecret: string;
       spotifyCallbackUrl: string;
+      fetchFn?: typeof fetch;
     }
   | {
       type: typeof GRANT_TYPE.RefreshToken;
@@ -20,11 +22,16 @@ type FetchSpotifyTokenParams =
       code: string;
       spotifyClientId: string;
       spotifyClientSecret: string;
+      fetchFn?: typeof fetch;
     };
 
-export const fetchSpotifyToken = async (
-  params: FetchSpotifyTokenParams
-): Promise<SpotifyTokenResponse> => {
+/**
+ * TODO: エラーハンドリング
+ */
+export const fetchSpotifyToken = async ({
+  fetchFn = fetch,
+  ...params
+}: FetchSpotifyTokenParams): Promise<SpotifyTokenResponse> => {
   const urlParams = new URLSearchParams();
   urlParams.append('grant_type', params.type);
   urlParams.append('code', params.code);
@@ -34,7 +41,7 @@ export const fetchSpotifyToken = async (
     urlParams.append('redirect_uri', params.spotifyCallbackUrl);
   }
 
-  const response = await fetch('https://accounts.spotify.com/api/token', {
+  const response = await fetchFn('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
       Authorization: `Basic ${Buffer.from(
