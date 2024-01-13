@@ -2,6 +2,7 @@
 	"extends": "@tsconfig/strictest",
 	"compilerOptions": {
 		"lib": [
+			"DOM",
 			"ESNext"
 		],
 		"incremental": false,
