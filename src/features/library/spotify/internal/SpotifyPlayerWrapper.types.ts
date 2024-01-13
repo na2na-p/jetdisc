@@ -3,6 +3,7 @@ import type {
   EVENT_TYPE,
   PLAYER_MEDIA_TYPE,
   PLAYER_TRACK_TYPE,
+  REPEAT_MODE,
 } from './SpotifyPlayerWrapper.constants.js';
 
 export type SpotifyPlayerInternal = {
@@ -79,7 +80,7 @@ export type SpotifyPlayerState = {
   };
   paused: boolean; // Whether the current track is paused.
   position: number; // The position_ms of the current track.
-  repeat_mode: 0 | 1 | 2; // The repeat mode. No repeat mode is 0,
+  repeat_mode: (typeof REPEAT_MODE)[keyof typeof REPEAT_MODE]; // The repeat mode. No repeat mode is 0,
   // repeat context is 1 and repeat track is 2.
   shuffle: boolean; // True if shuffled, false otherwise.
   track_window: {

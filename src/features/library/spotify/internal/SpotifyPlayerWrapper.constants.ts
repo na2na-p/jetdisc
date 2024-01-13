@@ -24,3 +24,9 @@ export const PLAYER_MEDIA_TYPE = {
   AUDIO: 'audio',
   VIDEO: 'video',
 } as const;
+
+export const REPEAT_MODE = {
+  OFF: 0,
+  CONTEXT: 1,
+  TRACK: 2,
+} as const;
