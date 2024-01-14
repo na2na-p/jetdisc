@@ -1,6 +1,7 @@
 export const APPLICATION_SCOPES = [
   'streaming',
-  'user-modify-playback-state',
   'user-read-private',
+  'user-read-email',
+  'user-modify-playback-state',
   'playlist-read-collaborative',
 ] as const;
