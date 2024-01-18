@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Cache Docker Build Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: docker-build-cache-${{ github.ref }}-${{ github.sha }}
@@ -38,7 +38,7 @@ jobs:
           echo TAG $TAG
           echo "docker_image_tag_ci=$TAG" >> $GITHUB_OUTPUT
       - name: Cache Docker Registry
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/docker-registry
           key: docker-registry-${{ github.ref }}-${{ github.sha }}

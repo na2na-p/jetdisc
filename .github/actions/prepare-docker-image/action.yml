@@ -18,7 +18,7 @@ runs:
         echo "WWWGROUP=$(id -g)" >> $GITHUB_ENV
         echo "WWWGROUP=$(id -g)" >> $GITHUB_OUTPUT
     - name: Cache Docker Registry
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: /tmp/docker-registry
         key: docker-registry-${{ github.ref }}-${{ github.sha }}
