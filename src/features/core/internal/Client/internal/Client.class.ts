@@ -78,12 +78,9 @@ export class Client extends DiscordJsClient {
     const interactionCommands = [...this.interactionCommands];
 
     for (const command of commands) {
-      // コマンドのインスタンスを生成し、registerメソッドを呼び出す
       const commandInstance = new command({
         store: this.#store,
       }).register();
-
-      // 新しいインスタンスを新しい配列に追加
       interactionCommands.push(commandInstance);
     }
     this.interactionCommands = interactionCommands;
