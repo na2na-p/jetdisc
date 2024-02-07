@@ -2,12 +2,17 @@ import { exit } from 'process';
 
 import type { CommandBase } from '@/features/commands/index.js';
 import type { getConfig } from '@/features/config/index.js';
+import {
+  getInMemoryStoreInstance,
+  type Store,
+  STORE_TYPES,
+} from '@/features/core/index.js';
 import type { ChatInputCommandInteraction } from '@/features/library/index.js';
 import {
+  chalk,
   Client as DiscordJsClient,
   GatewayIntentBits,
   InteractionType,
-  chalk,
 } from '@/features/library/index.js';
 import { log } from '@/features/others/log/index.js';
 
@@ -16,8 +21,9 @@ import type { ClassConstructorArgs } from './Client.types.js';
 export class Client extends DiscordJsClient {
   readonly #config: ReturnType<typeof getConfig>;
   private interactionCommands: ReadonlyArray<CommandBase> = [];
+  #store: Store;
 
-  constructor({ config, commands }: ClassConstructorArgs) {
+  constructor({ config, commands, storeDriver }: ClassConstructorArgs) {
     super({
       intents: [
         GatewayIntentBits.Guilds,
@@ -32,6 +38,14 @@ export class Client extends DiscordJsClient {
     } catch (error) {
       this.log(chalk.red('Failed to fetch the account'));
       exit(1);
+    }
+
+    switch (storeDriver) {
+      case STORE_TYPES.IN_MEMORY:
+        this.#store = getInMemoryStoreInstance();
+        break;
+      default:
+        throw new Error('Invalid store driver');
     }
 
     const commandsRegisteredResult = this.#installModules(commands);
