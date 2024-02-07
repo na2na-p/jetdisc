@@ -19,10 +19,10 @@ export abstract class CommandBase {
    */
   public readonly options?: ReadonlyArray<ApplicationCommandOptionData>;
 
-  #store: Store;
+  protected store: Store;
 
   constructor({ store }: { store: Store }) {
-    this.#store = store;
+    this.store = store;
   }
 
   public readonly register = () => this;
