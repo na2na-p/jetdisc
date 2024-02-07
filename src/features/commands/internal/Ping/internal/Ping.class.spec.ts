@@ -1,3 +1,4 @@
+import type { Store } from '@/features/core/index.js';
 import type {
   CacheType,
   ChatInputCommandInteraction,
@@ -7,9 +8,18 @@ import { Ping } from './Ping.class.js';
 
 describe('Ping', () => {
   let ping: Ping;
+  const mockedStore = vi.mocked<Store>(
+    {
+      getVoiceConnection: vi.fn(),
+      setVoiceConnection: vi.fn(),
+      getVoicePlayer: vi.fn(),
+      setVoicePlayer: vi.fn(),
+    },
+    { deep: true }
+  );
 
   beforeEach(() => {
-    ping = new Ping();
+    ping = new Ping({ store: mockedStore });
   });
 
   describe('interact', () => {

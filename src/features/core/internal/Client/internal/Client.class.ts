@@ -74,12 +74,19 @@ export class Client extends DiscordJsClient {
     });
   }
 
-  #installModules(commands: ReadonlyArray<CommandBase>): boolean {
-    commands.forEach(command => {
-      this.interactionCommands = this.interactionCommands.concat(
-        command.register()
-      );
-    });
+  #installModules(commands: ClassConstructorArgs['commands']): boolean {
+    const interactionCommands = [...this.interactionCommands];
+
+    for (const command of commands) {
+      // コマンドのインスタンスを生成し、registerメソッドを呼び出す
+      const commandInstance = new command({
+        store: this.#store,
+      }).register();
+
+      // 新しいインスタンスを新しい配列に追加
+      interactionCommands.push(commandInstance);
+    }
+    this.interactionCommands = interactionCommands;
     return true;
   }
 
@@ -87,7 +94,7 @@ export class Client extends DiscordJsClient {
     commands,
     application,
   }: {
-    commands: ReadonlyArray<CommandBase>;
+    commands: ClassConstructorArgs['commands'];
     application: Client['application'];
   }): boolean {
     if (commands.length === 0) {
@@ -106,7 +113,7 @@ export class Client extends DiscordJsClient {
       this.#config.SET_COMMANDS_TARGET_SERVERS.forEach(async serverId => {
         // this.on('ready')になってないとthis.applicationがnull。そうでないならok?
         // HACK: なぜかnullでも動く
-        application?.commands.set(commands, serverId);
+        application?.commands.set(this.interactionCommands, serverId);
         this.log(`Installed commands to ${chalk.underline(serverId)}`);
       });
       return true;
