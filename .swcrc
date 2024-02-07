@@ -15,6 +15,12 @@
 			"@/*": [
 				"src/*"
 			]
+		},
+		"minify": {
+			"compress": {
+				"unused": true
+			},
+			"mangle": true
 		}
 	},
 	"module": {
