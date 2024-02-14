@@ -1,5 +1,5 @@
 nodejs 20.11.0
-pnpm 8.15.1
+pnpm 8.15.2
 python 3.11.6
 kubectl 1.29.1
 argocd 2.10.0
