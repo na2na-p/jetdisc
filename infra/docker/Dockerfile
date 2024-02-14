@@ -31,7 +31,7 @@ ARG GID="991"
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
-	ffmpeg tini libssh-gcrypt-4=0.10.5-2 \
+	ffmpeg tini libgnutls30=3.7.9-2+deb12u2 \
 	&& corepack enable \
 	&& groupadd -g "${GID}" jetdisc \
 	&& useradd -l -u "${UID}" -g "${GID}" -m -d /jetdisc jetdisc \
