@@ -19,8 +19,8 @@ jobs:
         id: generate_token
         uses: actions/create-github-app-token@v1.9.0
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
         env:
           OPENSSL_CONF: /dev/null
       - uses: alexwilson/enable-github-automerge-action@main
