@@ -21,12 +21,10 @@ jobs:
         uses: actions/checkout@v4.1.1
       - name: Generate github token
         id: generate_token
-        uses: tibdex/github-app-token@v2.1.0
+        uses: actions/create-github-app-token@v1.9.0
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.PRIVATE_KEY }}
-        env:
-          OPENSSL_CONF: /dev/null
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
       - name: Approve
         run: gh pr review ${{ env.NUMBER }} --approve
         env:
