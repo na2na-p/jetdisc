@@ -25,8 +25,6 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
-        env:
-          OPENSSL_CONF: /dev/null
       - name: Approve
         run: gh pr review ${{ env.NUMBER }} --approve
         env:
