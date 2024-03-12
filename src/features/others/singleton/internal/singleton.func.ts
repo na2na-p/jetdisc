@@ -1,9 +1,26 @@
-type Getter<T> = () => T;
-type Factory<T> = () => T;
+type Constructor<T, Args extends unknown[]> = new (...args: Args) => T;
+type FactoryFunction<T, Args extends unknown[]> = (...args: Args) => T;
 
-export const singleton = <T>(factory: Factory<T>): Getter<T> =>
-  ((): Getter<T> => {
-    let memo: T | null = null;
+function isClass<T, Args extends unknown[]>(
+  func: Constructor<T, Args> | FactoryFunction<T, Args>
+): func is Constructor<T, Args> {
+  return /^class\s/.test(Function.prototype.toString.call(func));
+}
 
-    return () => (memo ? memo : (memo = factory()));
-  })();
+/**
+ * NOTE: 引数取るようになった時点でsingletonではないので命名を変えるか削除
+ * multitonあたりが適当
+ */
+export function singleton<T, Args extends unknown[]>(
+  factoryOrConstructor: Constructor<T, Args> | FactoryFunction<T, Args>
+): (...args: Args) => T {
+  let instance: T | null = null;
+  return (...args: Args) => {
+    if (!instance) {
+      instance = isClass<T, Args>(factoryOrConstructor)
+        ? new factoryOrConstructor(...args)
+        : factoryOrConstructor(...args);
+    }
+    return instance;
+  };
+}
