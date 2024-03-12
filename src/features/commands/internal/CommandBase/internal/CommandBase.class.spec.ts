@@ -1,3 +1,4 @@
+import type { Store } from '@/features/core/index.js';
 import type {
   CacheType,
   ChatInputCommandInteraction,
@@ -16,9 +17,20 @@ describe('CommandBase', () => {
   }
 
   let command: TestCommand;
+  const mockedStore = vi.mocked<Store>(
+    {
+      getVoiceConnection: vi.fn(),
+      setVoiceConnection: vi.fn(),
+      getVoicePlayer: vi.fn(),
+      setVoicePlayer: vi.fn(),
+    },
+    { deep: true }
+  );
 
   beforeEach(() => {
-    command = new TestCommand();
+    command = new TestCommand({
+      store: mockedStore,
+    });
   });
 
   describe('register', () => {

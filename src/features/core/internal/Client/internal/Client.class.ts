@@ -2,12 +2,17 @@ import { exit } from 'process';
 
 import type { CommandBase } from '@/features/commands/index.js';
 import type { getConfig } from '@/features/config/index.js';
+import {
+  getInMemoryStoreInstance,
+  type Store,
+  STORE_TYPES,
+} from '@/features/core/index.js';
 import type { ChatInputCommandInteraction } from '@/features/library/index.js';
 import {
+  chalk,
   Client as DiscordJsClient,
   GatewayIntentBits,
   InteractionType,
-  chalk,
 } from '@/features/library/index.js';
 import { log } from '@/features/others/log/index.js';
 
@@ -16,8 +21,9 @@ import type { ClassConstructorArgs } from './Client.types.js';
 export class Client extends DiscordJsClient {
   readonly #config: ReturnType<typeof getConfig>;
   private interactionCommands: ReadonlyArray<CommandBase> = [];
+  #store: Store;
 
-  constructor({ config, commands }: ClassConstructorArgs) {
+  constructor({ config, commands, storeDriver }: ClassConstructorArgs) {
     super({
       intents: [
         GatewayIntentBits.Guilds,
@@ -32,6 +38,14 @@ export class Client extends DiscordJsClient {
     } catch (error) {
       this.log(chalk.red('Failed to fetch the account'));
       exit(1);
+    }
+
+    switch (storeDriver) {
+      case STORE_TYPES.IN_MEMORY:
+        this.#store = getInMemoryStoreInstance();
+        break;
+      default:
+        throw new Error('Invalid store driver');
     }
 
     const commandsRegisteredResult = this.#installModules(commands);
@@ -60,12 +74,16 @@ export class Client extends DiscordJsClient {
     });
   }
 
-  #installModules(commands: ReadonlyArray<CommandBase>): boolean {
-    commands.forEach(command => {
-      this.interactionCommands = this.interactionCommands.concat(
-        command.register()
-      );
-    });
+  #installModules(commands: ClassConstructorArgs['commands']): boolean {
+    const interactionCommands = [...this.interactionCommands];
+
+    for (const command of commands) {
+      const commandInstance = new command({
+        store: this.#store,
+      }).register();
+      interactionCommands.push(commandInstance);
+    }
+    this.interactionCommands = interactionCommands;
     return true;
   }
 
@@ -73,7 +91,7 @@ export class Client extends DiscordJsClient {
     commands,
     application,
   }: {
-    commands: ReadonlyArray<CommandBase>;
+    commands: ClassConstructorArgs['commands'];
     application: Client['application'];
   }): boolean {
     if (commands.length === 0) {
@@ -92,7 +110,7 @@ export class Client extends DiscordJsClient {
       this.#config.SET_COMMANDS_TARGET_SERVERS.forEach(async serverId => {
         // this.on('ready')になってないとthis.applicationがnull。そうでないならok?
         // HACK: なぜかnullでも動く
-        application?.commands.set(commands, serverId);
+        application?.commands.set(this.interactionCommands, serverId);
         this.log(`Installed commands to ${chalk.underline(serverId)}`);
       });
       return true;

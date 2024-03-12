@@ -1,3 +1,4 @@
+import type { Store } from '@/features/core/index.js';
 import type { ApplicationCommandOptionData } from '@/features/library/index.js';
 
 import type { InteractArgs } from './CommandBase.types.js';
@@ -17,6 +18,12 @@ export abstract class CommandBase {
    * オプション
    */
   public readonly options?: ReadonlyArray<ApplicationCommandOptionData>;
+
+  protected store: Store;
+
+  constructor({ store }: { store: Store }) {
+    this.store = store;
+  }
 
   public readonly register = () => this;
 

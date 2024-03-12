@@ -7,3 +7,9 @@ export {
   getVoiceInstance,
 } from './internal/Voice/index.js';
 export type { Voice } from './internal/Voice/index.js';
+export {
+  getInMemoryStoreInstance,
+  type InMemoryStore,
+  type Store,
+  STORE_TYPES,
+} from './internal/Store/index.js';
