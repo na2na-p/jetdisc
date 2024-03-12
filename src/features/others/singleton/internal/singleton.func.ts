@@ -7,6 +7,10 @@ function isClass<T, Args extends unknown[]>(
   return /^class\s/.test(Function.prototype.toString.call(func));
 }
 
+/**
+ * NOTE: 引数取るようになった時点でsingletonではないので命名を変えるか削除
+ * multitonあたりが適当
+ */
 export function singleton<T, Args extends unknown[]>(
   factoryOrConstructor: Constructor<T, Args> | FactoryFunction<T, Args>
 ): (...args: Args) => T {
