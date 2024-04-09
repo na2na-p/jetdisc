@@ -1,4 +1,4 @@
-ARG NODE_VERSION=20.12.0-bookworm
+ARG NODE_VERSION=20.12.1-bookworm
 
 FROM node:${NODE_VERSION} AS builder
 
