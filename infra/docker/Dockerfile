@@ -1,4 +1,4 @@
-ARG NODE_VERSION=20.12.0-bookworm
+ARG NODE_VERSION=20.12.1-bookworm
 
 FROM node:${NODE_VERSION} AS builder
 
@@ -31,7 +31,7 @@ ARG GID="991"
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
-	ffmpeg tini libgnutls30=3.7.9-2+deb12u2 \
+	ffmpeg tini util-linux=2.38.1-5+deb12u1 \
 	&& corepack enable \
 	&& groupadd -g "${GID}" jetdisc \
 	&& useradd -l -u "${UID}" -g "${GID}" -m -d /jetdisc jetdisc \
