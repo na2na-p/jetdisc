@@ -20,15 +20,14 @@ export const getJoinableStateStatus = ({
     const voiceState = (() => {
       const guild = client.guilds.cache.get(guildId);
       if (!guild) return undefined;
-      const voiceState = guild.voiceStates.cache.get(client.user.id);
-      return voiceState;
+      return guild.voiceStates.cache.get(client.user.id);
     })();
 
     if (!channel.joinable) {
       return JOINABLE_STATE_STATUS.NOT_JOINABLE;
     } else if (!channel.viewable) {
       return JOINABLE_STATE_STATUS.NOT_VIEWABLE;
-    } else if (!!voiceState) {
+    } else if (voiceState) {
       return JOINABLE_STATE_STATUS.ALREADY_JOINED;
     } else {
       return JOINABLE_STATE_STATUS.JOINABLE;
