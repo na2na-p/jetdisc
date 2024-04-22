@@ -19,7 +19,7 @@ jobs:
       LATEST_TAG: ${{ steps.genelate_latest_tag.outputs.LATEST_TAG }}
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.3
       - name: Get current version
         id: get_version
         run: |
