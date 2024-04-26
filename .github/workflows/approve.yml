@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.1.3
+        uses: actions/checkout@v4.1.4
       - name: Generate github token
         id: generate_token
         uses: actions/create-github-app-token@v1.9.3
