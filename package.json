@@ -31,7 +31,7 @@
     "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-import": "2.29.1",
     "prettier": "3.2.5",
-    "tsx": "4.8.1",
+    "tsx": "4.9.0",
     "typescript": "5.4.5",
     "typescript-eslint": "7.8.0",
     "vitest": "1.5.3"
@@ -47,9 +47,9 @@
     "lodash-es": "4.17.21",
     "resolve": "1.22.8",
     "ytdl-core": "4.11.5",
-    "zod": "3.23.5"
+    "zod": "3.23.6"
   },
   "resolutions": {
-    "vite": "5.2.10"
+    "vite": "5.2.11"
   }
 }
