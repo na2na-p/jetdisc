@@ -1,6 +1,6 @@
-ARG NODE_VERSION=20.12.2-bookworm
+ARG NODE_VERSION=20.13.1-bookworm
 
-FROM node:${NODE_VERSION} AS builder
+FROM node:${NODE_VERSION} AS base
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	--mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -16,8 +16,11 @@ WORKDIR /jetdisc
 
 COPY --link ["pnpm-lock.yaml", "package.json", "./"]
 
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
-	pnpm i --frozen-lockfile --aggregate-output
+FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+
+FROM base AS builder
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 COPY --link . ./
 
@@ -43,10 +46,11 @@ RUN apt-get update \
 USER jetdisc
 WORKDIR /jetdisc
 
-COPY --chown=jetdisc:jetdisc --from=builder /jetdisc/node_modules ./node_modules
+COPY --chown=jetdisc:jetdisc --from=prod-deps /jetdisc/node_modules ./node_modules
 COPY --chown=jetdisc:jetdisc --from=builder /jetdisc/built ./built
 COPY --chown=jetdisc:jetdisc . ./
 
 ENV NODE_ENV=production
+
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["pnpm", "run", "start"]
