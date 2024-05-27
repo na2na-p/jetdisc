@@ -20,9 +20,9 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.4
+      - uses: actions/checkout@v4.1.6
       - name: Checkout repository
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.6
       - name: Setup asdf
         uses: asdf-vm/actions/setup@v3.0.2
         continue-on-error: true
