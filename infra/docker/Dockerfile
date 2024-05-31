@@ -1,4 +1,4 @@
-ARG NODE_VERSION=20.13.1-bookworm
+ARG NODE_VERSION=20.14.0-bookworm
 
 FROM node:${NODE_VERSION} AS base
 
