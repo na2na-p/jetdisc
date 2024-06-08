@@ -16,11 +16,13 @@ describe('getConfig', () => {
     process.env['DISCORD_APP_TOKEN'] = 'test_token';
     process.env['BOT_NAME'] = 'test_bot';
     process.env['SET_COMMANDS_TARGET_SERVERS'] = 'server1,server2';
+    process.env['STORE_DRIVER'] = 'local';
 
     const expectedConfig = {
       DISCORD_APP_TOKEN: 'test_token',
       BOT_NAME: 'test_bot',
       SET_COMMANDS_TARGET_SERVERS: ['server1', 'server2'],
+      STORE_DRIVER: 'local',
     };
 
     expect(getConfig()).toEqual(expectedConfig);
