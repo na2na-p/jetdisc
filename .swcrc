@@ -1,37 +1,35 @@
 {
-	"$schema": "https://json.schemastore.org/swcrc",
-	"jsc": {
-		"baseUrl": ".",
-		"parser": {
-			"syntax": "typescript",
-			"dynamicImport": false,
-			"decorators": false
-		},
-		"target": "esnext",
-		"loose": false,
-		"externalHelpers": false,
-		"keepClassNames": false,
-		"paths": {
-			"@/*": [
-				"src/*"
-			]
-		},
-		"minify": {
-			"compress": {
-				"unused": true
-			},
-			"mangle": true
-		}
-	},
-	"module": {
-		"type": "es6"
-	},
-	"exclude": [
-		".*.spec.tsx?$",
-		".*.test.tsx?$",
-		"./src/jest-setup.ts$",
-		"./**/jest-setup.ts$",
-		".*.js$"
-	],
-	"minify": false
+  "$schema": "https://swc.rs/schema.json",
+  "jsc": {
+    "baseUrl": ".",
+    "parser": {
+      "syntax": "typescript",
+      "dynamicImport": false,
+      "decorators": false
+    },
+    "target": "esnext",
+    "loose": false,
+    "externalHelpers": false,
+    "keepClassNames": false,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "minify": {
+      "compress": {
+        "unused": true
+      },
+      "mangle": true
+    }
+  },
+  "module": {
+    "type": "es6"
+  },
+  "exclude": [
+    ".*.spec.tsx?$",
+    ".*.test.tsx?$",
+    "./src/jest-setup.ts$",
+    "./**/jest-setup.ts$",
+    ".*.js$"
+  ],
+  "minify": true
 }

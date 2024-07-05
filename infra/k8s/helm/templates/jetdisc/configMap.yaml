@@ -4,3 +4,4 @@ metadata:
   name: jetdisc-configmap
 data:
   BOT_NAME: {{ .Values.configMap.botName | quote }}
+  STORE_DRIVER: {{ .Values.configMap.storeDriver | quote }}
