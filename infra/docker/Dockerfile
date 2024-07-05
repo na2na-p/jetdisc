@@ -33,8 +33,9 @@ ARG UID="991"
 ARG GID="991"
 
 RUN apt-get update \
+	&& apt-get upgrade -y \
 	&& apt-get install -y --no-install-recommends \
-	ffmpeg tini libc6=2.36-9+deb12u7 \
+	ffmpeg tini \
 	&& corepack enable \
 	&& groupadd -g "${GID}" jetdisc \
 	&& useradd -l -u "${UID}" -g "${GID}" -m -d /jetdisc jetdisc \
