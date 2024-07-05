@@ -6,8 +6,12 @@ image:
   registry: docker.io
   pullPolicy: IfNotPresent
 
-secret:
-  name: jetdisc-secret
+secrets:
+  discordAppToken: ""
+  setCommandsTargetServers: []
+
+configMap:
+  botName: ""
 
 resources:
   limits:
@@ -16,10 +20,3 @@ resources:
   requests:
     cpu: 250m
     memory: 128Mi
-
-hpa:
-  enabled: true
-  minReplicas: 1
-  maxReplicas: 1
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80

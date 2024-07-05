@@ -22,6 +22,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: {{ .Values.secret.name }}
+                name: jetdisc-secret
+            - configMapRef:
+                name: jetdisc-configmap
           resources: {{- toYaml .Values.resources | nindent 12 }}
       restartPolicy: Always
