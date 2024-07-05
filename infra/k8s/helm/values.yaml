@@ -12,6 +12,7 @@ secrets:
 
 configMap:
   botName: ""
+  storeDriver: "local"
 
 resources:
   limits:
