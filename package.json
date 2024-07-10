@@ -33,7 +33,7 @@
     "prettier": "3.3.2",
     "tsx": "4.16.2",
     "typescript": "5.5.3",
-    "typescript-eslint": "7.15.0",
+    "typescript-eslint": "7.16.0",
     "vitest": "1.6.0"
   },
   "dependencies": {
@@ -43,7 +43,7 @@
     "chalk": "5.3.0",
     "discord.js": "14.15.3",
     "dotenv": "16.4.5",
-    "libsodium-wrappers": "0.7.13",
+    "libsodium-wrappers": "0.7.14",
     "lodash-es": "4.17.21",
     "resolve": "1.22.8",
     "ytdl-core": "4.11.5",
