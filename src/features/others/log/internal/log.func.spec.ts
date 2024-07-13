@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-import type { SpyInstance } from 'vitest';
+import type { MockInstance } from 'vitest';
 
 import { chalk } from '@/features/library/index.js';
 
 import { log } from './log.func.js';
 
 describe('log', () => {
-  let mockStdout: SpyInstance;
+  let mockStdout: MockInstance;
   const originalConsoleLog = console.log;
 
   beforeEach(() => {
