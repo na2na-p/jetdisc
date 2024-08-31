@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: jetdisc-secret
+                name: {{ .Values.externalSecrets.targetName }}
             - configMapRef:
                 name: jetdisc-configmap
           resources: {{- toYaml .Values.resources | nindent 12 }}

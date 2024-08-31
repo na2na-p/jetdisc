@@ -8,11 +8,11 @@ image:
 
 secrets:
   discordAppToken: ""
-  setCommandsTargetServers: ""
 
 configMap:
   botName: ""
   storeDriver: "local"
+  setCommandsTargetServers: ""
 
 resources:
   limits:
@@ -21,3 +21,12 @@ resources:
   requests:
     cpu: 250m
     memory: 128Mi
+
+externalSecrets:
+  enabled: true
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: secretstore
+  targetName: jetdisc-secret
+  creationPolicy: Owner
+  refreshInterval: 1h

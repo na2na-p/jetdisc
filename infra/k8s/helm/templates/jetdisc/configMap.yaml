@@ -5,3 +5,4 @@ metadata:
 data:
   BOT_NAME: {{ .Values.configMap.botName | quote }}
   STORE_DRIVER: {{ .Values.configMap.storeDriver | quote }}
+  SET_COMMANDS_TARGET_SERVERS: {{ .Values.configMap.setCommandsTargetServers }}
