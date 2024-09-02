@@ -1,15 +1,13 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "jetdisc.fullname" . }}
   labels: {{- include "jetdisc.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: {{ include "jetdisc.name" . }}
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
