@@ -1,6 +1,6 @@
 image:
   repository: na2na/jetdisc
-  tag: "3.0.5"
+  tag: "3.0.6"
   registry: docker.io
   pullPolicy: IfNotPresent
 
