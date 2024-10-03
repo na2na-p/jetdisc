@@ -41,6 +41,8 @@ const typescriptEslintCustomRules = {
     {
       varsIgnorePattern: '^_',
       argsIgnorePattern: '^_',
+      caughtErrorsIgnorePattern: '^_',
+      destructuredArrayIgnorePattern: '^_',
     },
   ],
   '@typescript-eslint/consistent-type-imports': [
