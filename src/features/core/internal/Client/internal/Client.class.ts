@@ -33,7 +33,7 @@ export class Client extends DiscordJsClient {
     try {
       this.login(this.#config.DISCORD_APP_TOKEN);
     } catch (error) {
-      this.log(chalk.red('Failed to fetch the account'));
+      this.log(chalk.red(`Failed to fetch the account: ${error}`));
       exit(1);
     }
 
@@ -104,7 +104,7 @@ export class Client extends DiscordJsClient {
       });
       return true;
     } catch (error) {
-      throw new Error('Failed to install commands');
+      throw new Error(`Failed to install commands: ${error}`);
     }
   }
 

@@ -6,11 +6,11 @@ import {
 } from '@/features/core/index.js';
 import {
   AudioPlayerStatus,
-  StreamType,
   createAudioPlayer,
   createAudioResource,
   entersState,
   isNil,
+  StreamType,
 } from '@/features/library/index.js';
 import { LogicException } from '@/features/others/Error/LogicException.js';
 
@@ -58,7 +58,7 @@ export class YouTube extends CommandBase {
         );
         if (ytdl.validateURL(url)) return url;
         else throw new Error('Invalid URL');
-      } catch (error) {
+      } catch (_) {
         return;
       }
     })();
