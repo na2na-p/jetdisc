@@ -1,14 +1,15 @@
 export {
-  StreamType,
-  entersState,
-  AudioPlayerStatus,
-  AudioPlayer,
-  joinVoiceChannel,
-  getVoiceConnection,
-  createAudioPlayer,
-  createAudioResource,
-  VoiceConnection,
+	StreamType,
+	entersState,
+	AudioPlayerStatus,
+	AudioPlayer,
+	joinVoiceChannel,
+	getVoiceConnection,
+	createAudioPlayer,
+	createAudioResource,
+	VoiceConnection
 } from '@discordjs/voice';
+export type { DiscordGatewayAdapterCreator } from '@discordjs/voice';
 export { default as chalk } from 'chalk';
 export {
   Client,
