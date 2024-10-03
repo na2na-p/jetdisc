@@ -2,6 +2,7 @@ import type {
   VoiceConnection,
   ChatInputCommandInteraction,
   AudioPlayer,
+	DiscordGatewayAdapterCreator,
 } from '@/features/library/index.js';
 import { isNil, joinVoiceChannel } from '@/features/library/index.js';
 import { LogicException } from '@/features/others/Error/LogicException.js';
@@ -73,7 +74,8 @@ export class Voice {
           const connectedChannel = joinVoiceChannel({
             channelId: channel.id,
             guildId: channel.guild.id,
-            adapterCreator: channel.guild.voiceAdapterCreator,
+						// HACK: 型が嘘
+            adapterCreator: channel.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator,
           });
           this.connection.push({
             guildId: channel.guildId,
@@ -95,7 +97,7 @@ export class Voice {
         const connection = joinVoiceChannel({
           channelId: channel.id,
           guildId: channel.guild.id,
-          adapterCreator: channel.guild.voiceAdapterCreator,
+          adapterCreator: channel.guild.voiceAdapterCreator as DiscordGatewayAdapterCreator,
         });
 
         this.connection.push({
